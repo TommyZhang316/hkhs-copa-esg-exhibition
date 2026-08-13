@@ -599,7 +599,7 @@ function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <span className={compact ? "brand-mark brand-mark-compact" : "brand-mark"} data-brand-status="provisional">
       <img
-        src="/brand/hkhs-horizontal.jpg"
+        src="/brand/hkhs-horizontal.png"
         alt="Hong Kong Housing Society 香港房屋協會"
         width="2212"
         height="729"
@@ -1103,7 +1103,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
 
       <footer className="site-footer">
         <div className="footer-brand">
-          <img src="/brand/hkhs-vertical.jpg" alt="Hong Kong Housing Society 香港房屋協會" width="1658" height="1260" data-brand-status="provisional" />
+          <img src="/brand/hkhs-vertical.png" alt="Hong Kong Housing Society 香港房屋協會" width="1658" height="1260" data-brand-status="provisional" />
         </div>
         <div className="footer-statement">
           <p>{c.footer.statement}</p>
