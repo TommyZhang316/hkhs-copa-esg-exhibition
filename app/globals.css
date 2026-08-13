@@ -446,34 +446,6 @@ a {
   line-height: 1.45;
 }
 
-.hero-visual figcaption {
-  max-width: 40em;
-  margin-top: 12px;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.copa-stamp {
-  position: absolute;
-  right: clamp(0px, 2vw, 26px);
-  bottom: 28px;
-  display: grid;
-  justify-items: end;
-  color: var(--forest);
-}
-
-.copa-stamp span {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-}
-
-.copa-stamp strong {
-  font-size: 12px;
-  font-weight: 650;
-}
-
 .intro-section {
   display: grid;
   width: var(--content);
@@ -1744,11 +1716,6 @@ a {
     object-position: 50% 43%;
   }
 
-  .hero-visual figcaption {
-    margin-top: 7px;
-    font-size: 10px;
-  }
-
   .hero-video-overlay {
     right: 10px;
     bottom: 10px;
@@ -1771,21 +1738,6 @@ a {
 
   .hero-video-overlay p {
     display: none;
-  }
-
-  .copa-stamp {
-    right: 0;
-    bottom: 18px;
-  }
-
-  .copa-stamp span {
-    font-size: 13px;
-  }
-
-  .copa-stamp strong {
-    max-width: 18ch;
-    text-align: right;
-    font-size: 9px;
   }
 
   .intro-section {

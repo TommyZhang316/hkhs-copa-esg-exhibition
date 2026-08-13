@@ -29,7 +29,13 @@ test("server-renders the Traditional Chinese COPA experience", async () => {
 
   const html = await response.text();
   assert.match(html, /創建宜居．永續共融/);
-  assert.match(html, /物業及資產綜合平台/);
+  assert.match(html, /香港房屋協會-物業管理部門 可持續發展/);
+  assert.match(html, /物業及資產綜合平臺（COPA）/);
+  assert.match(html, /透過物聯網（IoT）在單一平臺/);
+  assert.match(html, /以量化成果，呈現我們的進展。/);
+  assert.match(html, /Hong Kong Housing Society Property Management Division/);
+  assert.match(html, /香港房屋協會 物業管理部門/);
+  assert.doesNotMatch(html, /跨代共融遊樂空間，讓不同年齡居民共享屋邨設施|以清楚範圍，呈現我們的進展|每個數字都與年份/);
   assert.match(html, /三大支柱/);
   assert.match(html, /ESG 概覽影片/);
   assert.match(html, /探索進度/);

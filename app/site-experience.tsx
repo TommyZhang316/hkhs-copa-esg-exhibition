@@ -116,8 +116,8 @@ const content = {
       close: "關閉",
     },
     brand: {
-      copa: "物業及資產綜合平台",
-      full: "Central Office for Property and Asset",
+      copa: "香港房屋協會 物業管理部門",
+      full: "Hong Kong Housing Society Property Management Division",
     },
     ui: {
       swipe: "左右滑動查看更多",
@@ -135,12 +135,11 @@ const content = {
       journeyProgress: "探索進度",
     },
     hero: {
-      eyebrow: "香港房屋協會可持續發展",
+      eyebrow: "香港房屋協會-物業管理部門 可持續發展",
       title: "創建宜居．永續共融",
       body: "我們在物業管理和社區日常中落實可持續發展，與居民共建更宜居、更低碳的未來。",
       cta: "探索我們的行動",
       secondary: "查看進展",
-      caption: "跨代共融遊樂空間，讓不同年齡居民共享屋邨設施",
       videoLabel: "ESG 概覽影片",
       videoDuration: "約 2 分鐘",
       videoStatus: "完整影片將於此位置播放",
@@ -188,9 +187,9 @@ const content = {
     },
     copa: {
       title: "以 COPA 連結物業管理每一環",
-      body: "我們透過物業及資產綜合平台整合系統、數據與專業能力，支援更清晰、及時和持續的管理決策。",
+      body: "物業及資產綜合平臺（COPA）",
       steps: [
-        ["連接", "在單一平台連接不同系統、感應器與物業資訊。", media.copaConnect, "COPA 地圖介面連接不同物業及資產資訊"],
+        ["連接", "透過物聯網（IoT）在單一平臺連接不同系統、感應器與物業資訊。", media.copaConnect, "COPA 地圖介面連接不同物業及資產資訊"],
         ["統一", "以標準化共同數據環境整理跨系統資料，建立一致的管理基礎。", media.copaStandardise, "COPA 資產管理儀表板統一呈現設施資料"],
         ["洞察", "透過互動儀表板、大數據分析及 AI-ready 基礎掌握物業狀況。", media.copaInsight, "COPA ESG 儀表板呈現能源、碳排放、可再生能源及用水資訊"],
         ["行動", "把資訊轉化為日常營運能力，支援安全、維修、能源及服務持續改善。", media.copaAct, "COPA 智能設施儀表板顯示警報、位置及影像資訊"],
@@ -282,8 +281,8 @@ const content = {
       },
     ] satisfies Story[],
     progress: {
-      title: "以清楚範圍，呈現我們的進展",
-      body: "每個數字都與年份、基準或適用物業範圍一同閱讀。",
+      title: "以量化成果，呈現我們的進展。",
+      body: "",
       source: "資料來源：香港房屋協會 2024/25 可持續發展報告及年度報告。每項數據均附正式文件連結及頁碼。",
     },
     metrics: [
@@ -316,26 +315,25 @@ const content = {
     },
     footer: {
       statement: "可持續發展不是單一項目，而是我們建造、管理和服務社區的方式。",
-      copyright: "香港房屋協會",
+      copyright: "香港房屋協會 物業管理部門",
       note: "數據以所示報告期、披露範圍及正式來源為準。",
     },
   },
   "zh-cn": {
     htmlLang: "zh-CN",
     nav: { home: "首页", pillars: "三大支柱", copa: "COPA", stories: "屋邨行动", progress: "进展", videos: "视频", menu: "打开菜单", close: "关闭" },
-    brand: { copa: "物业及资产综合平台", full: "Central Office for Property and Asset" },
+    brand: { copa: "香港房屋协会 物业管理部门", full: "Hong Kong Housing Society Property Management Division" },
     ui: {
       swipe: "左右滑动查看更多", previous: "上一项", next: "下一项", source: "查看正式来源", reportPage: "PDF 第", pageSuffix: "页",
       organization: "房协整体", property: "物业管理实践", sustainabilityReport: "香港房屋协会 2024/25 可持续发展报告", annualReport: "香港房屋协会 2024/25 年度报告",
       previousStory: "上一个故事", nextStory: "下一个故事", journeyProgress: "探索进度",
     },
     hero: {
-      eyebrow: "香港房屋协会可持续发展",
+      eyebrow: "香港房屋协会-物业管理部门 可持续发展",
       title: "创建宜居．永续共融",
       body: "我们在物业管理和社区日常中落实可持续发展，与居民共建更宜居、更低碳的未来。",
       cta: "探索我们的行动",
       secondary: "查看进展",
-      caption: "跨代共融游乐空间，让不同年龄居民共享屋邨设施",
       videoLabel: "ESG 概览视频", videoDuration: "约 2 分钟", videoStatus: "完整视频将在此位置播放",
     },
     intro: {
@@ -363,9 +361,9 @@ const content = {
     },
     copa: {
       title: "以 COPA 连结物业管理每一环",
-      body: "我们透过物业及资产综合平台整合系统、数据与专业能力，支持更清晰、及时和持续的管理决策。",
+      body: "物业及资产综合平台（COPA）",
       steps: [
-        ["连接", "在单一平台连接不同系统、传感器与物业信息。", media.copaConnect, "COPA 地图界面连接不同物业及资产信息"],
+        ["连接", "透过物联网（IoT）在单一平台连接不同系统、传感器与物业信息。", media.copaConnect, "COPA 地图界面连接不同物业及资产信息"],
         ["统一", "以标准化共同数据环境整理跨系统资料，建立一致的管理基础。", media.copaStandardise, "COPA 资产管理仪表板统一呈现设施数据"],
         ["洞察", "透过互动仪表板、大数据分析及 AI-ready 基础掌握物业状况。", media.copaInsight, "COPA ESG 仪表板呈现能源、碳排放、可再生能源及用水信息"],
         ["行动", "把信息转化为日常营运能力，支持安全、维修、能源及服务持续改善。", media.copaAct, "COPA 智能设施仪表板显示警报、位置及影像信息"],
@@ -374,7 +372,7 @@ const content = {
     },
     storySection: { title: "屋邨中的可持续行动", body: "从一部厨余机、一块旧布，到一个更安全的管理流程，改变在社区中逐步发生。", all: "全部", read: "阅读故事", detailTitle: "我们的行动", impactTitle: "带来的改变" },
     stories: [] as Story[],
-    progress: { title: "以清楚范围，呈现我们的进展", body: "每个数字都与年份、基准或适用物业范围一同阅读。", source: "资料来源：香港房屋协会 2024/25 可持续发展报告及年度报告。每项数据均附正式文件链接及页码。" },
+    progress: { title: "以量化成果，呈现我们的进展。", body: "", source: "资料来源：香港房屋协会 2024/25 可持续发展报告及年度报告。每项数据均附正式文件链接及页码。" },
     metrics: [
       { value: "31", unit: "%", label: "能源消耗减少", scope: "相对 2012/13 基准，按正式报告所列选定物业范围", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
       { value: "21.9", unit: "%", label: "范围一及二碳排放按年下降", scope: "2024/25，涵盖出租屋邨、管理物业、建筑项目及主要办公室", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
@@ -403,24 +401,23 @@ const content = {
         ["厨余回收设施示范", "从分类到回收，建立更便利的参与体验。", media.foodWasteLtt],
       ],
     },
-    footer: { statement: "可持续发展不是单一项目，而是我们建造、管理和服务社区的方式。", copyright: "香港房屋协会", note: "数据以所示报告期、披露范围及正式来源为准。" },
+    footer: { statement: "可持续发展不是单一项目，而是我们建造、管理和服务社区的方式。", copyright: "香港房屋协会 物业管理部门", note: "数据以所示报告期、披露范围及正式来源为准。" },
   },
   en: {
     htmlLang: "en",
     nav: { home: "Home", pillars: "Our pillars", copa: "COPA", stories: "Estate action", progress: "Progress", videos: "Videos", menu: "Open menu", close: "Close" },
-    brand: { copa: "Central Office for Property and Asset", full: "物業及資產綜合平台" },
+    brand: { copa: "香港房屋協會 物業管理部門", full: "Hong Kong Housing Society Property Management Division" },
     ui: {
       swipe: "Swipe to explore", previous: "Previous", next: "Next", source: "View official source", reportPage: "PDF page ", pageSuffix: "",
       organization: "HKHS-wide", property: "Property management practice", sustainabilityReport: "HKHS Sustainability Report 2024/25", annualReport: "HKHS Annual Report 2024/25",
       previousStory: "Previous story", nextStory: "Next story", journeyProgress: "Exploration progress",
     },
     hero: {
-      eyebrow: "HKHS sustainability",
+      eyebrow: "HKHS Property Management Division Sustainability",
       title: "Creating Homes for Sustainable Living",
       body: "We put sustainability into practice through property management and community life, building a liveable, low-carbon future with residents.",
       cta: "Explore our action",
       secondary: "View our progress",
-      caption: "An inclusive play space designed for residents across generations",
       videoLabel: "ESG overview film", videoDuration: "Around 2 minutes", videoStatus: "The full film will play here",
     },
     intro: {
@@ -448,9 +445,9 @@ const content = {
     },
     copa: {
       title: "Connecting every part of property management",
-      body: "Through COPA, we bring systems, data and professional capabilities together to support clearer, timely and continuous management decisions.",
+      body: "Central Office for Property and Asset (COPA)",
       steps: [
-        ["Connect", "Bring systems, sensors and property information together on one platform.", media.copaConnect, "A COPA map interface connecting property and asset information"],
+        ["Connect", "Use the Internet of Things (IoT) to connect systems, sensors and property information on one platform.", media.copaConnect, "A COPA map interface connecting property and asset information"],
         ["Standardise", "Organise information in a standardised common data environment for a consistent management foundation.", media.copaStandardise, "A COPA asset management dashboard presenting facility data consistently"],
         ["Understand", "Use interactive dashboards, big-data analytics and an AI-ready foundation to understand asset conditions.", media.copaInsight, "The COPA ESG dashboard presenting energy, emissions, renewable energy and water information"],
         ["Act", "Turn information into operational capability for safety, maintenance, energy and service improvement.", media.copaAct, "A COPA smart facilities dashboard showing alerts, locations and visual information"],
@@ -459,7 +456,7 @@ const content = {
     },
     storySection: { title: "Sustainability in estate life", body: "From food waste facilities and old fabric to safer management, change grows through practical community action.", all: "All", read: "Read story", detailTitle: "Our action", impactTitle: "The change" },
     stories: [] as Story[],
-    progress: { title: "Progress shown with clear scope", body: "Every number is read with its reporting year, baseline or applicable property scope.", source: "Sources: HKHS Sustainability Report 2024/25 and Annual Report 2024/25. Each figure includes an official document link and page reference." },
+    progress: { title: "Presenting our progress through measurable results.", body: "", source: "Sources: HKHS Sustainability Report 2024/25 and Annual Report 2024/25. Each figure includes an official document link and page reference." },
     metrics: [
       { value: "31", unit: "%", label: "reduction in energy consumption", scope: "Against the 2012/13 baseline, within the selected property scope stated in the report", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
       { value: "21.9", unit: "%", label: "year-on-year fall in Scope 1 and 2 emissions", scope: "2024/25, covering rental estates, managed properties, construction projects and major offices", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
@@ -488,7 +485,7 @@ const content = {
         ["Using a food waste recycling facility", "A more convenient experience from separation to recycling.", media.foodWasteLtt],
       ],
     },
-    footer: { statement: "Sustainability is not one project. It is how we build, manage and serve communities.", copyright: "Hong Kong Housing Society", note: "Figures should be read with the reporting period, disclosure scope and official source shown." },
+    footer: { statement: "Sustainability is not one project. It is how we build, manage and serve communities.", copyright: "Hong Kong Housing Society Property Management Division", note: "Figures should be read with the reporting period, disclosure scope and official source shown." },
   },
 } as const;
 
@@ -954,13 +951,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
                 <p>{c.hero.videoStatus}</p>
               </div>
             </div>
-            <figcaption>{c.hero.caption}</figcaption>
           </motion.figure>
-
-          <div className="copa-stamp" aria-label={`${c.brand.full}, ${c.brand.copa}`}>
-            <span>COPA</span>
-            <strong>{c.brand.copa}</strong>
-          </div>
         </section>
 
         <motion.section className="intro-section" {...reveal}>
@@ -1121,7 +1112,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           <motion.div className="progress-heading" {...reveal}>
             <ChartLineUp size={42} weight="thin" aria-hidden="true" />
             <h2>{c.progress.title}</h2>
-            <p>{c.progress.body}</p>
+            {c.progress.body ? <p>{c.progress.body}</p> : null}
           </motion.div>
           <div className="metrics-grid">
             {c.metrics.map((metric, index) => (
