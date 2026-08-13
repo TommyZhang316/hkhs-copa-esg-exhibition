@@ -31,7 +31,12 @@ test("server-renders the Traditional Chinese COPA experience", async () => {
   assert.match(html, /創建宜居．永續共融/);
   assert.match(html, /物業及資產綜合平台/);
   assert.match(html, /三大支柱/);
+  assert.match(html, /ESG 概覽影片/);
+  assert.match(html, /探索進度/);
+  assert.match(html, /\/media\/feedback2\/copa-connect\.webp/);
   assert.match(html, /屋邨中的可持續行動/);
+  assert.match(html, /20 個出租屋邨/);
+  assert.doesNotMatch(html, /20 個出租屋邨及 1 個管理物業/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/);
   assert.doesNotMatch(html, /DxwklpgWz3c|kr5ljZSQx_c|wxdvJ-yH_JQ|1bH5kHK0oec/);
 });

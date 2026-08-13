@@ -10,6 +10,7 @@ import {
   CheckCircle,
   Cpu,
   Database,
+  FilmSlate,
   HouseLine,
   Leaf,
   List,
@@ -83,9 +84,19 @@ const media = {
   garden: "/media/videos/community-garden.mp4",
   foodWasteKll: "/media/videos/food-waste-kll.mp4",
   foodWasteLtt: "/media/videos/food-waste-ltt.mp4",
-  copaCommand: "/media/copa/copa-command-centre.webp",
-  copaSpace: "/media/copa/copa-space.webp",
-  copaWall: "/media/copa/copa-exhibition-wall.webp",
+  copaConnect: "/media/feedback2/copa-connect.webp",
+  copaStandardise: "/media/feedback2/copa-standardise.webp",
+  copaInsight: "/media/feedback2/copa-insight.webp",
+  copaAct: "/media/feedback2/copa-act.webp",
+  foodWaste: "/media/feedback2/estate-food-waste.webp",
+  clothesRecycling: "/media/feedback2/estate-clothes-recycling.webp",
+  smartRecycling: "/media/feedback2/estate-smart-recycling.webp",
+  recyclingStation: "/media/feedback2/estate-recycling-station.webp",
+  solarMosquito: "/media/feedback2/estate-solar-mosquito.webp",
+  solarMosquitoNight: "/media/feedback2/estate-solar-mosquito-night.webp",
+  communityArt: "/media/feedback2/estate-community-art.webp",
+  evCharging: "/media/feedback2/estate-ev-charging.webp",
+  inclusivePlay: "/media/feedback2/estate-inclusive-play.webp",
 };
 
 const content = {
@@ -94,6 +105,7 @@ const content = {
     nav: {
       home: "首頁",
       pillars: "三大支柱",
+      copa: "COPA",
       stories: "屋邨行動",
       progress: "進展",
       videos: "影片",
@@ -117,6 +129,7 @@ const content = {
       annualReport: "香港房屋協會 2024/25 年度報告",
       previousStory: "上一個故事",
       nextStory: "下一個故事",
+      journeyProgress: "探索進度",
     },
     hero: {
       eyebrow: "香港房屋協會可持續發展",
@@ -124,7 +137,10 @@ const content = {
       body: "我們在物業管理和社區日常中落實可持續發展，與居民共建更宜居、更低碳的未來。",
       cta: "探索我們的行動",
       secondary: "查看進展",
-      caption: "屋邨居民參與物品再生及升級再造活動",
+      caption: "跨代共融遊樂空間，讓不同年齡居民共享屋邨設施",
+      videoLabel: "ESG 概覽影片",
+      videoDuration: "約 2 分鐘",
+      videoStatus: "完整影片將於此位置播放",
     },
     intro: {
       title: "在物業管理日常，把 ESG 承諾變成行動",
@@ -171,10 +187,10 @@ const content = {
       title: "以 COPA 連結物業管理每一環",
       body: "我們透過物業及資產綜合平台整合系統、數據與專業能力，支援更清晰、及時和持續的管理決策。",
       steps: [
-        ["連結", "在單一平台連接不同系統、感應器與物業資訊。", media.copaCommand, "COPA 指揮中心以大型屏幕整合物業及資產資訊"],
-        ["統一", "以標準化共同數據環境整理跨系統資料，建立一致的管理基礎。", media.copaCommand, "COPA 屏幕顯示物業資訊及香港地圖"],
-        ["洞察", "透過互動儀表板、大數據分析及 AI-ready 基礎掌握物業狀況。", media.copaWall, "COPA 展示空間內的數碼應用和互動屏幕"],
-        ["行動", "把資訊轉化為日常營運能力，支援安全、維修、能源及服務持續改善。", media.copaSpace, "COPA 工作空間及以樹木為意象的室內設計"],
+        ["連接", "在單一平台連接不同系統、感應器與物業資訊。", media.copaConnect, "COPA 地圖介面連接不同物業及資產資訊"],
+        ["統一", "以標準化共同數據環境整理跨系統資料，建立一致的管理基礎。", media.copaStandardise, "COPA 資產管理儀表板統一呈現設施資料"],
+        ["洞察", "透過互動儀表板、大數據分析及 AI-ready 基礎掌握物業狀況。", media.copaInsight, "COPA ESG 儀表板呈現能源、碳排放、可再生能源及用水資訊"],
+        ["行動", "把資訊轉化為日常營運能力，支援安全、維修、能源及服務持續改善。", media.copaAct, "COPA 智能設施儀表板顯示警報、位置及影像資訊"],
       ],
       features: "平台功能包括系統及感應器整合、共同數據環境、互動儀表板、安全數據管理，以及日後擴展能力。",
     },
@@ -188,14 +204,14 @@ const content = {
     },
     stories: [
       {
-        slug: "kwun-lung-lau-upcycling",
+        slug: "smart-recycling-hub",
         pillar: "carbon",
-        place: "觀龍樓",
-        title: "讓舊物展開第二段生命",
-        summary: "居民把回收布料轉化成實用物品，讓循環經濟走進社區日常。",
-        detail: "升級再造坊以舊衣和回收物料為創作材料，配合導師示範，讓居民親手完成可再次使用的生活物品。",
-        impact: "活動把減廢知識轉化為可參與的生活體驗，同時促進鄰里交流和技能分享。",
-        media: { type: "image", src: media.reuseHero, alt: "觀龍樓居民參與物品再生活動" },
+        place: "屋邨回收點",
+        title: "讓分類回收更清楚、更方便",
+        summary: "不同回收設施集中設置，讓居民在日常動線中更容易找到合適分類。",
+        detail: "物業管理團隊按屋邨環境配置回收設施，以清楚標示協助居民分辨紙張、容器及其他可回收物。",
+        impact: "把分類設施帶到便利位置，有助減少錯誤棄置，並讓資源循環成為屋邨日常。",
+        media: { type: "image", src: media.smartRecycling, alt: "屋邨內並列設置的智能分類回收設施" },
       },
       {
         slug: "smart-food-waste",
@@ -204,20 +220,20 @@ const content = {
         title: "智能回收，讓廚餘有更好去向",
         summary: "智能廚餘回收設施讓分類更方便，也支援屋邨持續優化回收服務。",
         detail: "居民可在屋邨使用智能廚餘回收設施。系統配合日常管理，協助推廣源頭分類和建立持續參與的習慣。",
-        impact: "近 50 部智能廚餘回收機已設於 20 個出租屋邨及 1 個管理物業。",
-        media: { type: "video", src: media.foodWasteLtt, alt: "居民示範使用智能廚餘回收設施" },
+        impact: "近 50 部智能廚餘回收機已設於 20 個出租屋邨。",
+        media: { type: "image", src: media.foodWaste, alt: "設於屋邨公共位置的智能廚餘回收機" },
         sourceKey: "annual",
         sourcePage: 141,
       },
       {
-        slug: "community-garden",
-        pillar: "homes",
-        place: "屋邨社區",
-        title: "在園圃中連結人與社區",
-        summary: "週末種植活動讓居民共享綠色空間，也讓環保知識在交流中生根。",
-        detail: "社區園圃提供共同種植、學習和相遇的空間。居民在照料植物的過程中交流經驗，建立對屋邨環境的共同投入。",
-        impact: "園圃把綠化、身心健康和社區連繫放在同一個可持續生活場景中。",
-        media: { type: "video", src: media.garden, alt: "居民參與週末社區園圃種植" },
+        slug: "clothes-recycling",
+        pillar: "carbon",
+        place: "屋邨回收點",
+        title: "為舊衣物預留回收出口",
+        summary: "衣物回收箱為不再使用的紡織品提供清楚、便利的收集位置。",
+        detail: "在合適公共位置設置衣物回收設施，配合標示和日常管理，讓居民更容易把舊衣從一般廢物中分流。",
+        impact: "延長物資使用週期，同時減少可再用紡織品進入堆填區。",
+        media: { type: "image", src: media.clothesRecycling, alt: "屋邨公共位置的兩個衣物回收箱" },
       },
       {
         slug: "renewable-energy",
@@ -227,7 +243,7 @@ const content = {
         summary: "太陽能和風力設備把公共空間轉化為可再生能源的實踐場景。",
         detail: "房協在合適屋邨設置太陽能光伏系統，並在觀龍樓應用風力發電，將可再生能源融入物業營運。",
         impact: "截至 2024/25 年度，10 個出租屋邨設有太陽能光伏系統。",
-        media: { type: "graphic", variant: "solar", alt: "屋邨可再生能源概念圖" },
+        media: { type: "image", src: media.solarMosquito, alt: "設於屋邨園景範圍的太陽能滅蚊燈" },
         sourceKey: "annual",
         sourcePage: 141,
       },
@@ -239,7 +255,47 @@ const content = {
         summary: "共融設施和社區活動回應長者、家庭及不同居民的生活需要。",
         detail: "房協從空間、設施和活動三方面推動跨代交流，讓居民在日常生活中建立互助和連繫。",
         impact: "設計不只處理通行和使用需要，也重視尊重、參與和社區歸屬感。",
-        media: { type: "graphic", variant: "community", alt: "跨代共融社區概念圖" },
+        media: { type: "image", src: media.inclusivePlay, alt: "屋邨內色彩清晰的長幼共融遊樂空間" },
+      },
+      {
+        slug: "community-art",
+        pillar: "homes",
+        place: "屋邨公共空間",
+        title: "把社區故事帶進日常空間",
+        summary: "以街坊創作和地方特色豐富公共空間，讓屋邨環境更具歸屬感。",
+        detail: "物業管理不只照顧設施運作，也透過合適的社區藝術和展示，把地方記憶融入居民每天經過的空間。",
+        impact: "公共空間兼具使用功能和社區特色，支持居民建立對居住環境的認同。",
+        media: { type: "image", src: media.communityArt, alt: "屋邨公共空間展示以漁光竹映為題的街坊創作" },
+      },
+      {
+        slug: "ev-charging",
+        pillar: "carbon",
+        place: "屋邨停車場",
+        title: "為低碳出行準備充電設施",
+        summary: "在合適停車位置配置充電設備，配合交通電動化的長遠需要。",
+        detail: "物業管理團隊按場地條件和使用需要規劃充電設施，並把設備安全、維護和日常運作納入管理。",
+        impact: "逐步完善屋邨低碳出行配套，也為未來資產管理建立實務經驗。",
+        media: { type: "image", src: media.evCharging, alt: "屋邨停車位置旁的電動車充電設備" },
+      },
+      {
+        slug: "solar-estate-details",
+        pillar: "carbon",
+        place: "屋邨園景",
+        title: "讓小型設施善用潔淨能源",
+        summary: "太陽能供電設備在園景和公共範圍支援日常環境管理。",
+        detail: "在日照及位置合適的地方，小型太陽能設備可為指定設施供電，減少接駁電源的需要。",
+        impact: "低碳轉型不只來自大型系統，也可由貼近日常管理的設施逐步累積。",
+        media: { type: "image", src: media.solarMosquitoNight, alt: "夜間屋邨園景內運作中的太陽能滅蚊燈" },
+      },
+      {
+        slug: "multi-stream-recycling",
+        pillar: "carbon",
+        place: "屋邨回收站",
+        title: "用清楚標示支援多類回收",
+        summary: "金屬、塑膠、紙張及玻璃分開收集，讓資源分類一目了然。",
+        detail: "管理團隊透過一致的分類顏色、圖示及收集安排，協助居民把不同物料投放到正確位置。",
+        impact: "清楚的設施介面有助提升回收體驗，並支援後續收集和資源處理。",
+        media: { type: "image", src: media.recyclingStation, alt: "設有金屬、塑膠、紙張及玻璃分類的屋邨回收站" },
       },
       {
         slug: "copa-smart-operations",
@@ -249,7 +305,7 @@ const content = {
         summary: "我們整合資訊、科技和專業知識，讓管理決策更清晰、更及時。",
         detail: "COPA 在單一平台連結物業和資產管理所需的系統、感應器、數據及流程，並以共同數據環境和互動儀表板支援日常工作。",
         impact: "管理團隊可更清晰掌握資產狀況，支援安全、維修、能源和服務表現的持續改善。",
-        media: { type: "image", src: media.copaCommand, alt: "COPA 指揮中心整合物業及資產資訊" },
+        media: { type: "image", src: media.copaAct, alt: "COPA 智能設施儀表板支援物業管理行動" },
       },
     ] satisfies Story[],
     progress: {
@@ -261,7 +317,7 @@ const content = {
       { value: "31", unit: "%", label: "能源消耗減少", scope: "相對 2012/13 基準，按正式報告所列選定物業範圍", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
       { value: "21.9", unit: "%", label: "範疇一及二碳排放按年下降", scope: "2024/25，涵蓋出租屋邨、管理物業、建築項目及主要辦公室", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
       { value: "16,099", unit: "公噸", label: "回收物料", scope: "2024/25 年度，包括金屬、紙張、塑膠、玻璃、木材及紡織物", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
-      { value: "近 50", unit: "部", label: "智能廚餘回收設施", scope: "設於 20 個出租屋邨及 1 個代管物業", scopeKind: "property", sourceKey: "annual", sourcePage: 141 },
+      { value: "近 50", unit: "部", label: "智能廚餘回收設施", scope: "設於 20 個出租屋邨", scopeKind: "property", sourceKey: "annual", sourcePage: 141 },
       { value: "25,100", unit: "小時", label: "社區服務", scope: "2024/25，由房協友里團隊及房協學院舊生會共同貢獻", scopeKind: "organization", sourceKey: "annual", sourcePage: 144 },
       { value: "38,660", unit: "小時", label: "員工培訓及專業發展", scope: "2024/25，適用於長期及固定任期員工", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
     ] satisfies Metric[],
@@ -293,12 +349,12 @@ const content = {
   },
   "zh-cn": {
     htmlLang: "zh-CN",
-    nav: { home: "首页", pillars: "三大支柱", stories: "屋邨行动", progress: "进展", videos: "视频", menu: "打开菜单", close: "关闭" },
+    nav: { home: "首页", pillars: "三大支柱", copa: "COPA", stories: "屋邨行动", progress: "进展", videos: "视频", menu: "打开菜单", close: "关闭" },
     brand: { copa: "物业及资产综合平台", full: "Central Office for Property and Asset" },
     ui: {
       swipe: "左右滑动查看更多", previous: "上一项", next: "下一项", source: "查看正式来源", reportPage: "PDF 第", pageSuffix: "页",
       organization: "房协整体", property: "物业管理实践", sustainabilityReport: "香港房屋协会 2024/25 可持续发展报告", annualReport: "香港房屋协会 2024/25 年度报告",
-      previousStory: "上一个故事", nextStory: "下一个故事",
+      previousStory: "上一个故事", nextStory: "下一个故事", journeyProgress: "探索进度",
     },
     hero: {
       eyebrow: "香港房屋协会可持续发展",
@@ -306,7 +362,8 @@ const content = {
       body: "我们在物业管理和社区日常中落实可持续发展，与居民共建更宜居、更低碳的未来。",
       cta: "探索我们的行动",
       secondary: "查看进展",
-      caption: "屋邨居民参与物品再生及升级再造活动",
+      caption: "跨代共融游乐空间，让不同年龄居民共享屋邨设施",
+      videoLabel: "ESG 概览视频", videoDuration: "约 2 分钟", videoStatus: "完整视频将在此位置播放",
     },
     intro: {
       title: "在物业管理日常，把 ESG 承诺变成行动",
@@ -335,10 +392,10 @@ const content = {
       title: "以 COPA 连结物业管理每一环",
       body: "我们透过物业及资产综合平台整合系统、数据与专业能力，支持更清晰、及时和持续的管理决策。",
       steps: [
-        ["连结", "在单一平台连接不同系统、传感器与物业信息。", media.copaCommand, "COPA 指挥中心以大型屏幕整合物业及资产信息"],
-        ["统一", "以标准化共同数据环境整理跨系统资料，建立一致的管理基础。", media.copaCommand, "COPA 屏幕显示物业信息及香港地图"],
-        ["洞察", "透过互动仪表板、大数据分析及 AI-ready 基础掌握物业状况。", media.copaWall, "COPA 展示空间内的数字应用和互动屏幕"],
-        ["行动", "把信息转化为日常营运能力，支持安全、维修、能源及服务持续改善。", media.copaSpace, "COPA 工作空间及以树木为意象的室内设计"],
+        ["连接", "在单一平台连接不同系统、传感器与物业信息。", media.copaConnect, "COPA 地图界面连接不同物业及资产信息"],
+        ["统一", "以标准化共同数据环境整理跨系统资料，建立一致的管理基础。", media.copaStandardise, "COPA 资产管理仪表板统一呈现设施数据"],
+        ["洞察", "透过互动仪表板、大数据分析及 AI-ready 基础掌握物业状况。", media.copaInsight, "COPA ESG 仪表板呈现能源、碳排放、可再生能源及用水信息"],
+        ["行动", "把信息转化为日常营运能力，支持安全、维修、能源及服务持续改善。", media.copaAct, "COPA 智能设施仪表板显示警报、位置及影像信息"],
       ],
       features: "平台功能包括系统及传感器整合、共同数据环境、互动仪表板、安全数据管理，以及日后扩展能力。",
     },
@@ -349,7 +406,7 @@ const content = {
       { value: "31", unit: "%", label: "能源消耗减少", scope: "相对 2012/13 基准，按正式报告所列选定物业范围", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
       { value: "21.9", unit: "%", label: "范围一及二碳排放按年下降", scope: "2024/25，涵盖出租屋邨、管理物业、建筑项目及主要办公室", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
       { value: "16,099", unit: "公吨", label: "回收物料", scope: "2024/25 年度，包括金属、纸张、塑料、玻璃、木材及纺织物", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
-      { value: "近 50", unit: "部", label: "智能厨余回收设施", scope: "设于 20 个出租屋邨及 1 个代管物业", scopeKind: "property", sourceKey: "annual", sourcePage: 141 },
+      { value: "近 50", unit: "部", label: "智能厨余回收设施", scope: "设于 20 个出租屋邨", scopeKind: "property", sourceKey: "annual", sourcePage: 141 },
       { value: "25,100", unit: "小时", label: "社区服务", scope: "2024/25，由房协友里团队及房协学院旧生会共同贡献", scopeKind: "organization", sourceKey: "annual", sourcePage: 144 },
       { value: "38,660", unit: "小时", label: "员工培训及专业发展", scope: "2024/25，适用于长期及固定任期员工", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
     ] satisfies Metric[],
@@ -377,12 +434,12 @@ const content = {
   },
   en: {
     htmlLang: "en",
-    nav: { home: "Home", pillars: "Our pillars", stories: "Estate action", progress: "Progress", videos: "Videos", menu: "Open menu", close: "Close" },
+    nav: { home: "Home", pillars: "Our pillars", copa: "COPA", stories: "Estate action", progress: "Progress", videos: "Videos", menu: "Open menu", close: "Close" },
     brand: { copa: "Central Office for Property and Asset", full: "物業及資產綜合平台" },
     ui: {
       swipe: "Swipe to explore", previous: "Previous", next: "Next", source: "View official source", reportPage: "PDF page ", pageSuffix: "",
       organization: "HKHS-wide", property: "Property management practice", sustainabilityReport: "HKHS Sustainability Report 2024/25", annualReport: "HKHS Annual Report 2024/25",
-      previousStory: "Previous story", nextStory: "Next story",
+      previousStory: "Previous story", nextStory: "Next story", journeyProgress: "Exploration progress",
     },
     hero: {
       eyebrow: "HKHS sustainability",
@@ -390,7 +447,8 @@ const content = {
       body: "We put sustainability into practice through property management and community life, building a liveable, low-carbon future with residents.",
       cta: "Explore our action",
       secondary: "View our progress",
-      caption: "Estate residents taking part in reuse and upcycling activities",
+      caption: "An inclusive play space designed for residents across generations",
+      videoLabel: "ESG overview film", videoDuration: "Around 2 minutes", videoStatus: "The full film will play here",
     },
     intro: {
       title: "Turning ESG commitments into everyday management",
@@ -419,10 +477,10 @@ const content = {
       title: "Connecting every part of property management",
       body: "Through COPA, we bring systems, data and professional capabilities together to support clearer, timely and continuous management decisions.",
       steps: [
-        ["Connect", "Bring systems, sensors and property information together on one platform.", media.copaCommand, "The COPA command centre integrates property and asset information on large displays"],
-        ["Standardise", "Organise information in a standardised common data environment for a consistent management foundation.", media.copaCommand, "COPA displays property information alongside a map of Hong Kong"],
-        ["Understand", "Use interactive dashboards, big-data analytics and an AI-ready foundation to understand asset conditions.", media.copaWall, "Digital applications and interactive displays in the COPA exhibition space"],
-        ["Act", "Turn information into operational capability for safety, maintenance, energy and service improvement.", media.copaSpace, "COPA workspace with a tree-inspired interior feature"],
+        ["Connect", "Bring systems, sensors and property information together on one platform.", media.copaConnect, "A COPA map interface connecting property and asset information"],
+        ["Standardise", "Organise information in a standardised common data environment for a consistent management foundation.", media.copaStandardise, "A COPA asset management dashboard presenting facility data consistently"],
+        ["Understand", "Use interactive dashboards, big-data analytics and an AI-ready foundation to understand asset conditions.", media.copaInsight, "The COPA ESG dashboard presenting energy, emissions, renewable energy and water information"],
+        ["Act", "Turn information into operational capability for safety, maintenance, energy and service improvement.", media.copaAct, "A COPA smart facilities dashboard showing alerts, locations and visual information"],
       ],
       features: "Platform capabilities include system and sensor integration, a common data environment, interactive dashboards, secure data management and future expansion.",
     },
@@ -433,7 +491,7 @@ const content = {
       { value: "31", unit: "%", label: "reduction in energy consumption", scope: "Against the 2012/13 baseline, within the selected property scope stated in the report", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
       { value: "21.9", unit: "%", label: "year-on-year fall in Scope 1 and 2 emissions", scope: "2024/25, covering rental estates, managed properties, construction projects and major offices", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
       { value: "16,099", unit: "tonnes", label: "materials recycled", scope: "2024/25, including metals, paper, plastics, glass, timber and textiles", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
-      { value: "Nearly 50", unit: "units", label: "smart food waste recycling facilities", scope: "Across 20 rental estates and one managed property", scopeKind: "property", sourceKey: "annual", sourcePage: 141 },
+      { value: "Nearly 50", unit: "units", label: "smart food waste recycling facilities", scope: "Across 20 rental estates", scopeKind: "property", sourceKey: "annual", sourcePage: 141 },
       { value: "25,100", unit: "hours", label: "community service", scope: "Contributed in 2024/25 by the CES Team and HKHS Academy Alumni Club", scopeKind: "organization", sourceKey: "annual", sourcePage: 144 },
       { value: "38,660", unit: "hours", label: "staff training and professional development", scope: "2024/25, for permanent and contract staff", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
     ] satisfies Metric[],
@@ -463,14 +521,14 @@ const content = {
 
 const englishStories: Story[] = [
   {
-    slug: "kwun-lung-lau-upcycling",
+    slug: "smart-recycling-hub",
     pillar: "carbon",
-    place: "Kwun Lung Lau",
-    title: "Giving old materials a second life",
-    summary: "Residents turn recovered fabric into useful objects and bring circular thinking into community life.",
-    detail: "The workshop uses old clothes and recovered materials for hands-on making. With guidance, residents create practical items that can be used again.",
-    impact: "Waste reduction becomes a shared experience that also supports neighbourly connection and skill sharing.",
-    media: { type: "image", src: media.reuseHero, alt: "Kwun Lung Lau residents taking part in a reuse activity" },
+    place: "Estate recycling point",
+    title: "Making recycling clearer and easier",
+    summary: "Grouped facilities help residents find the right recycling stream along everyday routes.",
+    detail: "Property management teams configure facilities for each estate and use clear signs to distinguish paper, containers and other recyclable materials.",
+    impact: "Convenient, legible collection points help reduce incorrect disposal and make resource circulation part of estate life.",
+    media: { type: "image", src: media.smartRecycling, alt: "Smart recycling facilities grouped together on an estate" },
   },
   {
     slug: "smart-food-waste",
@@ -479,20 +537,20 @@ const englishStories: Story[] = [
     title: "A smarter route for food waste",
     summary: "Smart facilities make separation easier and help estates keep improving recycling services.",
     detail: "Residents can use smart food waste recycling facilities in their estates. The system supports daily management and encourages lasting separation habits.",
-    impact: "Nearly 50 smart food waste recycling bins serve 20 rental estates and one managed property.",
-    media: { type: "video", src: media.foodWasteLtt, alt: "Residents demonstrating a smart food waste recycling facility" },
+    impact: "Nearly 50 smart food waste recycling bins serve 20 rental estates.",
+    media: { type: "image", src: media.foodWaste, alt: "A smart food waste recycling bin in a shared estate area" },
     sourceKey: "annual",
     sourcePage: 141,
   },
   {
-    slug: "community-garden",
-    pillar: "homes",
-    place: "Estate community",
-    title: "Growing connections in a shared garden",
-    summary: "Weekend planting lets residents share green space and learn through conversation.",
-    detail: "The community garden creates a place to grow, learn and meet. Residents exchange experience while building a shared commitment to their environment.",
-    impact: "The garden connects greening, wellbeing and community relationships in one everyday setting.",
-    media: { type: "video", src: media.garden, alt: "Residents planting together in a community garden" },
+    slug: "clothes-recycling",
+    pillar: "carbon",
+    place: "Estate recycling point",
+    title: "A collection route for used clothing",
+    summary: "Dedicated bins give unwanted textiles a clear and convenient collection point.",
+    detail: "Clothes recycling facilities in suitable shared areas, supported by signs and daily management, help separate reusable textiles from general waste.",
+    impact: "The arrangement extends material life and reduces reusable textiles sent to landfill.",
+    media: { type: "image", src: media.clothesRecycling, alt: "Two clothes recycling bins in a shared estate area" },
   },
   {
     slug: "renewable-energy",
@@ -502,7 +560,7 @@ const englishStories: Story[] = [
     summary: "Solar and wind installations turn shared spaces into practical renewable energy sites.",
     detail: "HKHS installs solar photovoltaic systems at suitable estates and uses wind generation at Kwun Lung Lau, integrating renewables into operations.",
     impact: "By 2024/25, solar photovoltaic systems were installed at 10 rental estates.",
-    media: { type: "graphic", variant: "solar", alt: "Conceptual view of renewable energy on an estate" },
+    media: { type: "image", src: media.solarMosquito, alt: "A solar-powered mosquito-control light in an estate landscape" },
     sourceKey: "annual",
     sourcePage: 141,
   },
@@ -514,7 +572,47 @@ const englishStories: Story[] = [
     summary: "Inclusive facilities and activities respond to older people, families and diverse residents.",
     detail: "HKHS promotes intergenerational connection through spaces, facilities and activities that encourage residents to meet and support one another.",
     impact: "Design addresses access and use while strengthening respect, participation and belonging.",
-    media: { type: "graphic", variant: "community", alt: "Conceptual view of an intergenerational community" },
+    media: { type: "image", src: media.inclusivePlay, alt: "A colourful inclusive play space on an estate" },
+  },
+  {
+    slug: "community-art",
+    pillar: "homes",
+    place: "Estate shared space",
+    title: "Bringing community stories into shared space",
+    summary: "Resident creativity and local character can enrich everyday estate environments.",
+    detail: "Property management supports functional shared spaces while suitable community art and displays bring local memories into residents' daily routes.",
+    impact: "Shared areas can serve practical needs and express a stronger sense of place and belonging.",
+    media: { type: "image", src: media.communityArt, alt: "Community artwork displayed in an estate shared space" },
+  },
+  {
+    slug: "ev-charging",
+    pillar: "carbon",
+    place: "Estate car park",
+    title: "Preparing charging facilities for lower-carbon travel",
+    summary: "Charging equipment at suitable parking spaces supports the longer-term transition to electric mobility.",
+    detail: "Property management teams plan charging around site conditions and user needs, while including safety, maintenance and operation in daily management.",
+    impact: "The facilities strengthen lower-carbon transport readiness and build practical asset management experience.",
+    media: { type: "image", src: media.evCharging, alt: "Electric vehicle charging equipment beside an estate parking space" },
+  },
+  {
+    slug: "solar-estate-details",
+    pillar: "carbon",
+    place: "Estate landscape",
+    title: "Using clean energy for small estate facilities",
+    summary: "Solar-powered equipment supports routine environmental management in landscaped and shared areas.",
+    detail: "Where sunlight and location are suitable, compact solar equipment can power selected facilities without a conventional electricity connection.",
+    impact: "Low-carbon transition grows through both large systems and practical details embedded in daily management.",
+    media: { type: "image", src: media.solarMosquitoNight, alt: "A solar-powered mosquito-control light operating in an estate landscape at night" },
+  },
+  {
+    slug: "multi-stream-recycling",
+    pillar: "carbon",
+    place: "Estate recycling station",
+    title: "Clear signs for multiple recycling streams",
+    summary: "Separate collection for metal, plastic, paper and glass makes sorting easier to understand.",
+    detail: "Consistent colours, icons and collection arrangements help residents place different materials in the correct stream.",
+    impact: "A clear facility interface improves the recycling experience and supports downstream collection and processing.",
+    media: { type: "image", src: media.recyclingStation, alt: "An estate recycling station for metal, plastic, paper and glass" },
   },
   {
     slug: "copa-smart-operations",
@@ -524,20 +622,20 @@ const englishStories: Story[] = [
     summary: "We bring information, technology and expertise together for clearer, timely decisions.",
     detail: "COPA connects the systems, sensors, data and workflows required for property and asset management on one platform, supported by a common data environment and interactive dashboards.",
     impact: "Teams gain a clearer view of asset conditions and support continuous improvement in safety, maintenance, energy and service performance.",
-    media: { type: "image", src: media.copaCommand, alt: "The COPA command centre integrating property and asset information" },
+    media: { type: "image", src: media.copaAct, alt: "A COPA smart facilities dashboard supporting property management action" },
   },
 ];
 
 const simplifiedStories: Story[] = [
   {
-    slug: "kwun-lung-lau-upcycling",
+    slug: "smart-recycling-hub",
     pillar: "carbon",
-    place: "观龙楼",
-    title: "让旧物展开第二段生命",
-    summary: "居民把回收布料转化成实用物品，让循环经济走进社区日常。",
-    detail: "升级再造坊以旧衣和回收物料为创作材料，配合导师示范，让居民亲手完成可再次使用的生活物品。",
-    impact: "活动把减废知识转化为可参与的生活体验，同时促进邻里交流和技能分享。",
-    media: { type: "image", src: media.reuseHero, alt: "观龙楼居民参与物品再生活动" },
+    place: "屋邨回收点",
+    title: "让分类回收更清楚、更方便",
+    summary: "不同回收设施集中设置，让居民在日常动线中更容易找到合适分类。",
+    detail: "物业管理团队按屋邨环境配置回收设施，以清楚标示协助居民分辨纸张、容器及其他可回收物。",
+    impact: "把分类设施带到便利位置，有助减少错误弃置，并让资源循环成为屋邨日常。",
+    media: { type: "image", src: media.smartRecycling, alt: "屋邨内并列设置的智能分类回收设施" },
   },
   {
     slug: "smart-food-waste",
@@ -546,20 +644,20 @@ const simplifiedStories: Story[] = [
     title: "智能回收，让厨余有更好去向",
     summary: "智能厨余回收设施让分类更方便，也支持屋邨持续优化回收服务。",
     detail: "居民可在屋邨使用智能厨余回收设施。系统配合日常管理，协助推广源头分类和建立持续参与的习惯。",
-    impact: "近 50 部智能厨余回收机已设于 20 个出租屋邨及 1 个管理物业。",
-    media: { type: "video", src: media.foodWasteLtt, alt: "居民示范使用智能厨余回收设施" },
+    impact: "近 50 部智能厨余回收机已设于 20 个出租屋邨。",
+    media: { type: "image", src: media.foodWaste, alt: "设于屋邨公共位置的智能厨余回收机" },
     sourceKey: "annual",
     sourcePage: 141,
   },
   {
-    slug: "community-garden",
-    pillar: "homes",
-    place: "屋邨社区",
-    title: "在园圃中连结人与社区",
-    summary: "周末种植活动让居民共享绿色空间，也让环保知识在交流中生根。",
-    detail: "社区园圃提供共同种植、学习和相遇的空间。居民在照料植物的过程中交流经验，建立对屋邨环境的共同投入。",
-    impact: "园圃把绿化、身心健康和社区连系放在同一个可持续生活场景中。",
-    media: { type: "video", src: media.garden, alt: "居民参与周末社区园圃种植" },
+    slug: "clothes-recycling",
+    pillar: "carbon",
+    place: "屋邨回收点",
+    title: "为旧衣物预留回收出口",
+    summary: "衣物回收箱为不再使用的纺织品提供清楚、便利的收集位置。",
+    detail: "在合适公共位置设置衣物回收设施，配合标示和日常管理，让居民更容易把旧衣从一般废物中分流。",
+    impact: "延长物资使用周期，同时减少可再用纺织品进入堆填区。",
+    media: { type: "image", src: media.clothesRecycling, alt: "屋邨公共位置的两个衣物回收箱" },
   },
   {
     slug: "renewable-energy",
@@ -569,7 +667,7 @@ const simplifiedStories: Story[] = [
     summary: "太阳能和风力设备把公共空间转化为可再生能源的实践场景。",
     detail: "房协在合适屋邨设置太阳能光伏系统，并在观龙楼应用风力发电，将可再生能源融入物业营运。",
     impact: "截至 2024/25 年度，10 个出租屋邨设有太阳能光伏系统。",
-    media: { type: "graphic", variant: "solar", alt: "屋邨可再生能源概念图" },
+    media: { type: "image", src: media.solarMosquito, alt: "设于屋邨园景范围的太阳能灭蚊灯" },
     sourceKey: "annual",
     sourcePage: 141,
   },
@@ -581,7 +679,47 @@ const simplifiedStories: Story[] = [
     summary: "共融设施和社区活动回应长者、家庭及不同居民的生活需要。",
     detail: "房协从空间、设施和活动三方面推动跨代交流，让居民在日常生活中建立互助和连系。",
     impact: "设计不只处理通行和使用需要，也重视尊重、参与和社区归属感。",
-    media: { type: "graphic", variant: "community", alt: "跨代共融社区概念图" },
+    media: { type: "image", src: media.inclusivePlay, alt: "屋邨内色彩清晰的长幼共融游乐空间" },
+  },
+  {
+    slug: "community-art",
+    pillar: "homes",
+    place: "屋邨公共空间",
+    title: "把社区故事带进日常空间",
+    summary: "以街坊创作和地方特色丰富公共空间，让屋邨环境更具归属感。",
+    detail: "物业管理不只照顾设施运作，也透过合适的社区艺术和展示，把地方记忆融入居民每天经过的空间。",
+    impact: "公共空间兼具使用功能和社区特色，支持居民建立对居住环境的认同。",
+    media: { type: "image", src: media.communityArt, alt: "屋邨公共空间展示以渔光竹映为题的街坊创作" },
+  },
+  {
+    slug: "ev-charging",
+    pillar: "carbon",
+    place: "屋邨停车场",
+    title: "为低碳出行准备充电设施",
+    summary: "在合适停车位置配置充电设备，配合交通电动化的长远需要。",
+    detail: "物业管理团队按场地条件和使用需要规划充电设施，并把设备安全、维护和日常运作纳入管理。",
+    impact: "逐步完善屋邨低碳出行配套，也为未来资产管理建立实务经验。",
+    media: { type: "image", src: media.evCharging, alt: "屋邨停车位置旁的电动车充电设备" },
+  },
+  {
+    slug: "solar-estate-details",
+    pillar: "carbon",
+    place: "屋邨园景",
+    title: "让小型设施善用清洁能源",
+    summary: "太阳能供电设备在园景和公共范围支持日常环境管理。",
+    detail: "在日照及位置合适的地方，小型太阳能设备可为指定设施供电，减少接驳电源的需要。",
+    impact: "低碳转型不只来自大型系统，也可由贴近日常管理的设施逐步累积。",
+    media: { type: "image", src: media.solarMosquitoNight, alt: "夜间屋邨园景内运作中的太阳能灭蚊灯" },
+  },
+  {
+    slug: "multi-stream-recycling",
+    pillar: "carbon",
+    place: "屋邨回收站",
+    title: "用清楚标示支持多类回收",
+    summary: "金属、塑料、纸张及玻璃分开收集，让资源分类一目了然。",
+    detail: "管理团队透过一致的分类颜色、图示及收集安排，协助居民把不同物料投放到正确位置。",
+    impact: "清楚的设施界面有助提升回收体验，并支持后续收集和资源处理。",
+    media: { type: "image", src: media.recyclingStation, alt: "设有金属、塑料、纸张及玻璃分类的屋邨回收站" },
   },
   {
     slug: "copa-smart-operations",
@@ -591,7 +729,7 @@ const simplifiedStories: Story[] = [
     summary: "我们整合信息、科技和专业知识，让管理决策更清晰、更及时。",
     detail: "COPA 在单一平台连接物业和资产管理所需的系统、传感器、数据及流程，并以共同数据环境和互动仪表板支持日常工作。",
     impact: "管理团队可更清晰掌握资产状况，支持安全、维修、能源和服务表现的持续改善。",
-    media: { type: "image", src: media.copaCommand, alt: "COPA 指挥中心整合物业及资产信息" },
+    media: { type: "image", src: media.copaAct, alt: "COPA 智能设施仪表板支持物业管理行动" },
   },
 ];
 
@@ -681,6 +819,30 @@ function useRailIndex(count: number) {
   return { railRef, activeIndex, selectIndex };
 }
 
+const sectionIds = ["home", "pillars", "copa", "stories", "progress", "videos"] as const;
+
+function useSectionProgress() {
+  const [activeSection, setActiveSection] = useState<(typeof sectionIds)[number]>("home");
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const elements = sectionIds.map((id) => document.getElementById(id)).filter((element): element is HTMLElement => Boolean(element));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveSection(visible.target.id as (typeof sectionIds)[number]);
+      },
+      { rootMargin: "-32% 0px -56% 0px", threshold: [0, 0.15, 0.4] },
+    );
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  return activeSection;
+}
+
 export function SiteExperience({ locale }: { locale: Locale }) {
   const reduceMotion = useReducedMotion();
   const c = content[locale];
@@ -690,6 +852,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const [activeVideo, setActiveVideo] = useState(0);
   const [activeCopaStep, setActiveCopaStep] = useState(0);
+  const activeSection = useSectionProgress();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogInnerRef = useRef<HTMLDivElement>(null);
   const pillarRailRef = useRef<HTMLDivElement>(null);
@@ -710,6 +873,14 @@ export function SiteExperience({ locale }: { locale: Locale }) {
   const selectedPillar = c.pillars.find((pillar) => pillar.key === activePillar) ?? c.pillars[0];
   const activePillarIndex = c.pillars.findIndex((pillar) => pillar.key === activePillar);
   const activeCopa = c.copa.steps[activeCopaStep];
+  const sectionLinks = [
+    ["home", c.nav.home],
+    ["pillars", c.nav.pillars],
+    ["copa", c.nav.copa],
+    ["stories", c.nav.stories],
+    ["progress", c.nav.progress],
+    ["videos", c.nav.videos],
+  ] as const;
   const dialogOpen = Boolean(selectedStory);
 
   useEffect(() => {
@@ -790,6 +961,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
 
         <nav className="desktop-nav" aria-label="Primary navigation">
           <a href="#pillars">{c.nav.pillars}</a>
+          <a href="#copa">{c.nav.copa}</a>
           <a href="#stories">{c.nav.stories}</a>
           <a href="#progress">{c.nav.progress}</a>
           <a href="#videos">{c.nav.videos}</a>
@@ -824,6 +996,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <nav aria-label="Mobile navigation">
               {[
                 ["#pillars", c.nav.pillars],
+                ["#copa", c.nav.copa],
                 ["#stories", c.nav.stories],
                 ["#progress", c.nav.progress],
                 ["#videos", c.nav.videos],
@@ -847,7 +1020,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <h1>{c.hero.title}</h1>
             <p className="hero-body">{c.hero.body}</p>
             <div className="hero-actions">
-              <a className="primary-button" href="#stories">{c.hero.cta}<ArrowRight size={18} aria-hidden="true" /></a>
+              <a className="primary-button" href="#pillars">{c.hero.cta}<ArrowRight size={18} aria-hidden="true" /></a>
               <a className="text-link" href="#progress">{c.hero.secondary}</a>
             </div>
           </motion.div>
@@ -858,8 +1031,15 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="hero-image-wrap">
-              <img src={media.reuseHero} alt={c.hero.caption} width="1800" height="1352" fetchPriority="high" />
+            <div className="hero-image-wrap hero-video-placeholder" role="img" aria-label={`${c.hero.videoLabel}, ${c.hero.videoDuration}. ${c.hero.videoStatus}`}>
+              <img src={media.inclusivePlay} alt="" width="1600" height="900" fetchPriority="high" />
+              <div className="hero-video-overlay">
+                <div className="hero-video-heading">
+                  <FilmSlate size={28} weight="regular" aria-hidden="true" />
+                  <span><strong>{c.hero.videoLabel}</strong><small>{c.hero.videoDuration}</small></span>
+                </div>
+                <p>{c.hero.videoStatus}</p>
+              </div>
             </div>
             <figcaption>{c.hero.caption}</figcaption>
           </motion.figure>
@@ -1076,7 +1256,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <div className="video-player">
               {/* Captions will be connected when the approved transcripts are provided. */}
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <video key={c.videos.items[activeVideo][2]} controls playsInline preload="metadata" aria-label={c.videos.items[activeVideo][0]}>
+              <video key={c.videos.items[activeVideo][2]} controls playsInline preload="metadata" poster={media.smartRecycling} aria-label={c.videos.items[activeVideo][0]}>
                 <source src={c.videos.items[activeVideo][2]} type="video/mp4" />
               </video>
               <p>{c.videos.note}</p>
@@ -1101,6 +1281,20 @@ export function SiteExperience({ locale }: { locale: Locale }) {
         </section>
       </main>
 
+      <aside className="page-progress" aria-label={c.ui.journeyProgress}>
+        <span className="page-progress-label">{sectionLinks.find(([id]) => id === activeSection)?.[1]}</span>
+        <div className="page-progress-track">
+          <span className="page-progress-fill" aria-hidden="true" />
+          <nav aria-label={c.ui.journeyProgress}>
+            {sectionLinks.map(([id, label]) => (
+              <a key={id} href={`#${id}`} className={activeSection === id ? "is-active" : ""} aria-label={label} aria-current={activeSection === id ? "location" : undefined}>
+                <span aria-hidden="true" />
+              </a>
+            ))}
+          </nav>
+        </div>
+      </aside>
+
       <footer className="site-footer">
         <div className="footer-brand">
           <img src="/brand/hkhs-vertical.png" alt="Hong Kong Housing Society 香港房屋協會" width="1658" height="1260" data-brand-status="provisional" />
@@ -1119,8 +1313,8 @@ export function SiteExperience({ locale }: { locale: Locale }) {
       <nav className="bottom-nav" aria-label="Mobile primary navigation">
         <a href="#home"><HouseLine size={21} aria-hidden="true" /><span>{c.nav.home}</span></a>
         <a href="#pillars"><Leaf size={21} aria-hidden="true" /><span>{c.nav.pillars}</span></a>
+        <a href="#copa"><Database size={21} aria-hidden="true" /><span>{c.nav.copa}</span></a>
         <a href="#stories"><Buildings size={21} aria-hidden="true" /><span>{c.nav.stories}</span></a>
-        <a href="#videos"><Play size={21} aria-hidden="true" /><span>{c.nav.videos}</span></a>
       </nav>
 
       <dialog
