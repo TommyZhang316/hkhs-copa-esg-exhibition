@@ -77,26 +77,29 @@ const sourceDocuments = {
   annual: "https://www.hkhs.com/home/pdf/ar2025/files/downloads/HKHS_Annual_Report_24-25.pdf",
 } as const;
 
+const siteBasePath = process.env.NEXT_PUBLIC_SITE_BASE_PATH ?? "";
+const publicPath = (path: string) => `${siteBasePath}${path}`;
+
 const media = {
-  reuseHero: "/media/photos/kll-reuse-hero.jpg",
-  reuseDetail: "/media/photos/kll-reuse-detail-1.jpg",
-  reusePortrait: "/media/photos/kll-reuse-detail-2.jpg",
-  garden: "/media/videos/community-garden.mp4",
-  foodWasteKll: "/media/videos/food-waste-kll.mp4",
-  foodWasteLtt: "/media/videos/food-waste-ltt.mp4",
-  copaConnect: "/media/feedback2/copa-connect.webp",
-  copaStandardise: "/media/feedback2/copa-standardise.webp",
-  copaInsight: "/media/feedback2/copa-insight.webp",
-  copaAct: "/media/feedback2/copa-act.webp",
-  foodWaste: "/media/feedback2/estate-food-waste.webp",
-  clothesRecycling: "/media/feedback2/estate-clothes-recycling.webp",
-  smartRecycling: "/media/feedback2/estate-smart-recycling.webp",
-  recyclingStation: "/media/feedback2/estate-recycling-station.webp",
-  solarMosquito: "/media/feedback2/estate-solar-mosquito.webp",
-  solarMosquitoNight: "/media/feedback2/estate-solar-mosquito-night.webp",
-  communityArt: "/media/feedback2/estate-community-art.webp",
-  evCharging: "/media/feedback2/estate-ev-charging.webp",
-  inclusivePlay: "/media/feedback2/estate-inclusive-play.webp",
+  reuseHero: publicPath("/media/photos/kll-reuse-hero.jpg"),
+  reuseDetail: publicPath("/media/photos/kll-reuse-detail-1.jpg"),
+  reusePortrait: publicPath("/media/photos/kll-reuse-detail-2.jpg"),
+  garden: publicPath("/media/videos/community-garden.mp4"),
+  foodWasteKll: publicPath("/media/videos/food-waste-kll.mp4"),
+  foodWasteLtt: publicPath("/media/videos/food-waste-ltt.mp4"),
+  copaConnect: publicPath("/media/feedback2/copa-connect.webp"),
+  copaStandardise: publicPath("/media/feedback2/copa-standardise.webp"),
+  copaInsight: publicPath("/media/feedback2/copa-insight.webp"),
+  copaAct: publicPath("/media/feedback2/copa-act.webp"),
+  foodWaste: publicPath("/media/feedback2/estate-food-waste.webp"),
+  clothesRecycling: publicPath("/media/feedback2/estate-clothes-recycling.webp"),
+  smartRecycling: publicPath("/media/feedback2/estate-smart-recycling.webp"),
+  recyclingStation: publicPath("/media/feedback2/estate-recycling-station.webp"),
+  solarMosquito: publicPath("/media/feedback2/estate-solar-mosquito.webp"),
+  solarMosquitoNight: publicPath("/media/feedback2/estate-solar-mosquito-night.webp"),
+  communityArt: publicPath("/media/feedback2/estate-community-art.webp"),
+  evCharging: publicPath("/media/feedback2/estate-ev-charging.webp"),
+  inclusivePlay: publicPath("/media/feedback2/estate-inclusive-play.webp"),
 };
 
 const content = {
@@ -206,34 +209,14 @@ const content = {
       {
         slug: "smart-recycling-hub",
         pillar: "carbon",
-        place: "屋邨回收點",
-        title: "讓分類回收更清楚、更方便",
-        summary: "不同回收設施集中設置，讓居民在日常動線中更容易找到合適分類。",
-        detail: "物業管理團隊按屋邨環境配置回收設施，以清楚標示協助居民分辨紙張、容器及其他可回收物。",
-        impact: "把分類設施帶到便利位置，有助減少錯誤棄置，並讓資源循環成為屋邨日常。",
+        place: "20 個出租屋邨",
+        title: "智能回收，讓分類走進日常",
+        summary: "廚餘、舊衣和多類可回收物各有清楚去向，讓屋邨分類更便利。",
+        detail: "物業管理團隊按屋邨環境整合智能廚餘機、衣物回收箱，以及金屬、塑膠、紙張和玻璃分類設施，並以清楚標示和日常管理支援居民參與。",
+        impact: "近 50 部智能廚餘回收機已設於 20 個出租屋邨，並與其他分類設施共同支援資源循環。",
         media: { type: "image", src: media.smartRecycling, alt: "屋邨內並列設置的智能分類回收設施" },
-      },
-      {
-        slug: "smart-food-waste",
-        pillar: "carbon",
-        place: "房協屋邨",
-        title: "智能回收，讓廚餘有更好去向",
-        summary: "智能廚餘回收設施讓分類更方便，也支援屋邨持續優化回收服務。",
-        detail: "居民可在屋邨使用智能廚餘回收設施。系統配合日常管理，協助推廣源頭分類和建立持續參與的習慣。",
-        impact: "近 50 部智能廚餘回收機已設於 20 個出租屋邨。",
-        media: { type: "image", src: media.foodWaste, alt: "設於屋邨公共位置的智能廚餘回收機" },
         sourceKey: "annual",
         sourcePage: 141,
-      },
-      {
-        slug: "clothes-recycling",
-        pillar: "carbon",
-        place: "屋邨回收點",
-        title: "為舊衣物預留回收出口",
-        summary: "衣物回收箱為不再使用的紡織品提供清楚、便利的收集位置。",
-        detail: "在合適公共位置設置衣物回收設施，配合標示和日常管理，讓居民更容易把舊衣從一般廢物中分流。",
-        impact: "延長物資使用週期，同時減少可再用紡織品進入堆填區。",
-        media: { type: "image", src: media.clothesRecycling, alt: "屋邨公共位置的兩個衣物回收箱" },
       },
       {
         slug: "renewable-energy",
@@ -286,16 +269,6 @@ const content = {
         detail: "在日照及位置合適的地方，小型太陽能設備可為指定設施供電，減少接駁電源的需要。",
         impact: "低碳轉型不只來自大型系統，也可由貼近日常管理的設施逐步累積。",
         media: { type: "image", src: media.solarMosquitoNight, alt: "夜間屋邨園景內運作中的太陽能滅蚊燈" },
-      },
-      {
-        slug: "multi-stream-recycling",
-        pillar: "carbon",
-        place: "屋邨回收站",
-        title: "用清楚標示支援多類回收",
-        summary: "金屬、塑膠、紙張及玻璃分開收集，讓資源分類一目了然。",
-        detail: "管理團隊透過一致的分類顏色、圖示及收集安排，協助居民把不同物料投放到正確位置。",
-        impact: "清楚的設施介面有助提升回收體驗，並支援後續收集和資源處理。",
-        media: { type: "image", src: media.recyclingStation, alt: "設有金屬、塑膠、紙張及玻璃分類的屋邨回收站" },
       },
       {
         slug: "copa-smart-operations",
@@ -523,34 +496,14 @@ const englishStories: Story[] = [
   {
     slug: "smart-recycling-hub",
     pillar: "carbon",
-    place: "Estate recycling point",
-    title: "Making recycling clearer and easier",
-    summary: "Grouped facilities help residents find the right recycling stream along everyday routes.",
-    detail: "Property management teams configure facilities for each estate and use clear signs to distinguish paper, containers and other recyclable materials.",
-    impact: "Convenient, legible collection points help reduce incorrect disposal and make resource circulation part of estate life.",
+    place: "20 rental estates",
+    title: "Smart recycling for everyday sorting",
+    summary: "Food waste, used clothing and common recyclables each have a clearer route across estate life.",
+    detail: "Property management teams bring together smart food waste bins, clothes collection and facilities for metal, plastic, paper and glass, supported by clear signs and daily management.",
+    impact: "Nearly 50 smart food waste recycling bins serve 20 rental estates alongside other recycling facilities.",
     media: { type: "image", src: media.smartRecycling, alt: "Smart recycling facilities grouped together on an estate" },
-  },
-  {
-    slug: "smart-food-waste",
-    pillar: "carbon",
-    place: "HKHS estates",
-    title: "A smarter route for food waste",
-    summary: "Smart facilities make separation easier and help estates keep improving recycling services.",
-    detail: "Residents can use smart food waste recycling facilities in their estates. The system supports daily management and encourages lasting separation habits.",
-    impact: "Nearly 50 smart food waste recycling bins serve 20 rental estates.",
-    media: { type: "image", src: media.foodWaste, alt: "A smart food waste recycling bin in a shared estate area" },
     sourceKey: "annual",
     sourcePage: 141,
-  },
-  {
-    slug: "clothes-recycling",
-    pillar: "carbon",
-    place: "Estate recycling point",
-    title: "A collection route for used clothing",
-    summary: "Dedicated bins give unwanted textiles a clear and convenient collection point.",
-    detail: "Clothes recycling facilities in suitable shared areas, supported by signs and daily management, help separate reusable textiles from general waste.",
-    impact: "The arrangement extends material life and reduces reusable textiles sent to landfill.",
-    media: { type: "image", src: media.clothesRecycling, alt: "Two clothes recycling bins in a shared estate area" },
   },
   {
     slug: "renewable-energy",
@@ -605,16 +558,6 @@ const englishStories: Story[] = [
     media: { type: "image", src: media.solarMosquitoNight, alt: "A solar-powered mosquito-control light operating in an estate landscape at night" },
   },
   {
-    slug: "multi-stream-recycling",
-    pillar: "carbon",
-    place: "Estate recycling station",
-    title: "Clear signs for multiple recycling streams",
-    summary: "Separate collection for metal, plastic, paper and glass makes sorting easier to understand.",
-    detail: "Consistent colours, icons and collection arrangements help residents place different materials in the correct stream.",
-    impact: "A clear facility interface improves the recycling experience and supports downstream collection and processing.",
-    media: { type: "image", src: media.recyclingStation, alt: "An estate recycling station for metal, plastic, paper and glass" },
-  },
-  {
     slug: "copa-smart-operations",
     pillar: "future",
     place: "COPA",
@@ -630,34 +573,14 @@ const simplifiedStories: Story[] = [
   {
     slug: "smart-recycling-hub",
     pillar: "carbon",
-    place: "屋邨回收点",
-    title: "让分类回收更清楚、更方便",
-    summary: "不同回收设施集中设置，让居民在日常动线中更容易找到合适分类。",
-    detail: "物业管理团队按屋邨环境配置回收设施，以清楚标示协助居民分辨纸张、容器及其他可回收物。",
-    impact: "把分类设施带到便利位置，有助减少错误弃置，并让资源循环成为屋邨日常。",
+    place: "20 个出租屋邨",
+    title: "智能回收，让分类走进日常",
+    summary: "厨余、旧衣和多类可回收物各有清楚去向，让屋邨分类更便利。",
+    detail: "物业管理团队按屋邨环境整合智能厨余机、衣物回收箱，以及金属、塑料、纸张和玻璃分类设施，并以清楚标示和日常管理支持居民参与。",
+    impact: "近 50 部智能厨余回收机已设于 20 个出租屋邨，并与其他分类设施共同支持资源循环。",
     media: { type: "image", src: media.smartRecycling, alt: "屋邨内并列设置的智能分类回收设施" },
-  },
-  {
-    slug: "smart-food-waste",
-    pillar: "carbon",
-    place: "房协屋邨",
-    title: "智能回收，让厨余有更好去向",
-    summary: "智能厨余回收设施让分类更方便，也支持屋邨持续优化回收服务。",
-    detail: "居民可在屋邨使用智能厨余回收设施。系统配合日常管理，协助推广源头分类和建立持续参与的习惯。",
-    impact: "近 50 部智能厨余回收机已设于 20 个出租屋邨。",
-    media: { type: "image", src: media.foodWaste, alt: "设于屋邨公共位置的智能厨余回收机" },
     sourceKey: "annual",
     sourcePage: 141,
-  },
-  {
-    slug: "clothes-recycling",
-    pillar: "carbon",
-    place: "屋邨回收点",
-    title: "为旧衣物预留回收出口",
-    summary: "衣物回收箱为不再使用的纺织品提供清楚、便利的收集位置。",
-    detail: "在合适公共位置设置衣物回收设施，配合标示和日常管理，让居民更容易把旧衣从一般废物中分流。",
-    impact: "延长物资使用周期，同时减少可再用纺织品进入堆填区。",
-    media: { type: "image", src: media.clothesRecycling, alt: "屋邨公共位置的两个衣物回收箱" },
   },
   {
     slug: "renewable-energy",
@@ -712,16 +635,6 @@ const simplifiedStories: Story[] = [
     media: { type: "image", src: media.solarMosquitoNight, alt: "夜间屋邨园景内运作中的太阳能灭蚊灯" },
   },
   {
-    slug: "multi-stream-recycling",
-    pillar: "carbon",
-    place: "屋邨回收站",
-    title: "用清楚标示支持多类回收",
-    summary: "金属、塑料、纸张及玻璃分开收集，让资源分类一目了然。",
-    detail: "管理团队透过一致的分类颜色、图示及收集安排，协助居民把不同物料投放到正确位置。",
-    impact: "清楚的设施界面有助提升回收体验，并支持后续收集和资源处理。",
-    media: { type: "image", src: media.recyclingStation, alt: "设有金属、塑料、纸张及玻璃分类的屋邨回收站" },
-  },
-  {
     slug: "copa-smart-operations",
     pillar: "future",
     place: "COPA",
@@ -737,7 +650,7 @@ function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <span className={compact ? "brand-mark brand-mark-compact" : "brand-mark"} data-brand-status="provisional">
       <img
-        src="/brand/hkhs-horizontal.png"
+        src={publicPath("/brand/hkhs-horizontal.png")}
         alt="Hong Kong Housing Society 香港房屋協會"
         width="2212"
         height="729"
@@ -955,7 +868,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
       <a className="skip-link" href="#main-content">Skip to content</a>
 
       <header className="topbar">
-        <a href={locale === "zh-hk" ? "/" : `/${locale}`} className="brand-link" aria-label={c.nav.home}>
+        <a href={publicPath(locale === "zh-hk" ? "/" : `/${locale}`)} className="brand-link" aria-label={c.nav.home}>
           <BrandMark compact />
         </a>
 
@@ -970,7 +883,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
         <div className="header-actions">
           <div className="language-switcher" aria-label="Language">
             {languageLinks.map(([key, label]) => (
-              <a key={key} href={key === "zh-hk" ? "/zh-hk" : `/${key}`} aria-current={locale === key ? "page" : undefined}>
+              <a key={key} href={publicPath(key === "zh-hk" ? "/zh-hk" : `/${key}`)} aria-current={locale === key ? "page" : undefined}>
                 {label}
               </a>
             ))}
@@ -1297,7 +1210,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
 
       <footer className="site-footer">
         <div className="footer-brand">
-          <img src="/brand/hkhs-vertical.png" alt="Hong Kong Housing Society 香港房屋協會" width="1658" height="1260" data-brand-status="provisional" />
+          <img src={publicPath("/brand/hkhs-vertical.png")} alt="Hong Kong Housing Society 香港房屋協會" width="1658" height="1260" data-brand-status="provisional" />
         </div>
         <div className="footer-statement">
           <p>{c.footer.statement}</p>
@@ -1311,10 +1224,11 @@ export function SiteExperience({ locale }: { locale: Locale }) {
       </footer>
 
       <nav className="bottom-nav" aria-label="Mobile primary navigation">
-        <a href="#home"><HouseLine size={21} aria-hidden="true" /><span>{c.nav.home}</span></a>
         <a href="#pillars"><Leaf size={21} aria-hidden="true" /><span>{c.nav.pillars}</span></a>
         <a href="#copa"><Database size={21} aria-hidden="true" /><span>{c.nav.copa}</span></a>
         <a href="#stories"><Buildings size={21} aria-hidden="true" /><span>{c.nav.stories}</span></a>
+        <a href="#progress"><ChartLineUp size={21} aria-hidden="true" /><span>{c.nav.progress}</span></a>
+        <a href="#videos"><Play size={21} aria-hidden="true" /><span>{c.nav.videos}</span></a>
       </nav>
 
       <dialog

@@ -35,6 +35,8 @@ test("server-renders the Traditional Chinese COPA experience", async () => {
   assert.match(html, /探索進度/);
   assert.match(html, /\/media\/feedback2\/copa-connect\.webp/);
   assert.match(html, /屋邨中的可持續行動/);
+  assert.match(html, /智能回收，讓分類走進日常/);
+  assert.doesNotMatch(html, /為舊衣物預留回收出口|用清楚標示支援多類回收/);
   assert.match(html, /20 個出租屋邨/);
   assert.doesNotMatch(html, /20 個出租屋邨及 1 個管理物業/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/);
