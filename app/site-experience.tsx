@@ -2,11 +2,14 @@
 
 import {
   ArrowRight,
+  ArrowSquareOut,
   Buildings,
+  CaretLeft,
+  CaretRight,
   ChartLineUp,
   CheckCircle,
   Cpu,
-  Globe,
+  Database,
   HouseLine,
   Leaf,
   List,
@@ -44,6 +47,9 @@ type Story = {
   detail: string;
   impact: string;
   media: StoryMedia;
+  scopeKind?: "organization" | "property";
+  sourceKey?: "sustainability" | "annual";
+  sourcePage?: number;
 };
 
 type Metric = {
@@ -51,7 +57,24 @@ type Metric = {
   unit: string;
   label: string;
   scope: string;
+  scopeKind: "organization" | "property";
+  sourceKey: "sustainability" | "annual";
+  sourcePage: number;
 };
+
+type RailCueProps = {
+  activeIndex: number;
+  count: number;
+  label: string;
+  previousLabel: string;
+  nextLabel: string;
+  onSelect: (index: number) => void;
+};
+
+const sourceDocuments = {
+  sustainability: "https://www.hkhs.com/home/pdf/sustainability_report/2025/files/downloads/HKHS%20Sustainability%20Report_24-25.pdf",
+  annual: "https://www.hkhs.com/home/pdf/ar2025/files/downloads/HKHS_Annual_Report_24-25.pdf",
+} as const;
 
 const media = {
   reuseHero: "/media/photos/kll-reuse-hero.jpg",
@@ -60,6 +83,9 @@ const media = {
   garden: "/media/videos/community-garden.mp4",
   foodWasteKll: "/media/videos/food-waste-kll.mp4",
   foodWasteLtt: "/media/videos/food-waste-ltt.mp4",
+  copaCommand: "/media/copa/copa-command-centre.webp",
+  copaSpace: "/media/copa/copa-space.webp",
+  copaWall: "/media/copa/copa-exhibition-wall.webp",
 };
 
 const content = {
@@ -78,20 +104,35 @@ const content = {
       copa: "物業及資產綜合平台",
       full: "Central Office for Property and Asset",
     },
+    ui: {
+      swipe: "左右滑動查看更多",
+      previous: "上一項",
+      next: "下一項",
+      source: "查看正式來源",
+      reportPage: "PDF 第",
+      pageSuffix: "頁",
+      organization: "房協整體",
+      property: "物業管理實踐",
+      sustainabilityReport: "香港房屋協會 2024/25 可持續發展報告",
+      annualReport: "香港房屋協會 2024/25 年度報告",
+      previousStory: "上一個故事",
+      nextStory: "下一個故事",
+    },
     hero: {
       eyebrow: "香港房屋協會可持續發展",
       title: "創建宜居．永續共融",
-      body: "我們把可持續發展融入房屋、屋邨管理及社區日常，與居民共建更宜居、更低碳的未來。",
+      body: "我們在物業管理和社區日常中落實可持續發展，與居民共建更宜居、更低碳的未來。",
       cta: "探索我們的行動",
       secondary: "查看進展",
       caption: "屋邨居民參與物品再生及升級再造活動",
     },
     intro: {
-      title: "可持續發展，從一個家延伸至整個社區",
-      body: "房屋不只是建築。我們從居民需要、資源使用及未來能力出發，把長遠承諾落實在每個屋邨日常。",
+      title: "在物業管理日常，把 ESG 承諾變成行動",
+      body: "我們從居民需要、資源使用、設施表現和未來能力出發，把房協的長遠方向落實在屋邨管理和社區日常。",
     },
     pillarHeading: "三大支柱，共同支撐宜居未來",
     pillarPrompt: "選擇支柱",
+    pillarSource: "三大支柱源自房協可持續發展策略。",
     pillars: [
       {
         key: "homes",
@@ -116,8 +157,8 @@ const content = {
       },
     ] satisfies Pillar[],
     journey: {
-      title: "從建造到日常，每一步都計算長遠價值",
-      body: "可持續發展貫穿房屋和資產的整個生命週期。",
+      title: "從建造到管理，把長遠價值帶進日常",
+      body: "物業管理團隊承接房屋和資產全生命週期的成果，並在營運中持續改善。",
       items: [
         ["規劃與設計", "把全生命週期、居民需要和氣候韌性納入早期決策。"],
         ["建造", "推動低碳建造、物料效益和安全施工。"],
@@ -125,6 +166,17 @@ const content = {
         ["居民參與", "讓減廢、回收、園圃和共融活動成為屋邨日常。"],
         ["社區協作", "與居民、學校、伙伴及業界共同擴大正面影響。"],
       ],
+    },
+    copa: {
+      title: "以 COPA 連結物業管理每一環",
+      body: "我們透過物業及資產綜合平台整合系統、數據與專業能力，支援更清晰、及時和持續的管理決策。",
+      steps: [
+        ["連結", "在單一平台連接不同系統、感應器與物業資訊。", media.copaCommand, "COPA 指揮中心以大型屏幕整合物業及資產資訊"],
+        ["統一", "以標準化共同數據環境整理跨系統資料，建立一致的管理基礎。", media.copaCommand, "COPA 屏幕顯示物業資訊及香港地圖"],
+        ["洞察", "透過互動儀表板、大數據分析及 AI-ready 基礎掌握物業狀況。", media.copaWall, "COPA 展示空間內的數碼應用和互動屏幕"],
+        ["行動", "把資訊轉化為日常營運能力，支援安全、維修、能源及服務持續改善。", media.copaSpace, "COPA 工作空間及以樹木為意象的室內設計"],
+      ],
+      features: "平台功能包括系統及感應器整合、共同數據環境、互動儀表板、安全數據管理，以及日後擴展能力。",
     },
     storySection: {
       title: "屋邨中的可持續行動",
@@ -154,6 +206,8 @@ const content = {
         detail: "居民可在屋邨使用智能廚餘回收設施。系統配合日常管理，協助推廣源頭分類和建立持續參與的習慣。",
         impact: "近 50 部智能廚餘回收機已設於 20 個出租屋邨及 1 個管理物業。",
         media: { type: "video", src: media.foodWasteLtt, alt: "居民示範使用智能廚餘回收設施" },
+        sourceKey: "annual",
+        sourcePage: 141,
       },
       {
         slug: "community-garden",
@@ -174,6 +228,8 @@ const content = {
         detail: "房協在合適屋邨設置太陽能光伏系統，並在觀龍樓應用風力發電，將可再生能源融入物業營運。",
         impact: "截至 2024/25 年度，10 個出租屋邨設有太陽能光伏系統。",
         media: { type: "graphic", variant: "solar", alt: "屋邨可再生能源概念圖" },
+        sourceKey: "annual",
+        sourcePage: 141,
       },
       {
         slug: "intergenerational-community",
@@ -189,31 +245,31 @@ const content = {
         slug: "copa-smart-operations",
         pillar: "future",
         place: "COPA",
-        title: "以數據支援物業及資產管理",
-        summary: "整合資訊、科技和專業知識，讓管理決策更及時、更具前瞻性。",
-        detail: "COPA 連結物業和資產管理所需的數據、流程及專業能力，支援安全、維修、能源和服務表現的持續改善。",
-        impact: "管理團隊能更清晰掌握資產狀況，並把創新應用轉化為日常營運能力。",
-        media: { type: "graphic", variant: "copa", alt: "COPA 數據支援物業管理概念圖" },
+        title: "把數據轉化為物業管理行動",
+        summary: "我們整合資訊、科技和專業知識，讓管理決策更清晰、更及時。",
+        detail: "COPA 在單一平台連結物業和資產管理所需的系統、感應器、數據及流程，並以共同數據環境和互動儀表板支援日常工作。",
+        impact: "管理團隊可更清晰掌握資產狀況，支援安全、維修、能源和服務表現的持續改善。",
+        media: { type: "image", src: media.copaCommand, alt: "COPA 指揮中心整合物業及資產資訊" },
       },
     ] satisfies Story[],
     progress: {
       title: "以清楚範圍，呈現我們的進展",
       body: "每個數字都與年份、基準或適用物業範圍一同閱讀。",
-      source: "資料來源：香港房屋協會 2024/25 可持續發展報告",
+      source: "資料來源：香港房屋協會 2024/25 可持續發展報告及年度報告。每項數據均附正式文件連結及頁碼。",
     },
     metrics: [
-      { value: "31", unit: "%", label: "能源消耗減少", scope: "相對 2012/13 基準，按正式報告所列物業範圍" },
-      { value: "21.9", unit: "%", label: "範疇一及二碳排放按年下降", scope: "2024/25，涵蓋出租屋邨、管理物業、建築項目及主要辦公室" },
-      { value: "16,099", unit: "公噸", label: "回收物料", scope: "2024/25 年度" },
-      { value: "近 50", unit: "部", label: "智能廚餘回收機", scope: "設於 20 個出租屋邨及 1 個管理物業" },
-      { value: "25,100", unit: "小時", label: "義工及社區服務", scope: "2024/25 年度" },
-      { value: "38,660", unit: "小時", label: "員工培訓", scope: "2024/25 年度" },
+      { value: "31", unit: "%", label: "能源消耗減少", scope: "相對 2012/13 基準，按正式報告所列選定物業範圍", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
+      { value: "21.9", unit: "%", label: "範疇一及二碳排放按年下降", scope: "2024/25，涵蓋出租屋邨、管理物業、建築項目及主要辦公室", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
+      { value: "16,099", unit: "公噸", label: "回收物料", scope: "2024/25 年度，包括金屬、紙張、塑膠、玻璃、木材及紡織物", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
+      { value: "近 50", unit: "部", label: "智能廚餘回收設施", scope: "設於 20 個出租屋邨及 1 個代管物業", scopeKind: "property", sourceKey: "annual", sourcePage: 141 },
+      { value: "25,100", unit: "小時", label: "社區服務", scope: "2024/25，由房協友里團隊及房協學院舊生會共同貢獻", scopeKind: "organization", sourceKey: "annual", sourcePage: 144 },
+      { value: "38,660", unit: "小時", label: "員工培訓及專業發展", scope: "2024/25，適用於長期及固定任期員工", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
     ] satisfies Metric[],
     governance: {
       title: "以負責任管治，推動每一步",
       body: "清晰的管治、跨部門協作和負責任融資，讓可持續發展成為房屋和資產決策的一部分。",
       items: [
-        ["方向與監督", "由董事會及相關工作小組推動策略、監督表現和檢視重點。"],
+        ["方向與監督", "由總監會議及相關工作小組推動策略、監督表現和檢視重點。"],
         ["落實與協作", "營運團隊把承諾納入規劃、建造、管理和社區服務。"],
         ["透明與問責", "以正式報告、明確數據範圍和持續溝通交代進展。"],
       ],
@@ -222,7 +278,7 @@ const content = {
       title: "看見社區中的改變",
       body: "由居民親身示範，了解綠色生活如何在屋邨發生。",
       play: "播放影片",
-      note: "影片設有原生播放控制。正式版本將加入字幕及逐字稿。",
+      note: "可使用原生播放控制觀看影片。",
       items: [
         ["週末園圃種植樂", "居民共享種植經驗，讓綠色空間成為社區交流的一部分。", media.garden],
         ["觀龍樓智能廚餘回收", "居民示範日常回收流程。", media.foodWasteKll],
@@ -232,35 +288,41 @@ const content = {
     footer: {
       statement: "可持續發展不是單一項目，而是我們建造、管理和服務社區的方式。",
       copyright: "香港房屋協會",
-      note: "本網站為 COPA 展覽網站初稿。內容及素材須按正式審批結果更新。",
+      note: "數據以所示報告期、披露範圍及正式來源為準。",
     },
   },
   "zh-cn": {
     htmlLang: "zh-CN",
     nav: { home: "首页", pillars: "三大支柱", stories: "屋邨行动", progress: "进展", videos: "视频", menu: "打开菜单", close: "关闭" },
     brand: { copa: "物业及资产综合平台", full: "Central Office for Property and Asset" },
+    ui: {
+      swipe: "左右滑动查看更多", previous: "上一项", next: "下一项", source: "查看正式来源", reportPage: "PDF 第", pageSuffix: "页",
+      organization: "房协整体", property: "物业管理实践", sustainabilityReport: "香港房屋协会 2024/25 可持续发展报告", annualReport: "香港房屋协会 2024/25 年度报告",
+      previousStory: "上一个故事", nextStory: "下一个故事",
+    },
     hero: {
       eyebrow: "香港房屋协会可持续发展",
       title: "创建宜居．永续共融",
-      body: "我们把可持续发展融入房屋、屋邨管理及社区日常，与居民共建更宜居、更低碳的未来。",
+      body: "我们在物业管理和社区日常中落实可持续发展，与居民共建更宜居、更低碳的未来。",
       cta: "探索我们的行动",
       secondary: "查看进展",
       caption: "屋邨居民参与物品再生及升级再造活动",
     },
     intro: {
-      title: "可持续发展，从一个家延伸至整个社区",
-      body: "房屋不只是建筑。我们从居民需要、资源使用及未来能力出发，把长远承诺落实在每个屋邨日常。",
+      title: "在物业管理日常，把 ESG 承诺变成行动",
+      body: "我们从居民需要、资源使用、设施表现和未来能力出发，把房协的长远方向落实在屋邨管理和社区日常。",
     },
     pillarHeading: "三大支柱，共同支撑宜居未来",
     pillarPrompt: "选择支柱",
+    pillarSource: "三大支柱源自房协可持续发展策略。",
     pillars: [
       { key: "homes", title: "可持续居所", english: "Sustainable Homes", description: "回应不同人生阶段和社会需要，营造安全、共融并具连系的居住环境。", action: "居所与社区" },
       { key: "carbon", title: "低碳转型", english: "Low-carbon Transformation", description: "把节能、减碳、循环资源和气候韧性融入发展、管理及营运。", action: "资源与环境" },
       { key: "future", title: "装备未来", english: "Future-fit Capabilities", description: "以人才、安全、数据和创新科技，提升物业及资产的长远表现。", action: "能力与创新" },
     ] satisfies Pillar[],
     journey: {
-      title: "从建造到日常，每一步都计算长远价值",
-      body: "可持续发展贯穿房屋和资产的整个生命周期。",
+      title: "从建造到管理，把长远价值带进日常",
+      body: "物业管理团队承接房屋和资产全生命周期的成果，并在营运中持续改善。",
       items: [
         ["规划与设计", "把全生命周期、居民需要和气候韧性纳入早期决策。"],
         ["建造", "推动低碳建造、物料效益和安全施工。"],
@@ -269,22 +331,33 @@ const content = {
         ["社区协作", "与居民、学校、伙伴及业界共同扩大正面影响。"],
       ],
     },
+    copa: {
+      title: "以 COPA 连结物业管理每一环",
+      body: "我们透过物业及资产综合平台整合系统、数据与专业能力，支持更清晰、及时和持续的管理决策。",
+      steps: [
+        ["连结", "在单一平台连接不同系统、传感器与物业信息。", media.copaCommand, "COPA 指挥中心以大型屏幕整合物业及资产信息"],
+        ["统一", "以标准化共同数据环境整理跨系统资料，建立一致的管理基础。", media.copaCommand, "COPA 屏幕显示物业信息及香港地图"],
+        ["洞察", "透过互动仪表板、大数据分析及 AI-ready 基础掌握物业状况。", media.copaWall, "COPA 展示空间内的数字应用和互动屏幕"],
+        ["行动", "把信息转化为日常营运能力，支持安全、维修、能源及服务持续改善。", media.copaSpace, "COPA 工作空间及以树木为意象的室内设计"],
+      ],
+      features: "平台功能包括系统及传感器整合、共同数据环境、互动仪表板、安全数据管理，以及日后扩展能力。",
+    },
     storySection: { title: "屋邨中的可持续行动", body: "从一部厨余机、一块旧布，到一个更安全的管理流程，改变在社区中逐步发生。", all: "全部", read: "阅读故事", detailTitle: "我们的行动", impactTitle: "带来的改变" },
     stories: [] as Story[],
-    progress: { title: "以清楚范围，呈现我们的进展", body: "每个数字都与年份、基准或适用物业范围一同阅读。", source: "资料来源：香港房屋协会 2024/25 可持续发展报告" },
+    progress: { title: "以清楚范围，呈现我们的进展", body: "每个数字都与年份、基准或适用物业范围一同阅读。", source: "资料来源：香港房屋协会 2024/25 可持续发展报告及年度报告。每项数据均附正式文件链接及页码。" },
     metrics: [
-      { value: "31", unit: "%", label: "能源消耗减少", scope: "相对 2012/13 基准，按正式报告所列物业范围" },
-      { value: "21.9", unit: "%", label: "范围一及二碳排放按年下降", scope: "2024/25，涵盖出租屋邨、管理物业、建筑项目及主要办公室" },
-      { value: "16,099", unit: "公吨", label: "回收物料", scope: "2024/25 年度" },
-      { value: "近 50", unit: "部", label: "智能厨余回收机", scope: "设于 20 个出租屋邨及 1 个管理物业" },
-      { value: "25,100", unit: "小时", label: "义工及社区服务", scope: "2024/25 年度" },
-      { value: "38,660", unit: "小时", label: "员工培训", scope: "2024/25 年度" },
+      { value: "31", unit: "%", label: "能源消耗减少", scope: "相对 2012/13 基准，按正式报告所列选定物业范围", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
+      { value: "21.9", unit: "%", label: "范围一及二碳排放按年下降", scope: "2024/25，涵盖出租屋邨、管理物业、建筑项目及主要办公室", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
+      { value: "16,099", unit: "公吨", label: "回收物料", scope: "2024/25 年度，包括金属、纸张、塑料、玻璃、木材及纺织物", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
+      { value: "近 50", unit: "部", label: "智能厨余回收设施", scope: "设于 20 个出租屋邨及 1 个代管物业", scopeKind: "property", sourceKey: "annual", sourcePage: 141 },
+      { value: "25,100", unit: "小时", label: "社区服务", scope: "2024/25，由房协友里团队及房协学院旧生会共同贡献", scopeKind: "organization", sourceKey: "annual", sourcePage: 144 },
+      { value: "38,660", unit: "小时", label: "员工培训及专业发展", scope: "2024/25，适用于长期及固定任期员工", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
     ] satisfies Metric[],
     governance: {
       title: "以负责任管治，推动每一步",
       body: "清晰的管治、跨部门协作和负责任融资，让可持续发展成为房屋和资产决策的一部分。",
       items: [
-        ["方向与监督", "由董事会及相关工作小组推动策略、监督表现和检视重点。"],
+        ["方向与监督", "由总监会议及相关工作小组推动策略、监督表现和检视重点。"],
         ["落实与协作", "营运团队把承诺纳入规划、建造、管理和社区服务。"],
         ["透明与问责", "以正式报告、明确数据范围和持续沟通交代进展。"],
       ],
@@ -293,41 +366,47 @@ const content = {
       title: "看见社区中的改变",
       body: "由居民亲身示范，了解绿色生活如何在屋邨发生。",
       play: "播放视频",
-      note: "视频设有原生播放控制。正式版本将加入字幕及逐字稿。",
+      note: "可使用原生播放控制观看视频。",
       items: [
         ["周末园圃种植乐", "居民共享种植经验，让绿色空间成为社区交流的一部分。", media.garden],
         ["观龙楼智能厨余回收", "居民示范日常回收流程。", media.foodWasteKll],
         ["厨余回收设施示范", "从分类到回收，建立更便利的参与体验。", media.foodWasteLtt],
       ],
     },
-    footer: { statement: "可持续发展不是单一项目，而是我们建造、管理和服务社区的方式。", copyright: "香港房屋协会", note: "本网站为 COPA 展览网站初稿。内容及素材须按正式审批结果更新。" },
+    footer: { statement: "可持续发展不是单一项目，而是我们建造、管理和服务社区的方式。", copyright: "香港房屋协会", note: "数据以所示报告期、披露范围及正式来源为准。" },
   },
   en: {
     htmlLang: "en",
     nav: { home: "Home", pillars: "Our pillars", stories: "Estate action", progress: "Progress", videos: "Videos", menu: "Open menu", close: "Close" },
     brand: { copa: "Central Office for Property and Asset", full: "物業及資產綜合平台" },
+    ui: {
+      swipe: "Swipe to explore", previous: "Previous", next: "Next", source: "View official source", reportPage: "PDF page ", pageSuffix: "",
+      organization: "HKHS-wide", property: "Property management practice", sustainabilityReport: "HKHS Sustainability Report 2024/25", annualReport: "HKHS Annual Report 2024/25",
+      previousStory: "Previous story", nextStory: "Next story",
+    },
     hero: {
       eyebrow: "HKHS sustainability",
       title: "Creating Homes for Sustainable Living",
-      body: "We bring sustainability into housing, estate management and community life, building a liveable, low-carbon future with residents.",
+      body: "We put sustainability into practice through property management and community life, building a liveable, low-carbon future with residents.",
       cta: "Explore our action",
       secondary: "View our progress",
       caption: "Estate residents taking part in reuse and upcycling activities",
     },
     intro: {
-      title: "Sustainability grows from every home into the community",
-      body: "Housing is more than buildings. We turn long-term commitments into everyday estate action through people, resources and future-ready capabilities.",
+      title: "Turning ESG commitments into everyday management",
+      body: "We bring HKHS's long-term direction into estate management through resident needs, resource use, asset performance and future-ready capabilities.",
     },
     pillarHeading: "Three pillars for a liveable future",
     pillarPrompt: "Choose a pillar",
+    pillarSource: "The three pillars form part of HKHS's sustainability strategy.",
     pillars: [
       { key: "homes", title: "Sustainable Homes", english: "可持續居所", description: "We respond to changing life stages and community needs with safe, inclusive and connected living environments.", action: "Homes and community" },
       { key: "carbon", title: "Low-carbon Transformation", english: "低碳轉型", description: "We integrate energy efficiency, carbon reduction, circular resources and resilience into development and operations.", action: "Resources and environment" },
       { key: "future", title: "Future-fit Capabilities", english: "裝備未來", description: "We strengthen long-term asset performance through people, safety, data and innovation.", action: "Capabilities and innovation" },
     ] satisfies Pillar[],
     journey: {
-      title: "Long-term value, from construction to everyday life",
-      body: "Sustainability runs through the full housing and asset lifecycle.",
+      title: "Bringing long-term value into everyday management",
+      body: "Property management carries lifecycle thinking into operations and continuous improvement.",
       items: [
         ["Plan and design", "Bring lifecycle thinking, resident needs and climate resilience into early decisions."],
         ["Build", "Advance lower-carbon construction, material efficiency and safe delivery."],
@@ -336,22 +415,33 @@ const content = {
         ["Work together", "Extend positive impact with residents, schools, partners and the industry."],
       ],
     },
+    copa: {
+      title: "Connecting every part of property management",
+      body: "Through COPA, we bring systems, data and professional capabilities together to support clearer, timely and continuous management decisions.",
+      steps: [
+        ["Connect", "Bring systems, sensors and property information together on one platform.", media.copaCommand, "The COPA command centre integrates property and asset information on large displays"],
+        ["Standardise", "Organise information in a standardised common data environment for a consistent management foundation.", media.copaCommand, "COPA displays property information alongside a map of Hong Kong"],
+        ["Understand", "Use interactive dashboards, big-data analytics and an AI-ready foundation to understand asset conditions.", media.copaWall, "Digital applications and interactive displays in the COPA exhibition space"],
+        ["Act", "Turn information into operational capability for safety, maintenance, energy and service improvement.", media.copaSpace, "COPA workspace with a tree-inspired interior feature"],
+      ],
+      features: "Platform capabilities include system and sensor integration, a common data environment, interactive dashboards, secure data management and future expansion.",
+    },
     storySection: { title: "Sustainability in estate life", body: "From food waste facilities and old fabric to safer management, change grows through practical community action.", all: "All", read: "Read story", detailTitle: "Our action", impactTitle: "The change" },
     stories: [] as Story[],
-    progress: { title: "Progress shown with clear scope", body: "Every number is read with its reporting year, baseline or applicable property scope.", source: "Source: HKHS Sustainability Report 2024/25" },
+    progress: { title: "Progress shown with clear scope", body: "Every number is read with its reporting year, baseline or applicable property scope.", source: "Sources: HKHS Sustainability Report 2024/25 and Annual Report 2024/25. Each figure includes an official document link and page reference." },
     metrics: [
-      { value: "31", unit: "%", label: "reduction in energy consumption", scope: "Against the 2012/13 baseline, within the property scope stated in the report" },
-      { value: "21.9", unit: "%", label: "year-on-year fall in Scope 1 and 2 emissions", scope: "2024/25, covering rental estates, managed properties, construction projects and major offices" },
-      { value: "16,099", unit: "tonnes", label: "materials recycled", scope: "2024/25" },
-      { value: "Nearly 50", unit: "units", label: "smart food waste recycling bins", scope: "Across 20 rental estates and one managed property" },
-      { value: "25,100", unit: "hours", label: "volunteer and community service", scope: "2024/25" },
-      { value: "38,660", unit: "hours", label: "staff training", scope: "2024/25" },
+      { value: "31", unit: "%", label: "reduction in energy consumption", scope: "Against the 2012/13 baseline, within the selected property scope stated in the report", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
+      { value: "21.9", unit: "%", label: "year-on-year fall in Scope 1 and 2 emissions", scope: "2024/25, covering rental estates, managed properties, construction projects and major offices", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
+      { value: "16,099", unit: "tonnes", label: "materials recycled", scope: "2024/25, including metals, paper, plastics, glass, timber and textiles", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
+      { value: "Nearly 50", unit: "units", label: "smart food waste recycling facilities", scope: "Across 20 rental estates and one managed property", scopeKind: "property", sourceKey: "annual", sourcePage: 141 },
+      { value: "25,100", unit: "hours", label: "community service", scope: "Contributed in 2024/25 by the CES Team and HKHS Academy Alumni Club", scopeKind: "organization", sourceKey: "annual", sourcePage: 144 },
+      { value: "38,660", unit: "hours", label: "staff training and professional development", scope: "2024/25, for permanent and contract staff", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
     ] satisfies Metric[],
     governance: {
       title: "Responsible governance behind every step",
       body: "Clear oversight, collaboration and responsible finance make sustainability part of housing and asset decisions.",
       items: [
-        ["Direction and oversight", "The Supervisory Board and working groups guide strategy, monitor performance and review priorities."],
+        ["Direction and oversight", "The Directors' Meeting and relevant working groups guide strategy, monitor performance and review priorities."],
         ["Delivery and collaboration", "Operational teams bring commitments into planning, construction, management and community service."],
         ["Transparency and accountability", "Formal reporting, clear data scopes and ongoing communication show our progress."],
       ],
@@ -360,14 +450,14 @@ const content = {
       title: "See change taking place",
       body: "Residents show how greener living becomes part of everyday estate life.",
       play: "Play video",
-      note: "Videos include native playback controls. Captions and transcripts will be added for the final version.",
+      note: "Use the native playback controls to watch each video.",
       items: [
         ["A weekend in the community garden", "Residents share growing experience and turn green space into a place for connection.", media.garden],
         ["Smart food waste recycling at Kwun Lung Lau", "Residents demonstrate the everyday recycling process.", media.foodWasteKll],
         ["Using a food waste recycling facility", "A more convenient experience from separation to recycling.", media.foodWasteLtt],
       ],
     },
-    footer: { statement: "Sustainability is not one project. It is how we build, manage and serve communities.", copyright: "Hong Kong Housing Society", note: "This is a draft COPA exhibition website. Content and media will be updated after formal approval." },
+    footer: { statement: "Sustainability is not one project. It is how we build, manage and serve communities.", copyright: "Hong Kong Housing Society", note: "Figures should be read with the reporting period, disclosure scope and official source shown." },
   },
 } as const;
 
@@ -391,6 +481,8 @@ const englishStories: Story[] = [
     detail: "Residents can use smart food waste recycling facilities in their estates. The system supports daily management and encourages lasting separation habits.",
     impact: "Nearly 50 smart food waste recycling bins serve 20 rental estates and one managed property.",
     media: { type: "video", src: media.foodWasteLtt, alt: "Residents demonstrating a smart food waste recycling facility" },
+    sourceKey: "annual",
+    sourcePage: 141,
   },
   {
     slug: "community-garden",
@@ -411,6 +503,8 @@ const englishStories: Story[] = [
     detail: "HKHS installs solar photovoltaic systems at suitable estates and uses wind generation at Kwun Lung Lau, integrating renewables into operations.",
     impact: "By 2024/25, solar photovoltaic systems were installed at 10 rental estates.",
     media: { type: "graphic", variant: "solar", alt: "Conceptual view of renewable energy on an estate" },
+    sourceKey: "annual",
+    sourcePage: 141,
   },
   {
     slug: "intergenerational-community",
@@ -426,11 +520,11 @@ const englishStories: Story[] = [
     slug: "copa-smart-operations",
     pillar: "future",
     place: "COPA",
-    title: "Data-supported property and asset management",
-    summary: "Connected information, technology and expertise support timely, forward-looking decisions.",
-    detail: "COPA brings together data, processes and professional capabilities for safety, maintenance, energy and service improvement.",
-    impact: "Teams gain a clearer view of asset conditions and turn innovation into everyday operational capability.",
-    media: { type: "graphic", variant: "copa", alt: "Conceptual view of COPA supporting property management" },
+    title: "Turning data into property management action",
+    summary: "We bring information, technology and expertise together for clearer, timely decisions.",
+    detail: "COPA connects the systems, sensors, data and workflows required for property and asset management on one platform, supported by a common data environment and interactive dashboards.",
+    impact: "Teams gain a clearer view of asset conditions and support continuous improvement in safety, maintenance, energy and service performance.",
+    media: { type: "image", src: media.copaCommand, alt: "The COPA command centre integrating property and asset information" },
   },
 ];
 
@@ -454,6 +548,8 @@ const simplifiedStories: Story[] = [
     detail: "居民可在屋邨使用智能厨余回收设施。系统配合日常管理，协助推广源头分类和建立持续参与的习惯。",
     impact: "近 50 部智能厨余回收机已设于 20 个出租屋邨及 1 个管理物业。",
     media: { type: "video", src: media.foodWasteLtt, alt: "居民示范使用智能厨余回收设施" },
+    sourceKey: "annual",
+    sourcePage: 141,
   },
   {
     slug: "community-garden",
@@ -474,6 +570,8 @@ const simplifiedStories: Story[] = [
     detail: "房协在合适屋邨设置太阳能光伏系统，并在观龙楼应用风力发电，将可再生能源融入物业营运。",
     impact: "截至 2024/25 年度，10 个出租屋邨设有太阳能光伏系统。",
     media: { type: "graphic", variant: "solar", alt: "屋邨可再生能源概念图" },
+    sourceKey: "annual",
+    sourcePage: 141,
   },
   {
     slug: "intergenerational-community",
@@ -489,11 +587,11 @@ const simplifiedStories: Story[] = [
     slug: "copa-smart-operations",
     pillar: "future",
     place: "COPA",
-    title: "以数据支持物业及资产管理",
-    summary: "整合信息、科技和专业知识，让管理决策更及时、更具前瞻性。",
-    detail: "COPA 连结物业和资产管理所需的数据、流程及专业能力，支持安全、维修、能源和服务表现的持续改善。",
-    impact: "管理团队能更清晰掌握资产状况，并把创新应用转化为日常营运能力。",
-    media: { type: "graphic", variant: "copa", alt: "COPA 数据支持物业管理概念图" },
+    title: "把数据转化为物业管理行动",
+    summary: "我们整合信息、科技和专业知识，让管理决策更清晰、更及时。",
+    detail: "COPA 在单一平台连接物业和资产管理所需的系统、传感器、数据及流程，并以共同数据环境和互动仪表板支持日常工作。",
+    impact: "管理团队可更清晰掌握资产状况，支持安全、维修、能源和服务表现的持续改善。",
+    media: { type: "image", src: media.copaCommand, alt: "COPA 指挥中心整合物业及资产信息" },
   },
 ];
 
@@ -533,6 +631,56 @@ function StoryVisual({ media: visual, compact = false }: { media: StoryMedia; co
   );
 }
 
+function RailCue({ activeIndex, count, label, previousLabel, nextLabel, onSelect }: RailCueProps) {
+  return (
+    <div className="rail-cue" aria-label={label}>
+      <span className="rail-cue-label">{label}</span>
+      <div className="rail-controls">
+        <button type="button" onClick={() => onSelect(Math.max(0, activeIndex - 1))} disabled={activeIndex === 0} aria-label={previousLabel}>
+          <CaretLeft size={18} weight="bold" aria-hidden="true" />
+        </button>
+        <span className="rail-count" aria-live="polite">{activeIndex + 1} / {count}</span>
+        <div className="rail-dots" aria-hidden="true">
+          {Array.from({ length: count }, (_, index) => <span key={index} className={index === activeIndex ? "is-active" : ""} />)}
+        </div>
+        <button type="button" onClick={() => onSelect(Math.min(count - 1, activeIndex + 1))} disabled={activeIndex === count - 1} aria-label={nextLabel}>
+          <CaretRight size={18} weight="bold" aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function useRailIndex(count: number) {
+  const railRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail || typeof IntersectionObserver === "undefined") return;
+    const items = Array.from(rail.children);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveIndex(items.indexOf(visible.target));
+      },
+      { root: rail, threshold: [0.45, 0.7] },
+    );
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, [count]);
+
+  const selectIndex = (index: number) => {
+    const item = railRef.current?.children[index] as HTMLElement | undefined;
+    item?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+    setActiveIndex(index);
+  };
+
+  return { railRef, activeIndex, selectIndex };
+}
+
 export function SiteExperience({ locale }: { locale: Locale }) {
   const reduceMotion = useReducedMotion();
   const c = content[locale];
@@ -541,7 +689,16 @@ export function SiteExperience({ locale }: { locale: Locale }) {
   const [storyFilter, setStoryFilter] = useState<"all" | PillarKey>("all");
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const [activeVideo, setActiveVideo] = useState(0);
+  const [activeCopaStep, setActiveCopaStep] = useState(0);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const dialogInnerRef = useRef<HTMLDivElement>(null);
+  const pillarRailRef = useRef<HTMLDivElement>(null);
+  const videoRailRef = useRef<HTMLDivElement>(null);
+  const {
+    railRef: journeyRailRef,
+    activeIndex: journeyActiveIndex,
+    selectIndex: selectJourneyIndex,
+  } = useRailIndex(c.journey.items.length);
 
   const stories = useMemo(() => {
     if (locale === "en") return englishStories;
@@ -551,16 +708,61 @@ export function SiteExperience({ locale }: { locale: Locale }) {
 
   const filteredStories = storyFilter === "all" ? stories : stories.filter((story) => story.pillar === storyFilter);
   const selectedPillar = c.pillars.find((pillar) => pillar.key === activePillar) ?? c.pillars[0];
+  const activePillarIndex = c.pillars.findIndex((pillar) => pillar.key === activePillar);
+  const activeCopa = c.copa.steps[activeCopaStep];
+  const dialogOpen = Boolean(selectedStory);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (selectedStory && !dialog.open) dialog.showModal();
-    if (!selectedStory && dialog.open) dialog.close();
+    if (!dialogOpen) {
+      if (dialog.open) dialog.close();
+      return;
+    }
+
+    const scrollPosition = window.scrollY;
+    const previousBodyStyles = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      width: document.body.style.width,
+      overflow: document.body.style.overflow,
+    };
+    if (!dialog.open) dialog.showModal();
+    if (dialogInnerRef.current) dialogInnerRef.current.scrollTop = 0;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+
     return () => {
       if (dialog.open) dialog.close();
+      document.body.style.position = previousBodyStyles.position;
+      document.body.style.top = previousBodyStyles.top;
+      document.body.style.width = previousBodyStyles.width;
+      document.body.style.overflow = previousBodyStyles.overflow;
+      window.scrollTo(0, scrollPosition);
     };
-  }, [selectedStory]);
+  }, [dialogOpen]);
+
+  const selectPillar = (index: number) => {
+    const pillar = c.pillars[index];
+    if (!pillar) return;
+    setActivePillar(pillar.key);
+    (pillarRailRef.current?.children[index] as HTMLElement | undefined)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+  };
+
+  const selectVideo = (index: number) => {
+    setActiveVideo(index);
+    (videoRailRef.current?.children[index] as HTMLElement | undefined)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+  };
+
+  const selectStoryByOffset = (offset: number) => {
+    if (!selectedStory) return;
+    const currentIndex = stories.findIndex((story) => story.slug === selectedStory.slug);
+    const nextIndex = (currentIndex + offset + stories.length) % stories.length;
+    setSelectedStory(stories[nextIndex]);
+    if (dialogInnerRef.current) dialogInnerRef.current.scrollTop = 0;
+  };
 
   const languageLinks = [
     ["zh-hk", "繁"],
@@ -679,20 +881,28 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <h2>{c.pillarHeading}</h2>
           </div>
           <div className="pillars-layout">
-            <div className="pillar-tabs" role="tablist" aria-label={c.pillarPrompt}>
+            <div className="pillar-tabs" role="tablist" aria-label={c.pillarPrompt} ref={pillarRailRef}>
               {c.pillars.map((pillar) => (
                 <button
                   key={pillar.key}
                   type="button"
                   role="tab"
                   aria-selected={activePillar === pillar.key}
-                  onClick={() => setActivePillar(pillar.key)}
+                  onClick={() => selectPillar(c.pillars.findIndex((item) => item.key === pillar.key))}
                 >
                   <span>{pillar.title}</span>
                   <small>{pillar.english}</small>
                 </button>
               ))}
             </div>
+            <RailCue
+              activeIndex={activePillarIndex}
+              count={c.pillars.length}
+              label={c.ui.swipe}
+              previousLabel={c.ui.previous}
+              nextLabel={c.ui.next}
+              onSelect={selectPillar}
+            />
             <AnimatePresence mode="wait">
               <motion.article
                 key={selectedPillar.key}
@@ -712,6 +922,9 @@ export function SiteExperience({ locale }: { locale: Locale }) {
               </motion.article>
             </AnimatePresence>
           </div>
+          <a className="section-source-link" href={`${sourceDocuments.sustainability}#page=23`} target="_blank" rel="noreferrer">
+            {c.pillarSource}<span>{c.ui.source}</span><ArrowSquareOut size={16} aria-hidden="true" />
+          </a>
         </section>
 
         <motion.section className="journey-section" {...reveal}>
@@ -719,7 +932,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <h2>{c.journey.title}</h2>
             <p>{c.journey.body}</p>
           </div>
-          <div className="journey-track">
+          <div className="journey-track" ref={journeyRailRef}>
             {c.journey.items.map(([title, description], index) => (
               <article key={title} style={{ "--item-index": index } as React.CSSProperties}>
                 <span aria-hidden="true">{index + 1}</span>
@@ -728,7 +941,52 @@ export function SiteExperience({ locale }: { locale: Locale }) {
               </article>
             ))}
           </div>
+          <RailCue
+            activeIndex={journeyActiveIndex}
+            count={c.journey.items.length}
+            label={c.ui.swipe}
+            previousLabel={c.ui.previous}
+            nextLabel={c.ui.next}
+            onSelect={selectJourneyIndex}
+          />
         </motion.section>
+
+        <section className="copa-section" id="copa">
+          <div className="copa-heading">
+            <div className="copa-heading-mark" aria-hidden="true"><Database size={34} weight="thin" /></div>
+            <h2>{c.copa.title}</h2>
+            <p>{c.copa.body}</p>
+          </div>
+          <div className="copa-experience">
+            <AnimatePresence mode="wait">
+              <motion.figure
+                key={activeCopaStep}
+                className="copa-visual"
+                initial={reduceMotion ? false : { opacity: 0, scale: 0.985 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.32 }}
+              >
+                <img src={activeCopa[2]} alt={activeCopa[3]} width="2048" height="1152" loading="lazy" />
+              </motion.figure>
+            </AnimatePresence>
+            <div className="copa-step-list" role="tablist" aria-label={c.copa.title}>
+              {c.copa.steps.map(([title, description], index) => (
+                <button
+                  key={title}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeCopaStep === index}
+                  onClick={() => setActiveCopaStep(index)}
+                >
+                  <strong>{title}</strong>
+                  <span>{description}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <p className="copa-feature-note">{c.copa.features}</p>
+        </section>
 
         <section className="stories-section" id="stories">
           <div className="section-heading">
@@ -755,7 +1013,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
                 >
                   <div className="story-media"><StoryVisual media={story.media} compact /></div>
                   <div className="story-copy">
-                    <p className="story-place">{story.place}</p>
+                    <div className="story-meta"><p className="story-place">{story.place}</p><span>{c.ui.property}</span></div>
                     <h3>{story.title}</h3>
                     <p>{story.summary}</p>
                     <button type="button" onClick={() => setSelectedStory(story)}>{c.storySection.read}<ArrowRight size={17} aria-hidden="true" /></button>
@@ -775,9 +1033,15 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           <div className="metrics-grid">
             {c.metrics.map((metric, index) => (
               <motion.article key={metric.label} className={`metric metric-${index}`} {...reveal}>
+                <span className={`scope-label scope-${metric.scopeKind}`}>{metric.scopeKind === "property" ? c.ui.property : c.ui.organization}</span>
                 <div className="metric-value"><strong>{metric.value}</strong><span>{metric.unit}</span></div>
                 <h3>{metric.label}</h3>
                 <p>{metric.scope}</p>
+                <a className="metric-source" href={`${sourceDocuments[metric.sourceKey]}#page=${metric.sourcePage}`} target="_blank" rel="noreferrer">
+                  <span>{c.ui.source}</span>
+                  <small>{metric.sourceKey === "annual" ? c.ui.annualReport : c.ui.sustainabilityReport}<br />{c.ui.reportPage}{metric.sourcePage}{c.ui.pageSuffix}</small>
+                  <ArrowSquareOut size={16} aria-hidden="true" />
+                </a>
               </motion.article>
             ))}
           </div>
@@ -789,6 +1053,9 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <ShieldCheck size={48} weight="thin" aria-hidden="true" />
             <h2>{c.governance.title}</h2>
             <p>{c.governance.body}</p>
+            <a className="section-source-link governance-source" href={`${sourceDocuments.sustainability}#page=12`} target="_blank" rel="noreferrer">
+              <span>{c.ui.source}</span><ArrowSquareOut size={16} aria-hidden="true" />
+            </a>
           </div>
           <div className="governance-points">
             {c.governance.items.map(([title, description]) => (
@@ -807,19 +1074,29 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           </div>
           <div className="video-layout">
             <div className="video-player">
+              {/* Captions will be connected when the approved transcripts are provided. */}
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
               <video key={c.videos.items[activeVideo][2]} controls playsInline preload="metadata" aria-label={c.videos.items[activeVideo][0]}>
                 <source src={c.videos.items[activeVideo][2]} type="video/mp4" />
               </video>
               <p>{c.videos.note}</p>
             </div>
-            <div className="video-selector">
+            <div className="video-selector" ref={videoRailRef}>
               {c.videos.items.map(([title, description], index) => (
-                <button key={title} type="button" className={activeVideo === index ? "is-active" : ""} onClick={() => setActiveVideo(index)}>
+                <button key={title} type="button" className={activeVideo === index ? "is-active" : ""} onClick={() => selectVideo(index)}>
                   <span className="play-icon"><Play size={18} weight="fill" aria-hidden="true" /></span>
                   <span><strong>{title}</strong><small>{description}</small></span>
                 </button>
               ))}
             </div>
+            <RailCue
+              activeIndex={activeVideo}
+              count={c.videos.items.length}
+              label={c.ui.swipe}
+              previousLabel={c.ui.previous}
+              nextLabel={c.ui.next}
+              onSelect={selectVideo}
+            />
           </div>
         </section>
       </main>
@@ -853,20 +1130,33 @@ export function SiteExperience({ locale }: { locale: Locale }) {
         onClose={() => setSelectedStory(null)}
       >
         {selectedStory && (
-          <div className="dialog-inner">
+          <>
             <button className="dialog-close" type="button" onClick={() => setSelectedStory(null)} aria-label={c.nav.close}>
               <X size={23} aria-hidden="true" />
             </button>
+            <div className="dialog-inner" ref={dialogInnerRef}>
             <div className="dialog-media"><StoryVisual media={selectedStory.media} /></div>
             <div className="dialog-copy">
-              <p className="story-place">{selectedStory.place}</p>
+              <div className="story-meta"><p className="story-place">{selectedStory.place}</p><span>{c.ui.property}</span></div>
               <h2>{selectedStory.title}</h2>
               <h3>{c.storySection.detailTitle}</h3>
               <p>{selectedStory.detail}</p>
               <h3>{c.storySection.impactTitle}</h3>
               <p>{selectedStory.impact}</p>
+              {selectedStory.sourceKey && selectedStory.sourcePage && (
+                <a className="dialog-source" href={`${sourceDocuments[selectedStory.sourceKey]}#page=${selectedStory.sourcePage}`} target="_blank" rel="noreferrer">
+                  <span>{c.ui.source}</span>
+                  <small>{selectedStory.sourceKey === "annual" ? c.ui.annualReport : c.ui.sustainabilityReport}<br />{c.ui.reportPage}{selectedStory.sourcePage}{c.ui.pageSuffix}</small>
+                  <ArrowSquareOut size={17} aria-hidden="true" />
+                </a>
+              )}
+              <div className="dialog-story-nav">
+                <button type="button" onClick={() => selectStoryByOffset(-1)}><CaretLeft size={18} aria-hidden="true" />{c.ui.previousStory}</button>
+                <button type="button" onClick={() => selectStoryByOffset(1)}>{c.ui.nextStory}<CaretRight size={18} aria-hidden="true" /></button>
+              </div>
             </div>
-          </div>
+            </div>
+          </>
         )}
       </dialog>
     </div>
