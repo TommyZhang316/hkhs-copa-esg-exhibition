@@ -237,7 +237,7 @@ a {
   z-index: 80;
   display: grid;
   align-content: start;
-  gap: 36px;
+  gap: 22px;
   background: var(--page);
   padding: 24px;
 }
@@ -258,12 +258,16 @@ a {
 
 .mobile-menu nav a {
   display: flex;
-  min-height: 68px;
+  min-height: 58px;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
   font-size: 22px;
   font-weight: 680;
+}
+
+.mobile-language-switcher {
+  justify-self: start;
 }
 
 .hero {
@@ -275,7 +279,7 @@ a {
   grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
   align-items: center;
   gap: clamp(34px, 5vw, 82px);
-  padding: 48px 0 78px;
+  padding: 40px 0 56px;
 }
 
 .hero-copy {
@@ -453,7 +457,7 @@ a {
   grid-template-columns: 70px minmax(0, 1fr);
   gap: 12px 24px;
   border-top: 1px solid var(--line);
-  padding: 96px 0;
+  padding: 68px 0;
 }
 
 .intro-mark {
@@ -496,7 +500,7 @@ a {
 .stories-section,
 .progress-section,
 .videos-section {
-  padding: 110px max(20px, calc((100vw - 1200px) / 2));
+  padding: 78px max(20px, calc((100vw - 1200px) / 2));
 }
 
 .pillars-section {
@@ -507,7 +511,7 @@ a {
   display: grid;
   max-width: 760px;
   gap: 18px;
-  margin-bottom: 48px;
+  margin-bottom: 36px;
 }
 
 .pillars-layout {
@@ -951,7 +955,7 @@ a {
   display: grid;
   max-width: 720px;
   gap: 16px;
-  margin: 0 auto 58px;
+  margin: 0 auto 42px;
   text-align: center;
 }
 
@@ -1304,7 +1308,7 @@ a {
   border-top: 1px solid var(--line);
   background: color-mix(in srgb, var(--surface-strong) 72%, var(--page));
   color: var(--forest);
-  padding: 72px max(20px, calc((100vw - 1200px) / 2));
+  padding: 56px max(20px, calc((100vw - 1200px) / 2));
 }
 
 .footer-brand {
@@ -1619,7 +1623,7 @@ a {
     grid-template-columns: 1fr;
     align-content: center;
     gap: 24px;
-    padding: 28px 0 70px;
+    padding: 24px 0 46px;
   }
 
   .eyebrow {
@@ -1700,7 +1704,7 @@ a {
   .intro-section {
     grid-template-columns: 1fr;
     gap: 18px;
-    padding: 78px 0;
+    padding: 52px 0;
   }
 
   .intro-mark {
@@ -1727,11 +1731,11 @@ a {
   .stories-section,
   .progress-section,
   .videos-section {
-    padding: 78px 16px;
+    padding: 54px 16px;
   }
 
   .section-heading {
-    margin-bottom: 34px;
+    margin-bottom: 26px;
   }
 
   .pillars-layout {
@@ -1990,7 +1994,7 @@ a {
   .site-footer {
     grid-template-columns: 1fr;
     gap: 34px;
-    padding: 62px 20px 40px;
+    padding: 48px 20px 34px;
   }
 
   .footer-brand {

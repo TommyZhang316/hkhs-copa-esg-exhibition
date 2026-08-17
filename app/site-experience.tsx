@@ -203,7 +203,7 @@ const content = {
       title: "創建宜居．永續共融",
       body: "我們在物業管理和社區日常中落實可持續發展，與居民共建更宜居、更低碳的未來。",
       cta: "探索屋邨行動",
-      secondary: "查看進展",
+      secondary: "觀看屋邨 ESG 實踐視頻",
       imageAlt: "屋邨內的共融遊樂及休憩空間",
     },
     intro: {
@@ -357,7 +357,6 @@ const content = {
     footer: {
       statement: "可持續發展不是單一項目，而是我們建造、管理和服務社區的方式。",
       copyright: "香港房屋協會 物業管理部門",
-      note: "數據以所示報告期、披露範圍及正式來源為準。",
     },
   },
   "zh-cn": {
@@ -374,7 +373,7 @@ const content = {
       title: "创建宜居．永续共融",
       body: "我们在物业管理和社区日常中落实可持续发展，与居民共建更宜居、更低碳的未来。",
       cta: "探索屋邨行动",
-      secondary: "查看进展",
+      secondary: "观看屋邨 ESG 实践视频",
       imageAlt: "屋邨内的共融游乐及休憩空间",
     },
     intro: {
@@ -412,7 +411,7 @@ const content = {
       note: "可使用原生播放控制观看视频。",
       items: [] as [string, string, string][],
     },
-    footer: { statement: "可持续发展不是单一项目，而是我们建造、管理和服务社区的方式。", copyright: "香港房屋协会 物业管理部门", note: "数据以所示报告期、披露范围及正式来源为准。" },
+    footer: { statement: "可持续发展不是单一项目，而是我们建造、管理和服务社区的方式。", copyright: "香港房屋协会 物业管理部门" },
   },
   en: {
     htmlLang: "en",
@@ -428,7 +427,7 @@ const content = {
       title: "Creating Homes for Sustainable Living",
       body: "We put sustainability into practice through property management and community life, building a liveable, low-carbon future with residents.",
       cta: "Explore estate action",
-      secondary: "View our progress",
+      secondary: "Watch estate ESG practices in action",
       imageAlt: "An inclusive play and resting space on an estate",
     },
     intro: {
@@ -466,7 +465,7 @@ const content = {
       note: "Use the native playback controls to watch each video.",
       items: [] as [string, string, string][],
     },
-    footer: { statement: "Sustainability is not one project. It is how we build, manage and serve communities.", copyright: "Hong Kong Housing Society Property Management Division", note: "Figures should be read with the reporting period, disclosure scope and official source shown." },
+    footer: { statement: "Sustainability is not one project. It is how we build, manage and serve communities.", copyright: "Hong Kong Housing Society Property Management Division" },
   },
 } as const;
 
@@ -701,7 +700,7 @@ function RailCue({ activeIndex, count, label, previousLabel, nextLabel, onSelect
   );
 }
 
-const sectionIds = ["home", "stories", "progress", "videos", "pillars"] as const;
+const sectionIds = ["home", "stories", "videos", "progress", "pillars"] as const;
 
 function useSectionProgress() {
   const [activeSection, setActiveSection] = useState<(typeof sectionIds)[number]>("home");
@@ -749,8 +748,8 @@ export function SiteExperience({ locale }: { locale: Locale }) {
   const sectionLinks = [
     ["home", c.nav.home],
     ["stories", c.nav.stories],
-    ["progress", c.nav.progress],
     ["videos", c.nav.videos],
+    ["progress", c.nav.progress],
     ["pillars", c.nav.pillars],
   ] as const;
   const dialogOpen = Boolean(selectedStory);
@@ -833,8 +832,8 @@ export function SiteExperience({ locale }: { locale: Locale }) {
 
         <nav className="desktop-nav" aria-label="Primary navigation">
           <a href="#stories">{c.nav.stories}</a>
-          <a href="#progress">{c.nav.progress}</a>
           <a href="#videos">{c.nav.videos}</a>
+          <a href="#progress">{c.nav.progress}</a>
           <a href="#pillars">{c.nav.pillars}</a>
         </nav>
 
@@ -867,13 +866,20 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <nav aria-label="Mobile navigation">
               {[
                 ["#stories", c.nav.stories],
-                ["#progress", c.nav.progress],
                 ["#videos", c.nav.videos],
+                ["#progress", c.nav.progress],
                 ["#pillars", c.nav.pillars],
               ].map(([href, label]) => (
                 <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowRight size={22} aria-hidden="true" /></a>
               ))}
             </nav>
+            <div className="language-switcher mobile-language-switcher" aria-label="Language">
+              {languageLinks.map(([key, label]) => (
+                <a key={key} href={publicPath(key === "zh-hk" ? "/zh-hk" : `/${key}`)} aria-current={locale === key ? "page" : undefined}>
+                  {label}
+                </a>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -891,7 +897,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <p className="hero-body">{c.hero.body}</p>
             <div className="hero-actions">
               <a className="primary-button" href="#stories">{c.hero.cta}<ArrowRight size={18} aria-hidden="true" /></a>
-              <a className="text-link" href="#progress">{c.hero.secondary}</a>
+              <a className="text-link" href="#videos">{c.hero.secondary}</a>
             </div>
           </motion.div>
 
@@ -950,32 +956,6 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           </motion.div>
         </section>
 
-        <section className="progress-section" id="progress">
-          <motion.div className="progress-heading" {...reveal}>
-            <ChartLineUp size={42} weight="thin" aria-hidden="true" />
-            <h2>{c.progress.title}</h2>
-            {c.progress.body ? <p>{c.progress.body}</p> : null}
-          </motion.div>
-          <div className="metrics-grid">
-            {c.metrics.map((metric, index) => (
-              <motion.article key={metric.label} className={`metric metric-${index}`} {...reveal}>
-                <span className={`scope-label scope-${metric.scopeKind}`}>{metric.scopeKind === "property" ? c.ui.property : c.ui.organization}</span>
-                <div className="metric-value"><strong>{metric.value}</strong><span>{metric.unit}</span></div>
-                <h3>{metric.label}</h3>
-                <p>{metric.scope}</p>
-              </motion.article>
-            ))}
-          </div>
-          <details className="source-note">
-            <summary>{c.ui.source}<ArrowSquareOut size={16} aria-hidden="true" /></summary>
-            <p>{c.progress.source}</p>
-            <div>
-              <a href={sourceDocuments.sustainability} target="_blank" rel="noreferrer">{c.ui.sustainabilityReport}</a>
-              <a href={sourceDocuments.annual} target="_blank" rel="noreferrer">{c.ui.annualReport}</a>
-            </div>
-          </details>
-        </section>
-
         <section className="videos-section" id="videos">
           <div className="section-heading">
             <h2>{c.videos.title}</h2>
@@ -1007,6 +987,32 @@ export function SiteExperience({ locale }: { locale: Locale }) {
               onSelect={selectVideo}
             />
           </div>
+        </section>
+
+        <section className="progress-section" id="progress">
+          <motion.div className="progress-heading" {...reveal}>
+            <ChartLineUp size={42} weight="thin" aria-hidden="true" />
+            <h2>{c.progress.title}</h2>
+            {c.progress.body ? <p>{c.progress.body}</p> : null}
+          </motion.div>
+          <div className="metrics-grid">
+            {c.metrics.map((metric, index) => (
+              <motion.article key={metric.label} className={`metric metric-${index}`} {...reveal}>
+                <span className={`scope-label scope-${metric.scopeKind}`}>{metric.scopeKind === "property" ? c.ui.property : c.ui.organization}</span>
+                <div className="metric-value"><strong>{metric.value}</strong><span>{metric.unit}</span></div>
+                <h3>{metric.label}</h3>
+                <p>{metric.scope}</p>
+              </motion.article>
+            ))}
+          </div>
+          <details className="source-note">
+            <summary>{c.ui.source}<ArrowSquareOut size={16} aria-hidden="true" /></summary>
+            <p>{c.progress.source}</p>
+            <div>
+              <a href={sourceDocuments.sustainability} target="_blank" rel="noreferrer">{c.ui.sustainabilityReport}</a>
+              <a href={sourceDocuments.annual} target="_blank" rel="noreferrer">{c.ui.annualReport}</a>
+            </div>
+          </details>
         </section>
 
         <section className="pillars-section" id="pillars">
@@ -1087,14 +1093,13 @@ export function SiteExperience({ locale }: { locale: Locale }) {
         </div>
         <div className="footer-meta">
           <p>© {new Date().getFullYear()} {c.footer.copyright}</p>
-          <p>{c.footer.note}</p>
         </div>
       </footer>
 
       <nav className="bottom-nav" aria-label="Mobile primary navigation">
         <a href="#stories"><Buildings size={21} aria-hidden="true" /><span>{c.nav.stories}</span></a>
-        <a href="#progress"><ChartLineUp size={21} aria-hidden="true" /><span>{c.nav.progress}</span></a>
         <a href="#videos"><Play size={21} aria-hidden="true" /><span>{c.nav.videos}</span></a>
+        <a href="#progress"><ChartLineUp size={21} aria-hidden="true" /><span>{c.nav.progress}</span></a>
         <a href="#pillars"><Leaf size={21} aria-hidden="true" /><span>{c.nav.pillars}</span></a>
       </nav>
 

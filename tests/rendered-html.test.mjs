@@ -30,6 +30,7 @@ test("server-renders the Property Management Division sustainability experience"
   const html = await response.text();
   assert.match(html, /創建宜居．永續共融/);
   assert.match(html, /香港房屋協會-物業管理部門 可持續發展/);
+  assert.match(html, /class="text-link" href="#videos">觀看屋邨 ESG 實踐視頻/);
   assert.match(html, /以量化成果，呈現我們的進展。/);
   assert.match(html, /Hong Kong Housing Society Property Management Division/);
   assert.match(html, /香港房屋協會 物業管理部門/);
@@ -65,6 +66,9 @@ test("server-renders the Property Management Division sustainability experience"
   assert.match(html, /由物業管理員工示範廚餘分類和回收流程/);
   assert.doesNotMatch(html, /food-waste-kll|food-waste-ltt|觀龍樓智能廚餘回收/);
   assert.ok(html.indexOf("物業管理，讓可持續發展在屋邨發生") < html.indexOf("三大支柱，共同支撐宜居未來"));
+  assert.ok(html.indexOf('id="stories"') < html.indexOf('id="videos"'));
+  assert.ok(html.indexOf('id="videos"') < html.indexOf('id="progress"'));
+  assert.doesNotMatch(html, /數據以所示報告期、披露範圍及正式來源為準/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/);
   assert.doesNotMatch(html, /DxwklpgWz3c|kr5ljZSQx_c|wxdvJ-yH_JQ|1bH5kHK0oec/);
 });
@@ -80,8 +84,12 @@ test("server-renders English and Simplified Chinese routes", async () => {
   assert.match(englishHtml, /Environment/);
   assert.match(englishHtml, /Governance/);
   assert.match(englishHtml, /GeoAI-enabled smart mosquito monitoring/);
+  assert.match(englishHtml, /Watch estate ESG practices in action/);
+  assert.doesNotMatch(englishHtml, /Figures should be read with the reporting period/);
   assert.match(simplifiedHtml, /创建宜居．永续共融/);
   assert.match(simplifiedHtml, /环境/);
   assert.match(simplifiedHtml, /管治/);
   assert.match(simplifiedHtml, /GeoAI智能监测灭蚊灯/);
+  assert.match(simplifiedHtml, /观看屋邨 ESG 实践视频/);
+  assert.doesNotMatch(simplifiedHtml, /数据以所示报告期、披露范围及正式来源为准/);
 });
