@@ -1,0 +1,142 @@
+[
+  {
+    "id": "VD-01",
+    "src": "/media/videos/latest/VD-01.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "週末園圃種植樂", "description": "居民共享種植經驗，讓綠色空間成為社區交流的一部分。" },
+      "zh-cn": { "title": "周末园圃种植乐", "description": "居民共享种植经验，让绿色空间成为社区交流的一部分。" },
+      "en": { "title": "A weekend in the community garden", "description": "Residents share growing experience and turn green space into a place for connection." }
+    }
+  },
+  {
+    "id": "VD-02",
+    "src": "/media/videos/latest/VD-02.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "花花世界", "description": "以花卉和園藝活動豐富屋邨綠色生活。" },
+      "zh-cn": { "title": "花花世界", "description": "以花卉和园艺活动丰富屋邨绿色生活。" },
+      "en": { "title": "A world of flowers", "description": "Flowers and gardening activities enrich greener estate life." }
+    }
+  },
+  {
+    "id": "VD-03",
+    "src": "/media/videos/latest/VD-03.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "園途友里：製作艾草薄荷膏", "description": "社區與學校以植物體驗連繫環境教育和日常生活。" },
+      "zh-cn": { "title": "园途友里：制作艾草薄荷膏", "description": "社区与学校以植物体验连系环境教育和日常生活。" },
+      "en": { "title": "Garden Neighbours: making mugwort mint balm", "description": "A plant-based activity connects environmental learning with everyday life." }
+    }
+  },
+  {
+    "id": "VD-04",
+    "src": "/media/videos/latest/VD-04.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "共融休憩空間", "description": "從公共空間看見共融設計如何融入屋邨日常。" },
+      "zh-cn": { "title": "共融休憩空间", "description": "从公共空间看见共融设计如何融入屋邨日常。" },
+      "en": { "title": "An inclusive place to rest", "description": "See how inclusive design becomes part of everyday estate space." }
+    }
+  },
+  {
+    "id": "VD-05",
+    "src": "/media/videos/latest/VD-05.mov",
+    "mime": "video/quicktime",
+    "locales": {
+      "zh-hk": { "title": "環保風力發電照明", "description": "以風力及混合能源支援屋邨公共空間照明。" },
+      "zh-cn": { "title": "环保风力发电照明", "description": "以风力及混合能源支持屋邨公共空间照明。" },
+      "en": { "title": "Wind-powered environmental lighting", "description": "Wind and hybrid energy support lighting in estate shared spaces." }
+    }
+  },
+  {
+    "id": "VD-06",
+    "src": "/media/videos/latest/VD-06.mov",
+    "mime": "video/quicktime",
+    "locales": {
+      "zh-hk": { "title": "GeoAI 智能滅蚊", "description": "了解智能監測設備如何支援更具針對性的防蚊工作。" },
+      "zh-cn": { "title": "GeoAI 智能灭蚊", "description": "了解智能监测设备如何支持更具针对性的防蚊工作。" },
+      "en": { "title": "GeoAI smart mosquito control", "description": "See how smart monitoring supports more targeted mosquito-control work." }
+    }
+  },
+  {
+    "id": "VD-07",
+    "src": "/media/videos/latest/VD-07.mov",
+    "mime": "video/quicktime",
+    "locales": {
+      "zh-hk": { "title": "智能廚餘機使用示範", "description": "由物業管理員工示範廚餘分類和回收流程。" },
+      "zh-cn": { "title": "智能厨余机使用示范", "description": "由物业管理员工示范厨余分类和回收流程。" },
+      "en": { "title": "Using a smart food waste machine", "description": "A property management team member demonstrates the food waste sorting and recycling process." }
+    }
+  },
+  {
+    "id": "VD-08",
+    "src": "/media/videos/latest/VD-08.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "升級再造坊（一）", "description": "從日常物料出發，探索升級再造的不同可能。" },
+      "zh-cn": { "title": "升级再造坊（一）", "description": "从日常物料出发，探索升级再造的不同可能。" },
+      "en": { "title": "Upcycling workshop 1", "description": "Exploring new possibilities for everyday materials through upcycling." }
+    }
+  },
+  {
+    "id": "VD-09",
+    "src": "/media/videos/latest/VD-09.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "升級再造坊（二）", "description": "以創意延長物料的使用價值。" },
+      "zh-cn": { "title": "升级再造坊（二）", "description": "以创意延长物料的使用价值。" },
+      "en": { "title": "Upcycling workshop 2", "description": "Creative ideas extend the useful life of materials." }
+    }
+  },
+  {
+    "id": "VD-10",
+    "src": "/media/videos/latest/VD-10.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "升級再造坊（三）", "description": "讓資源循環成為可參與的社區體驗。" },
+      "zh-cn": { "title": "升级再造坊（三）", "description": "让资源循环成为可参与的社区体验。" },
+      "en": { "title": "Upcycling workshop 3", "description": "Making circular use of resources a participatory community experience." }
+    }
+  },
+  {
+    "id": "VD-11",
+    "src": "/media/videos/latest/VD-11.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "升級再造坊（四）", "description": "在製作過程中重新認識物料和減廢。" },
+      "zh-cn": { "title": "升级再造坊（四）", "description": "在制作过程中重新认识物料和减废。" },
+      "en": { "title": "Upcycling workshop 4", "description": "The making process encourages a fresh look at materials and waste reduction." }
+    }
+  },
+  {
+    "id": "VD-12",
+    "src": "/media/videos/latest/VD-12.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "升級再造坊（五）", "description": "以社區創作延續物料價值和環保意識。" },
+      "zh-cn": { "title": "升级再造坊（五）", "description": "以社区创作延续物料价值和环保意识。" },
+      "en": { "title": "Upcycling workshop 5", "description": "Community making extends material value and environmental awareness." }
+    }
+  },
+  {
+    "id": "VD-13",
+    "src": "/media/videos/latest/VD-13.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "留足跡．長記憶（一）", "description": "以數碼地圖記錄社區足跡，連繫不同世代的生活記憶。" },
+      "zh-cn": { "title": "留足迹．长记忆（一）", "description": "以数码地图记录社区足迹，连系不同世代的生活记忆。" },
+      "en": { "title": "Footprints and memories 1", "description": "Digital maps record community places and connect memories across generations." }
+    }
+  },
+  {
+    "id": "VD-14",
+    "src": "/media/videos/latest/VD-14.mp4",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "留足跡．長記憶（二）", "description": "由年輕一代分享數碼工具，促進跨代交流。" },
+      "zh-cn": { "title": "留足迹．长记忆（二）", "description": "由年轻一代分享数码工具，促进跨代交流。" },
+      "en": { "title": "Footprints and memories 2", "description": "Younger participants share digital tools and support intergenerational exchange." }
+    }
+  }
+]

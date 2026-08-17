@@ -7,21 +7,20 @@ import {
   CaretLeft,
   CaretRight,
   ChartLineUp,
-  CheckCircle,
   Cpu,
-  FilmSlate,
   HouseLine,
   Leaf,
   List,
   Play,
   Recycle,
-  ShieldCheck,
   Sun,
   UsersThree,
   X,
 } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import estateActionRecords from "../content/estate-actions.json";
+import videoRecords from "../content/videos.json";
 
 type Locale = "zh-hk" | "zh-cn" | "en";
 type PillarKey = "homes" | "carbon" | "future";
@@ -29,7 +28,8 @@ type ActionKey = "community" | "environment" | "service" | "innovation";
 type StoryMedia =
   | { type: "image"; src: string; alt: string }
   | { type: "video"; src: string; alt: string }
-  | { type: "graphic"; variant: "solar" | "community"; alt: string };
+  | { type: "graphic"; variant: "solar" | "community"; alt: string }
+  | { type: "empty"; alt: string };
 
 type Pillar = {
   key: PillarKey;
@@ -40,6 +40,7 @@ type Pillar = {
 };
 
 type Story = {
+  contentId: string;
   slug: string;
   pillar: PillarKey;
   action: ActionKey;
@@ -52,6 +53,39 @@ type Story = {
   scopeKind?: "organization" | "property";
   sourceKey?: "sustainability" | "annual";
   sourcePage?: number;
+};
+
+type EstateActionRecord = {
+  id: string;
+  slug: string;
+  pillar: PillarKey;
+  action: ActionKey;
+  image: string | null;
+  sourceKey: "sustainability" | "annual" | null;
+  sourcePage: number | null;
+  locales: Record<Locale, {
+    place: string;
+    title: string;
+    summary: string;
+    detail: string;
+    impact: string;
+    alt: string;
+  }>;
+};
+
+type VideoRecord = {
+  id: string;
+  src: string;
+  mime: "video/mp4" | "video/quicktime";
+  locales: Record<Locale, { title: string; description: string }>;
+};
+
+type VideoItem = {
+  id: string;
+  title: string;
+  description: string;
+  src: string;
+  mime: "video/mp4" | "video/quicktime";
 };
 
 type Metric = {
@@ -85,9 +119,6 @@ const media = {
   reuseHero: publicPath("/media/photos/kll-reuse-hero.jpg"),
   reuseDetail: publicPath("/media/photos/kll-reuse-detail-1.jpg"),
   reusePortrait: publicPath("/media/photos/kll-reuse-detail-2.jpg"),
-  garden: publicPath("/media/videos/community-garden.mp4"),
-  foodWasteKll: publicPath("/media/videos/food-waste-kll.mp4"),
-  foodWasteLtt: publicPath("/media/videos/food-waste-ltt.mp4"),
   foodWaste: publicPath("/media/feedback2/estate-food-waste.webp"),
   clothesRecycling: publicPath("/media/feedback2/estate-clothes-recycling.webp"),
   smartRecycling: publicPath("/media/feedback2/estate-smart-recycling.webp"),
@@ -103,6 +134,36 @@ const media = {
   smartFoodWaste: publicPath("/media/feedback4/smart-food-waste.webp"),
 };
 
+const buildEstateStories = (locale: Locale): Story[] =>
+  (estateActionRecords as EstateActionRecord[]).map((record) => {
+    const copy = record.locales[locale];
+    return {
+      contentId: record.id,
+      slug: record.slug,
+      pillar: record.pillar,
+      action: record.action,
+      place: copy.place,
+      title: copy.title,
+      summary: copy.summary,
+      detail: copy.detail,
+      impact: copy.impact,
+      media: record.image
+        ? { type: "image", src: publicPath(record.image), alt: copy.alt }
+        : { type: "empty", alt: "" },
+      sourceKey: record.sourceKey ?? undefined,
+      sourcePage: record.sourcePage ?? undefined,
+    };
+  });
+
+const buildVideoItems = (locale: Locale): VideoItem[] =>
+  (videoRecords as VideoRecord[]).map((record) => ({
+    id: record.id,
+    title: record.locales[locale].title,
+    description: record.locales[locale].description,
+    src: publicPath(record.src),
+    mime: record.mime,
+  }));
+
 const content = {
   "zh-hk": {
     htmlLang: "zh-HK",
@@ -112,7 +173,6 @@ const content = {
       progress: "進展",
       videos: "影片",
       pillars: "三大支柱",
-      direction: "房協方向",
       menu: "開啟選單",
       close: "關閉",
     },
@@ -133,7 +193,7 @@ const content = {
       annualReport: "香港房屋協會 2024/25 年度報告",
       previousStory: "上一個故事",
       nextStory: "下一個故事",
-      journeyProgress: "探索進度",
+      journeyProgress: "頁面進度",
     },
     hero: {
       eyebrow: "香港房屋協會-物業管理部門 可持續發展",
@@ -141,9 +201,7 @@ const content = {
       body: "我們在物業管理和社區日常中落實可持續發展，與居民共建更宜居、更低碳的未來。",
       cta: "探索屋邨行動",
       secondary: "查看進展",
-      videoLabel: "ESG 概覽影片",
-      videoDuration: "約 2 分鐘",
-      videoStatus: "完整影片將於此位置播放",
+      imageAlt: "屋邨內的共融遊樂及休憩空間",
     },
     intro: {
       title: "在物業管理日常，把 ESG 承諾變成行動",
@@ -175,17 +233,6 @@ const content = {
         action: "能力與創新",
       },
     ] satisfies Pillar[],
-    journey: {
-      title: "從建造到管理，把長遠價值帶進日常",
-      body: "物業管理團隊承接房屋和資產全生命週期的成果，並在營運中持續改善。",
-      items: [
-        ["規劃與設計", "把全生命週期、居民需要和氣候韌性納入早期決策。"],
-        ["建造", "推動低碳建造、物料效益和安全施工。"],
-        ["管理營運", "以數據和科技持續改善能源、設施及服務表現。"],
-        ["居民參與", "讓減廢、回收、園圃和共融活動成為屋邨日常。"],
-        ["社區協作", "與居民、學校、伙伴及業界共同擴大正面影響。"],
-      ],
-    },
     storySection: {
       title: "物業管理，讓可持續發展在屋邨發生",
       body: "按主題探索我們在社區共融、綠色營運、數碼服務及智慧管理上的實際工作。",
@@ -196,6 +243,10 @@ const content = {
       actionPrompt: "選擇屋邨行動主題",
       actions: { community: "共融社區", environment: "綠色營運", service: "數碼服務", innovation: "智慧管理" },
     },
+    stories: [] as Story[],
+    /* Legacy inline records kept temporarily for comparison. Live estate actions
+       are loaded from content/estate-actions.json. Remove this block after the
+       first content-studio review cycle.
     stories: [
       {
         slug: "smart-recycling-hub",
@@ -279,6 +330,7 @@ const content = {
         media: { type: "image", src: media.hsLiving, alt: "HS Living 手機應用程式畫面" },
       },
     ] satisfies Story[],
+    */
     progress: {
       title: "以量化成果，呈現我們的進展。",
       body: "",
@@ -292,25 +344,12 @@ const content = {
       { value: "25,100", unit: "小時", label: "社區服務", scope: "2024/25，由房協友里團隊及房協學院舊生會共同貢獻", scopeKind: "organization", sourceKey: "annual", sourcePage: 144 },
       { value: "38,660", unit: "小時", label: "員工培訓及專業發展", scope: "2024/25，適用於長期及固定任期員工", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
     ] satisfies Metric[],
-    governance: {
-      title: "以負責任管治，推動每一步",
-      body: "清晰的管治、跨部門協作和負責任融資，讓可持續發展成為房屋和資產決策的一部分。",
-      items: [
-        ["方向與監督", "由總監會議及相關工作小組推動策略、監督表現和檢視重點。"],
-        ["落實與協作", "營運團隊把承諾納入規劃、建造、管理和社區服務。"],
-        ["透明與問責", "以正式報告、明確數據範圍和持續溝通交代進展。"],
-      ],
-    },
     videos: {
       title: "看見社區中的改變",
-      body: "由居民親身示範，了解綠色生活如何在屋邨發生。",
+      body: "透過屋邨片段，了解綠色生活、共融社區和智慧管理如何在日常發生。",
       play: "播放影片",
       note: "可使用原生播放控制觀看影片。",
-      items: [
-        ["週末園圃種植樂", "居民共享種植經驗，讓綠色空間成為社區交流的一部分。", media.garden],
-        ["觀龍樓智能廚餘回收", "居民示範日常回收流程。", media.foodWasteKll],
-        ["廚餘回收設施示範", "從分類到回收，建立更便利的參與體驗。", media.foodWasteLtt],
-      ],
+      items: [] as [string, string, string][],
     },
     footer: {
       statement: "可持續發展不是單一項目，而是我們建造、管理和服務社區的方式。",
@@ -320,12 +359,12 @@ const content = {
   },
   "zh-cn": {
     htmlLang: "zh-CN",
-    nav: { home: "首页", stories: "屋邨行动", progress: "进展", videos: "视频", pillars: "三大支柱", direction: "房协方向", menu: "打开菜单", close: "关闭" },
+    nav: { home: "首页", stories: "屋邨行动", progress: "进展", videos: "视频", pillars: "三大支柱", menu: "打开菜单", close: "关闭" },
     brand: { division: "香港房屋协会 物业管理部门", full: "Hong Kong Housing Society Property Management Division" },
     ui: {
       swipe: "左右滑动查看更多", previous: "上一项", next: "下一项", source: "查看正式来源", reportPage: "PDF 第", pageSuffix: "页",
       organization: "房协整体", property: "物业管理实践", sustainabilityReport: "香港房屋协会 2024/25 可持续发展报告", annualReport: "香港房屋协会 2024/25 年度报告",
-      previousStory: "上一个故事", nextStory: "下一个故事", journeyProgress: "探索进度",
+      previousStory: "上一个故事", nextStory: "下一个故事", journeyProgress: "页面进度",
     },
     hero: {
       eyebrow: "香港房屋协会-物业管理部门 可持续发展",
@@ -333,7 +372,7 @@ const content = {
       body: "我们在物业管理和社区日常中落实可持续发展，与居民共建更宜居、更低碳的未来。",
       cta: "探索屋邨行动",
       secondary: "查看进展",
-      videoLabel: "ESG 概览视频", videoDuration: "约 2 分钟", videoStatus: "完整视频将在此位置播放",
+      imageAlt: "屋邨内的共融游乐及休憩空间",
     },
     intro: {
       title: "在物业管理日常，把 ESG 承诺变成行动",
@@ -347,17 +386,6 @@ const content = {
       { key: "carbon", title: "低碳转型", english: "Low-carbon Transformation", description: "把节能、减碳、循环资源和气候韧性融入发展、管理及营运。", action: "资源与环境" },
       { key: "future", title: "装备未来", english: "Future-fit Capabilities", description: "以人才、安全、数据和创新科技，提升物业及资产的长远表现。", action: "能力与创新" },
     ] satisfies Pillar[],
-    journey: {
-      title: "从建造到管理，把长远价值带进日常",
-      body: "物业管理团队承接房屋和资产全生命周期的成果，并在营运中持续改善。",
-      items: [
-        ["规划与设计", "把全生命周期、居民需要和气候韧性纳入早期决策。"],
-        ["建造", "推动低碳建造、物料效益和安全施工。"],
-        ["管理营运", "以数据和科技持续改善能源、设施及服务表现。"],
-        ["居民参与", "让减废、回收、园圃和共融活动成为屋邨日常。"],
-        ["社区协作", "与居民、学校、伙伴及业界共同扩大正面影响。"],
-      ],
-    },
     storySection: {
       title: "物业管理，让可持续发展在屋邨发生",
       body: "按主题探索我们在社区共融、绿色营运、数码服务及智慧管理上的实际工作。",
@@ -374,36 +402,23 @@ const content = {
       { value: "25,100", unit: "小时", label: "社区服务", scope: "2024/25，由房协友里团队及房协学院旧生会共同贡献", scopeKind: "organization", sourceKey: "annual", sourcePage: 144 },
       { value: "38,660", unit: "小时", label: "员工培训及专业发展", scope: "2024/25，适用于长期及固定任期员工", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
     ] satisfies Metric[],
-    governance: {
-      title: "以负责任管治，推动每一步",
-      body: "清晰的管治、跨部门协作和负责任融资，让可持续发展成为房屋和资产决策的一部分。",
-      items: [
-        ["方向与监督", "由总监会议及相关工作小组推动策略、监督表现和检视重点。"],
-        ["落实与协作", "营运团队把承诺纳入规划、建造、管理和社区服务。"],
-        ["透明与问责", "以正式报告、明确数据范围和持续沟通交代进展。"],
-      ],
-    },
     videos: {
       title: "看见社区中的改变",
-      body: "由居民亲身示范，了解绿色生活如何在屋邨发生。",
+      body: "透过屋邨片段，了解绿色生活、共融社区和智慧管理如何在日常发生。",
       play: "播放视频",
       note: "可使用原生播放控制观看视频。",
-      items: [
-        ["周末园圃种植乐", "居民共享种植经验，让绿色空间成为社区交流的一部分。", media.garden],
-        ["观龙楼智能厨余回收", "居民示范日常回收流程。", media.foodWasteKll],
-        ["厨余回收设施示范", "从分类到回收，建立更便利的参与体验。", media.foodWasteLtt],
-      ],
+      items: [] as [string, string, string][],
     },
     footer: { statement: "可持续发展不是单一项目，而是我们建造、管理和服务社区的方式。", copyright: "香港房屋协会 物业管理部门", note: "数据以所示报告期、披露范围及正式来源为准。" },
   },
   en: {
     htmlLang: "en",
-    nav: { home: "Home", stories: "Estate action", progress: "Progress", videos: "Videos", pillars: "Our pillars", direction: "HKHS direction", menu: "Open menu", close: "Close" },
+    nav: { home: "Home", stories: "Estate action", progress: "Progress", videos: "Videos", pillars: "Our pillars", menu: "Open menu", close: "Close" },
     brand: { division: "香港房屋協會 物業管理部門", full: "Hong Kong Housing Society Property Management Division" },
     ui: {
       swipe: "Swipe to explore", previous: "Previous", next: "Next", source: "View official source", reportPage: "PDF page ", pageSuffix: "",
       organization: "HKHS-wide", property: "Property management practice", sustainabilityReport: "HKHS Sustainability Report 2024/25", annualReport: "HKHS Annual Report 2024/25",
-      previousStory: "Previous story", nextStory: "Next story", journeyProgress: "Exploration progress",
+      previousStory: "Previous story", nextStory: "Next story", journeyProgress: "Page progress",
     },
     hero: {
       eyebrow: "HKHS Property Management Division Sustainability",
@@ -411,7 +426,7 @@ const content = {
       body: "We put sustainability into practice through property management and community life, building a liveable, low-carbon future with residents.",
       cta: "Explore estate action",
       secondary: "View our progress",
-      videoLabel: "ESG overview film", videoDuration: "Around 2 minutes", videoStatus: "The full film will play here",
+      imageAlt: "An inclusive play and resting space on an estate",
     },
     intro: {
       title: "Turning ESG commitments into everyday management",
@@ -425,17 +440,6 @@ const content = {
       { key: "carbon", title: "Low-carbon Transformation", english: "低碳轉型", description: "We integrate energy efficiency, carbon reduction, circular resources and resilience into development and operations.", action: "Resources and environment" },
       { key: "future", title: "Future-fit Capabilities", english: "裝備未來", description: "We strengthen long-term asset performance through people, safety, data and innovation.", action: "Capabilities and innovation" },
     ] satisfies Pillar[],
-    journey: {
-      title: "Bringing long-term value into everyday management",
-      body: "Property management carries lifecycle thinking into operations and continuous improvement.",
-      items: [
-        ["Plan and design", "Bring lifecycle thinking, resident needs and climate resilience into early decisions."],
-        ["Build", "Advance lower-carbon construction, material efficiency and safe delivery."],
-        ["Manage and operate", "Use data and technology to improve energy, facilities and services."],
-        ["Engage residents", "Make waste reduction, recycling, gardens and inclusion part of estate life."],
-        ["Work together", "Extend positive impact with residents, schools, partners and the industry."],
-      ],
-    },
     storySection: {
       title: "Property management makes sustainability tangible",
       body: "Explore our work across inclusive communities, greener operations, digital services and smarter management.",
@@ -452,30 +456,19 @@ const content = {
       { value: "25,100", unit: "hours", label: "community service", scope: "Contributed in 2024/25 by the CES Team and HKHS Academy Alumni Club", scopeKind: "organization", sourceKey: "annual", sourcePage: 144 },
       { value: "38,660", unit: "hours", label: "staff training and professional development", scope: "2024/25, for permanent and contract staff", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
     ] satisfies Metric[],
-    governance: {
-      title: "Responsible governance behind every step",
-      body: "Clear oversight, collaboration and responsible finance make sustainability part of housing and asset decisions.",
-      items: [
-        ["Direction and oversight", "The Directors' Meeting and relevant working groups guide strategy, monitor performance and review priorities."],
-        ["Delivery and collaboration", "Operational teams bring commitments into planning, construction, management and community service."],
-        ["Transparency and accountability", "Formal reporting, clear data scopes and ongoing communication show our progress."],
-      ],
-    },
     videos: {
       title: "See change taking place",
-      body: "Residents show how greener living becomes part of everyday estate life.",
+      body: "Estate stories show how greener living, inclusive communities and smarter management become part of everyday life.",
       play: "Play video",
       note: "Use the native playback controls to watch each video.",
-      items: [
-        ["A weekend in the community garden", "Residents share growing experience and turn green space into a place for connection.", media.garden],
-        ["Smart food waste recycling at Kwun Lung Lau", "Residents demonstrate the everyday recycling process.", media.foodWasteKll],
-        ["Using a food waste recycling facility", "A more convenient experience from separation to recycling.", media.foodWasteLtt],
-      ],
+      items: [] as [string, string, string][],
     },
     footer: { statement: "Sustainability is not one project. It is how we build, manage and serve communities.", copyright: "Hong Kong Housing Society Property Management Division", note: "Figures should be read with the reporting period, disclosure scope and official source shown." },
   },
 } as const;
 
+/* Legacy inline translations kept temporarily for comparison. Live estate
+   actions are loaded from content/estate-actions.json.
 const englishStories: Story[] = [
   {
     slug: "smart-recycling-hub",
@@ -643,6 +636,7 @@ const simplifiedStories: Story[] = [
     media: { type: "image", src: media.hsLiving, alt: "HS Living 手机应用程序画面" },
   },
 ];
+*/
 
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
@@ -668,6 +662,10 @@ function StoryVisual({ media: visual, compact = false }: { media: StoryMedia; co
         <source src={visual.src} type="video/mp4" />
       </video>
     );
+  }
+
+  if (visual.type === "empty") {
+    return <div className="story-empty-media" aria-hidden="true" />;
   }
 
   const Icon = visual.variant === "solar" ? Sun : UsersThree;
@@ -700,37 +698,7 @@ function RailCue({ activeIndex, count, label, previousLabel, nextLabel, onSelect
   );
 }
 
-function useRailIndex(count: number) {
-  const railRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail || typeof IntersectionObserver === "undefined") return;
-    const items = Array.from(rail.children);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActiveIndex(items.indexOf(visible.target));
-      },
-      { root: rail, threshold: [0.45, 0.7] },
-    );
-    items.forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
-  }, [count]);
-
-  const selectIndex = (index: number) => {
-    const item = railRef.current?.children[index] as HTMLElement | undefined;
-    item?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
-    setActiveIndex(index);
-  };
-
-  return { railRef, activeIndex, selectIndex };
-}
-
-const sectionIds = ["home", "stories", "progress", "videos", "pillars", "direction"] as const;
+const sectionIds = ["home", "stories", "progress", "videos", "pillars"] as const;
 
 function useSectionProgress() {
   const [activeSection, setActiveSection] = useState<(typeof sectionIds)[number]>("home");
@@ -767,17 +735,10 @@ export function SiteExperience({ locale }: { locale: Locale }) {
   const dialogInnerRef = useRef<HTMLDivElement>(null);
   const pillarRailRef = useRef<HTMLDivElement>(null);
   const videoRailRef = useRef<HTMLDivElement>(null);
-  const {
-    railRef: journeyRailRef,
-    activeIndex: journeyActiveIndex,
-    selectIndex: selectJourneyIndex,
-  } = useRailIndex(c.journey.items.length);
-
   const stories = useMemo(() => {
-    if (locale === "en") return englishStories;
-    if (locale === "zh-cn") return simplifiedStories;
-    return [...content["zh-hk"].stories];
+    return buildEstateStories(locale);
   }, [locale]);
+  const videoItems = useMemo(() => buildVideoItems(locale), [locale]);
 
   const filteredStories = storyFilter === "all" ? stories : stories.filter((story) => story.action === storyFilter);
   const selectedPillar = c.pillars.find((pillar) => pillar.key === activePillar) ?? c.pillars[0];
@@ -788,7 +749,6 @@ export function SiteExperience({ locale }: { locale: Locale }) {
     ["progress", c.nav.progress],
     ["videos", c.nav.videos],
     ["pillars", c.nav.pillars],
-    ["direction", c.nav.direction],
   ] as const;
   const dialogOpen = Boolean(selectedStory);
 
@@ -873,7 +833,6 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           <a href="#progress">{c.nav.progress}</a>
           <a href="#videos">{c.nav.videos}</a>
           <a href="#pillars">{c.nav.pillars}</a>
-          <a href="#direction">{c.nav.direction}</a>
         </nav>
 
         <div className="header-actions">
@@ -908,7 +867,6 @@ export function SiteExperience({ locale }: { locale: Locale }) {
                 ["#progress", c.nav.progress],
                 ["#videos", c.nav.videos],
                 ["#pillars", c.nav.pillars],
-                ["#direction", c.nav.direction],
               ].map(([href, label]) => (
                 <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowRight size={22} aria-hidden="true" /></a>
               ))}
@@ -940,15 +898,8 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="hero-image-wrap hero-video-placeholder" role="img" aria-label={`${c.hero.videoLabel}, ${c.hero.videoDuration}. ${c.hero.videoStatus}`}>
-              <img src={media.inclusivePlay} alt="" width="1600" height="900" fetchPriority="high" />
-              <div className="hero-video-overlay">
-                <div className="hero-video-heading">
-                  <FilmSlate size={28} weight="regular" aria-hidden="true" />
-                  <span><strong>{c.hero.videoLabel}</strong><small>{c.hero.videoDuration}</small></span>
-                </div>
-                <p>{c.hero.videoStatus}</p>
-              </div>
+            <div className="hero-image-wrap">
+              <img src={media.inclusivePlay} alt={c.hero.imageAlt} width="1600" height="900" fetchPriority="high" />
             </div>
           </motion.figure>
         </section>
@@ -976,6 +927,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
                 <motion.article
                   layout
                   key={story.slug}
+                  data-content-id={story.contentId}
                   className={`story-card story-card-${index % 6} story-${story.slug}`}
                   initial={reduceMotion ? false : { opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -1030,14 +982,14 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <div className="video-player">
               {/* Captions will be connected when the approved transcripts are provided. */}
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <video key={c.videos.items[activeVideo][2]} controls playsInline preload="metadata" poster={media.smartRecycling} aria-label={c.videos.items[activeVideo][0]}>
-                <source src={c.videos.items[activeVideo][2]} type="video/mp4" />
+              <video key={videoItems[activeVideo].src} controls playsInline preload="metadata" poster={media.smartRecycling} aria-label={videoItems[activeVideo].title}>
+                <source src={videoItems[activeVideo].src} type={videoItems[activeVideo].mime} />
               </video>
               <p>{c.videos.note}</p>
             </div>
             <div className="video-selector" ref={videoRailRef}>
-              {c.videos.items.map(([title, description], index) => (
-                <button key={title} type="button" className={activeVideo === index ? "is-active" : ""} onClick={() => selectVideo(index)}>
+              {videoItems.map(({ id, title, description }, index) => (
+                <button key={id} type="button" data-content-id={id} className={activeVideo === index ? "is-active" : ""} onClick={() => selectVideo(index)}>
                   <span className="play-icon"><Play size={18} weight="fill" aria-hidden="true" /></span>
                   <span><strong>{title}</strong><small>{description}</small></span>
                 </button>
@@ -1045,7 +997,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             </div>
             <RailCue
               activeIndex={activeVideo}
-              count={c.videos.items.length}
+              count={videoItems.length}
               label={c.ui.swipe}
               previousLabel={c.ui.previous}
               nextLabel={c.ui.next}
@@ -1105,48 +1057,6 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           </a>
         </section>
 
-        <motion.section className="journey-section" id="direction" {...reveal}>
-          <div className="journey-lead">
-            <h2>{c.journey.title}</h2>
-            <p>{c.journey.body}</p>
-          </div>
-          <div className="journey-track" ref={journeyRailRef}>
-            {c.journey.items.map(([title, description], index) => (
-              <article key={title} style={{ "--item-index": index } as React.CSSProperties}>
-                <span aria-hidden="true">{index + 1}</span>
-                <h3>{title}</h3>
-                <p>{description}</p>
-              </article>
-            ))}
-          </div>
-          <RailCue
-            activeIndex={journeyActiveIndex}
-            count={c.journey.items.length}
-            label={c.ui.swipe}
-            previousLabel={c.ui.previous}
-            nextLabel={c.ui.next}
-            onSelect={selectJourneyIndex}
-          />
-        </motion.section>
-
-        <motion.section className="governance-section" {...reveal}>
-          <div className="governance-copy">
-            <ShieldCheck size={48} weight="thin" aria-hidden="true" />
-            <h2>{c.governance.title}</h2>
-            <p>{c.governance.body}</p>
-            <a className="section-source-link governance-source" href={`${sourceDocuments.sustainability}#page=12`} target="_blank" rel="noreferrer">
-              <span>{c.ui.source}</span><ArrowSquareOut size={16} aria-hidden="true" />
-            </a>
-          </div>
-          <div className="governance-points">
-            {c.governance.items.map(([title, description]) => (
-              <article key={title}>
-                <CheckCircle size={24} weight="regular" aria-hidden="true" />
-                <div><h3>{title}</h3><p>{description}</p></div>
-              </article>
-            ))}
-          </div>
-        </motion.section>
       </main>
 
       <aside className="page-progress" aria-label={c.ui.journeyProgress}>
@@ -1183,7 +1093,6 @@ export function SiteExperience({ locale }: { locale: Locale }) {
         <a href="#progress"><ChartLineUp size={21} aria-hidden="true" /><span>{c.nav.progress}</span></a>
         <a href="#videos"><Play size={21} aria-hidden="true" /><span>{c.nav.videos}</span></a>
         <a href="#pillars"><Leaf size={21} aria-hidden="true" /><span>{c.nav.pillars}</span></a>
-        <a href="#direction"><HouseLine size={21} aria-hidden="true" /><span>{c.nav.direction}</span></a>
       </nav>
 
       <dialog

@@ -1,0 +1,387 @@
+[
+  {
+    "id": "EA-01",
+    "slug": "smart-recycling-hub",
+    "pillar": "carbon",
+    "action": "environment",
+    "image": "/media/estate-actions/EA-01.webp",
+    "sourceKey": "annual",
+    "sourcePage": 141,
+    "locales": {
+      "zh-hk": {
+        "place": "20 個出租屋邨",
+        "title": "智能回收，讓廚餘分類走進日常",
+        "summary": "智能廚餘機、舊衣及多類可回收物各有清楚去向，讓屋邨分類更便利。",
+        "detail": "物業管理團隊按屋邨環境整合智能廚餘機、衣物回收箱，以及金屬、塑膠、紙張和玻璃分類設施。智能廚餘機配備防滿溢及除味裝置，居民亦可透過「綠綠賞」二維碼參與回收。",
+        "impact": "近 50 部智能廚餘回收機已設於 20 個出租屋邨，並與其他分類設施共同支援資源循環。",
+        "alt": "出租屋邨設置的智能廚餘回收設施"
+      },
+      "zh-cn": {
+        "place": "20 个出租屋邨",
+        "title": "智能回收，让厨余分类走进日常",
+        "summary": "智能厨余机、旧衣及多类可回收物各有清楚去向，让屋邨分类更便利。",
+        "detail": "物业管理团队按屋邨环境整合智能厨余机、衣物回收箱，以及金属、塑料、纸张和玻璃分类设施。智能厨余机配备防满溢及除味装置，居民也可透过「绿绿赏」二维码参与回收。",
+        "impact": "近 50 部智能厨余回收机已设于 20 个出租屋邨，并与其他分类设施共同支持资源循环。",
+        "alt": "出租屋邨设置的智能厨余回收设施"
+      },
+      "en": {
+        "place": "20 rental estates",
+        "title": "Smart recycling makes food waste sorting easier",
+        "summary": "Smart food waste machines, used clothing and common recyclables each have a clearer route across estate life.",
+        "detail": "Property management teams bring together smart food waste machines, clothes collection and facilities for metal, plastic, paper and glass. The food waste machines include overflow prevention and odour-control features, while residents can take part through the GREEN$ QR code.",
+        "impact": "Nearly 50 smart food waste recycling machines serve 20 rental estates alongside other recycling facilities.",
+        "alt": "A smart food waste recycling facility at a rental estate"
+      }
+    }
+  },
+  {
+    "id": "EA-02",
+    "slug": "renewable-energy",
+    "pillar": "carbon",
+    "action": "environment",
+    "image": "/media/estate-actions/EA-02.webp",
+    "sourceKey": "annual",
+    "sourcePage": 141,
+    "locales": {
+      "zh-hk": {
+        "place": "出租屋邨",
+        "title": "在屋邨採集潔淨能源",
+        "summary": "太陽能和風力設備把公共空間轉化為可再生能源的實踐場景。",
+        "detail": "房協在合適屋邨設置太陽能光伏系統，並在觀龍樓應用風力發電及混合發電照明系統，將可再生能源融入物業營運。",
+        "impact": "截至 2024/25 年度，10 個出租屋邨設有太陽能光伏系統。",
+        "alt": "觀龍樓的風力發電設備"
+      },
+      "zh-cn": {
+        "place": "出租屋邨",
+        "title": "在屋邨采集洁净能源",
+        "summary": "太阳能和风力设备把公共空间转化为可再生能源的实践场景。",
+        "detail": "房协在合适屋邨设置太阳能光伏系统，并在观龙楼应用风力发电及混合发电照明系统，将可再生能源融入物业营运。",
+        "impact": "截至 2024/25 年度，10 个出租屋邨设有太阳能光伏系统。",
+        "alt": "观龙楼的风力发电设备"
+      },
+      "en": {
+        "place": "Rental estates",
+        "title": "Harvesting cleaner energy on estates",
+        "summary": "Solar and wind installations turn shared spaces into practical renewable energy sites.",
+        "detail": "HKHS installs solar photovoltaic systems at suitable estates and uses wind and hybrid-powered lighting systems at Kwun Lung Lau, integrating renewables into property operations.",
+        "impact": "By 2024/25, solar photovoltaic systems were installed at 10 rental estates.",
+        "alt": "Wind generation equipment at Kwun Lung Lau"
+      }
+    }
+  },
+  {
+    "id": "EA-03",
+    "slug": "intergenerational-community",
+    "pillar": "homes",
+    "action": "community",
+    "image": "/media/estate-actions/EA-03.webp",
+    "sourceKey": null,
+    "sourcePage": null,
+    "locales": {
+      "zh-hk": {
+        "place": "跨代社區",
+        "title": "讓不同世代共享生活空間",
+        "summary": "共融設施和社區活動回應長者、家庭及不同居民的生活需要。",
+        "detail": "房協從空間、設施和活動三方面推動跨代交流，讓居民在日常生活中建立互助和連繫。",
+        "impact": "設計不只處理通行和使用需要，也重視尊重、參與和社區歸屬感。",
+        "alt": "屋邨內色彩清晰的長幼共融遊樂空間"
+      },
+      "zh-cn": {
+        "place": "跨代社区",
+        "title": "让不同世代共享生活空间",
+        "summary": "共融设施和社区活动回应长者、家庭及不同居民的生活需要。",
+        "detail": "房协从空间、设施和活动三方面推动跨代交流，让居民在日常生活中建立互助和连系。",
+        "impact": "设计不只处理通行和使用需要，也重视尊重、参与和社区归属感。",
+        "alt": "屋邨内色彩清晰的长幼共融游乐空间"
+      },
+      "en": {
+        "place": "Intergenerational community",
+        "title": "Shared spaces for every generation",
+        "summary": "Inclusive facilities and activities respond to older people, families and diverse residents.",
+        "detail": "HKHS promotes intergenerational connection through spaces, facilities and activities that encourage residents to meet and support one another.",
+        "impact": "Design addresses access and use while strengthening respect, participation and belonging.",
+        "alt": "A colourful inclusive play space on an estate"
+      }
+    }
+  },
+  {
+    "id": "EA-04",
+    "slug": "community-art",
+    "pillar": "homes",
+    "action": "community",
+    "image": "/media/estate-actions/EA-04.webp",
+    "sourceKey": null,
+    "sourcePage": null,
+    "locales": {
+      "zh-hk": {
+        "place": "屋邨公共空間",
+        "title": "把社區故事帶進日常空間",
+        "summary": "以街坊創作和地方特色豐富公共空間，讓屋邨環境更具歸屬感。",
+        "detail": "物業管理不只照顧設施運作，也透過合適的社區藝術和展示，把地方記憶融入居民每天經過的空間。",
+        "impact": "公共空間兼具使用功能和社區特色，支持居民建立對居住環境的認同。",
+        "alt": "屋邨公共空間展示街坊創作"
+      },
+      "zh-cn": {
+        "place": "屋邨公共空间",
+        "title": "把社区故事带进日常空间",
+        "summary": "以街坊创作和地方特色丰富公共空间，让屋邨环境更具归属感。",
+        "detail": "物业管理不只照顾设施运作，也透过合适的社区艺术和展示，把地方记忆融入居民每天经过的空间。",
+        "impact": "公共空间兼具使用功能和社区特色，支持居民建立对居住环境的认同。",
+        "alt": "屋邨公共空间展示街坊创作"
+      },
+      "en": {
+        "place": "Estate shared space",
+        "title": "Bringing community stories into shared space",
+        "summary": "Resident creativity and local character can enrich everyday estate environments.",
+        "detail": "Property management supports functional shared spaces while suitable community art and displays bring local memories into residents' daily routes.",
+        "impact": "Shared areas can serve practical needs and express a stronger sense of place and belonging.",
+        "alt": "Community artwork displayed in an estate shared space"
+      }
+    }
+  },
+  {
+    "id": "EA-05",
+    "slug": "ev-charging",
+    "pillar": "carbon",
+    "action": "environment",
+    "image": "/media/estate-actions/EA-05.webp",
+    "sourceKey": null,
+    "sourcePage": null,
+    "locales": {
+      "zh-hk": {
+        "place": "屋邨停車場",
+        "title": "為低碳出行準備充電設施",
+        "summary": "在合適停車位置配置充電設備，配合交通電動化的長遠需要。",
+        "detail": "物業管理團隊按場地條件和使用需要規劃充電設施，並把設備安全、維護和日常運作納入管理。",
+        "impact": "逐步完善屋邨低碳出行配套，也為未來資產管理建立實務經驗。",
+        "alt": "屋邨停車位置旁的電動車充電設備"
+      },
+      "zh-cn": {
+        "place": "屋邨停车场",
+        "title": "为低碳出行准备充电设施",
+        "summary": "在合适停车位置配置充电设备，配合交通电动化的长远需要。",
+        "detail": "物业管理团队按场地条件和使用需要规划充电设施，并把设备安全、维护和日常运作纳入管理。",
+        "impact": "逐步完善屋邨低碳出行配套，也为未来资产管理建立实务经验。",
+        "alt": "屋邨停车位置旁的电动车充电设备"
+      },
+      "en": {
+        "place": "Estate car park",
+        "title": "Preparing charging facilities for lower-carbon travel",
+        "summary": "Charging equipment at suitable parking spaces supports the longer-term transition to electric mobility.",
+        "detail": "Property management teams plan charging around site conditions and user needs, while including safety, maintenance and operation in daily management.",
+        "impact": "The facilities strengthen lower-carbon transport readiness and build practical asset management experience.",
+        "alt": "Electric vehicle charging equipment beside an estate parking space"
+      }
+    }
+  },
+  {
+    "id": "EA-06",
+    "slug": "geoai-mosquito-control",
+    "pillar": "future",
+    "action": "innovation",
+    "image": "/media/estate-actions/EA-06.webp",
+    "sourceKey": null,
+    "sourcePage": null,
+    "locales": {
+      "zh-hk": {
+        "place": "觀龍樓等屋邨",
+        "title": "以智能監測支援精準防蚊",
+        "summary": "智能滅蚊燈和氣象資料協助團隊掌握環境變化，提早部署防蚊工作。",
+        "detail": "物業管理團隊與科研機構合作，在觀龍樓等屋邨安裝智能滅蚊燈及氣象站，透過數據辨識蚊種及預測短期蚊患趨勢。",
+        "impact": "環境管理由定期處理走向更具針對性的部署，提升屋邨防蚊工作的效率。",
+        "alt": "屋邨園景內的智能滅蚊及環境監測設備"
+      },
+      "zh-cn": {
+        "place": "观龙楼等屋邨",
+        "title": "以智能监测支持精准防蚊",
+        "summary": "智能灭蚊灯和气象数据协助团队掌握环境变化，提早部署防蚊工作。",
+        "detail": "物业管理团队与科研机构合作，在观龙楼等屋邨安装智能灭蚊灯及气象站，透过数据辨识蚊种及预测短期蚊患趋势。",
+        "impact": "环境管理由定期处理走向更具针对性的部署，提升屋邨防蚊工作的效率。",
+        "alt": "屋邨园景内的智能灭蚊及环境监测设备"
+      },
+      "en": {
+        "place": "Kwun Lung Lau and other estates",
+        "title": "Using smart monitoring for targeted mosquito control",
+        "summary": "Smart mosquito traps and weather data help teams track environmental change and plan earlier action.",
+        "detail": "Property management teams work with research partners to install smart mosquito traps and weather stations, using data to identify species and forecast short-term mosquito activity.",
+        "impact": "Estate hygiene work becomes more targeted and responsive to local conditions.",
+        "alt": "Smart mosquito-control and environmental monitoring equipment in an estate landscape"
+      }
+    }
+  },
+  {
+    "id": "EA-07",
+    "slug": "hs-living-service",
+    "pillar": "future",
+    "action": "service",
+    "image": "/media/estate-actions/EA-07.webp",
+    "sourceKey": null,
+    "sourcePage": null,
+    "locales": {
+      "zh-hk": {
+        "place": "屋邨數碼服務",
+        "title": "一站式資訊，連繫屋邨生活",
+        "summary": "居民可透過手機應用程式查閱屋邨資訊、接收通知及報名參與活動。",
+        "detail": "HS Living 及房協屋邨資訊手機應用程式把常用屋邨資訊和服務帶到流動裝置，讓居民更便捷地了解日常安排及社區活動。",
+        "impact": "資訊傳達更及時，亦減少紙本通告的需要，支持居民參與和綠色生活。",
+        "alt": "HS Living 手機應用程式畫面"
+      },
+      "zh-cn": {
+        "place": "屋邨数码服务",
+        "title": "一站式信息，连系屋邨生活",
+        "summary": "居民可透过手机应用程序查阅屋邨信息、接收通知及报名参与活动。",
+        "detail": "HS Living 及房协屋邨信息手机应用程序把常用屋邨信息和服务带到移动设备，让居民更便捷地了解日常安排及社区活动。",
+        "impact": "信息传达更及时，也减少纸本通告的需要，支持居民参与和绿色生活。",
+        "alt": "HS Living 手机应用程序画面"
+      },
+      "en": {
+        "place": "Estate digital services",
+        "title": "One place for everyday estate information",
+        "summary": "Residents can view estate information, receive notices and register for activities on their phones.",
+        "detail": "The HS Living and estate information apps bring frequently used information and services to mobile devices, helping residents keep up with everyday arrangements and community activities.",
+        "impact": "Information reaches residents sooner, with less reliance on paper notices and more convenient participation.",
+        "alt": "HS Living mobile application screens"
+      }
+    }
+  },
+  {
+    "id": "EA-08",
+    "slug": "estate-digital-noticeboards",
+    "pillar": "future",
+    "action": "service",
+    "image": null,
+    "sourceKey": null,
+    "sourcePage": null,
+    "locales": {
+      "zh-hk": {
+        "place": "屋邨大廈地下大堂",
+        "title": "電子通告板，讓資訊更快到達",
+        "summary": "影片、通告和海報以數碼方式發布，讓居民掌握屋邨及政府部門的最新資訊。",
+        "detail": "物業管理團隊在合適的大廈地下大堂設置電子通告板，集中播放屋邨辦事處及政府部門的影片、通告和海報。",
+        "impact": "日常資訊能夠更及時、全面地傳達，也減少更新紙本告示所需的時間。",
+        "alt": ""
+      },
+      "zh-cn": {
+        "place": "屋邨大厦地下大堂",
+        "title": "电子通告板，让信息更快到达",
+        "summary": "视频、通告和海报以数码方式发布，让居民掌握屋邨及政府部门的最新信息。",
+        "detail": "物业管理团队在合适的大厦地下大堂设置电子通告板，集中播放屋邨办事处及政府部门的视频、通告和海报。",
+        "impact": "日常信息能够更及时、全面地传达，也减少更新纸本告示所需的时间。",
+        "alt": ""
+      },
+      "en": {
+        "place": "Estate entrance lobbies",
+        "title": "Digital noticeboards deliver information sooner",
+        "summary": "Videos, notices and posters help residents keep up with the latest estate and government information.",
+        "detail": "Property management teams install digital noticeboards in suitable estate entrance lobbies to present videos, notices and posters from estate offices and government departments.",
+        "impact": "Everyday information can be communicated more promptly and comprehensively, with less time spent replacing printed notices.",
+        "alt": ""
+      }
+    }
+  },
+  {
+    "id": "EA-09",
+    "slug": "yiu-ming-intergenerational-play",
+    "pillar": "homes",
+    "action": "community",
+    "image": "/media/estate-actions/EA-09.webp",
+    "sourceKey": null,
+    "sourcePage": null,
+    "locales": {
+      "zh-hk": {
+        "place": "乙明邨",
+        "title": "跨代共融遊樂空間，連繫不同年齡",
+        "summary": "兒童遊樂和健體設施置於同一空間，鼓勵長、中、青、幼共同使用。",
+        "detail": "乙明邨的跨代共融遊樂空間設有兒童彈跳床、健體單車等設施，讓不同年齡居民在日常生活中互動。",
+        "impact": "遊樂空間不只提供設施，也成為促進交流、共融與鄰里連繫的社區場景。",
+        "alt": "乙明邨色彩鮮明的跨代共融遊樂空間"
+      },
+      "zh-cn": {
+        "place": "乙明邨",
+        "title": "跨代共融游乐空间，连系不同年龄",
+        "summary": "儿童游乐和健体设施置于同一空间，鼓励长、中、青、幼共同使用。",
+        "detail": "乙明邨的跨代共融游乐空间设有儿童弹跳床、健体单车等设施，让不同年龄居民在日常生活中互动。",
+        "impact": "游乐空间不只提供设施，也成为促进交流、共融与邻里连系的社区场景。",
+        "alt": "乙明邨色彩鲜明的跨代共融游乐空间"
+      },
+      "en": {
+        "place": "Yiu Ming Estate",
+        "title": "An intergenerational play space for every age",
+        "summary": "Children's play and fitness facilities share one space, encouraging residents of different generations to take part together.",
+        "detail": "The intergenerational play space at Yiu Ming Estate includes children's trampolines, fitness bikes and other facilities that support everyday interaction across age groups.",
+        "impact": "The space provides more than equipment. It creates a setting for connection, inclusion and stronger neighbourhood ties.",
+        "alt": "The colourful intergenerational play space at Yiu Ming Estate"
+      }
+    }
+  },
+  {
+    "id": "EA-10",
+    "slug": "proptech-co-working-space",
+    "pillar": "future",
+    "action": "innovation",
+    "image": null,
+    "sourceKey": null,
+    "sourcePage": null,
+    "locales": {
+      "zh-hk": {
+        "place": "房協 × 數碼港",
+        "title": "共享工作室，連繫房地產科技創新",
+        "summary": "房地產科技共享工作室為初創企業提供交流及真實場景測試機會。",
+        "detail": "房協與數碼港設立房地產科技共享工作室，讓創科團隊了解物業管理需要，並在合適情況下探索屋邨場景的技術應用。",
+        "impact": "把前線需要、業界知識和創新方案連繫起來，支持物業管理能力持續提升。",
+        "alt": ""
+      },
+      "zh-cn": {
+        "place": "房协 × 数码港",
+        "title": "共享工作室，连系房地产科技创新",
+        "summary": "房地产科技共享工作室为初创企业提供交流及真实场景测试机会。",
+        "detail": "房协与数码港设立房地产科技共享工作室，让创科团队了解物业管理需要，并在合适情况下探索屋邨场景的技术应用。",
+        "impact": "把前线需要、业界知识和创新方案连系起来，支持物业管理能力持续提升。",
+        "alt": ""
+      },
+      "en": {
+        "place": "HKHS × Cyberport",
+        "title": "A shared workspace for property technology innovation",
+        "summary": "The Property Technology Co-working Space gives start-ups opportunities to exchange ideas and test solutions in real settings.",
+        "detail": "HKHS and Cyberport established the shared workspace so technology teams can better understand property management needs and explore suitable applications in estate settings.",
+        "impact": "It connects frontline needs, industry knowledge and emerging solutions to support continuous improvement in property management.",
+        "alt": ""
+      }
+    }
+  },
+  {
+    "id": "EA-11",
+    "slug": "walkable-pv-panel",
+    "pillar": "carbon",
+    "action": "environment",
+    "image": "/media/estate-actions/EA-11.webp",
+    "sourceKey": null,
+    "sourcePage": null,
+    "locales": {
+      "zh-hk": {
+        "place": "觀龍樓",
+        "title": "Walkable PV Panel，讓公共空間同時發電",
+        "summary": "可步行太陽能板把發電功能融入日常通行空間，拓展屋邨應用可再生能源的方式。",
+        "detail": "物業管理團隊在合適位置應用可步行太陽能板，讓公共空間在維持通行功能的同時收集太陽能。",
+        "impact": "這項應用展示可再生能源設施如何更貼近屋邨日常，為後續綠色營運累積實務經驗。",
+        "alt": "觀龍樓公共空間鋪設的可步行太陽能板"
+      },
+      "zh-cn": {
+        "place": "观龙楼",
+        "title": "Walkable PV Panel，让公共空间同时发电",
+        "summary": "可步行太阳能板把发电功能融入日常通行空间，拓展屋邨应用可再生能源的方式。",
+        "detail": "物业管理团队在合适位置应用可步行太阳能板，让公共空间在维持通行功能的同时收集太阳能。",
+        "impact": "这项应用展示可再生能源设施如何更贴近屋邨日常，为后续绿色营运积累实务经验。",
+        "alt": "观龙楼公共空间铺设的可步行太阳能板"
+      },
+      "en": {
+        "place": "Kwun Lung Lau",
+        "title": "Walkable PV panels bring generation into shared space",
+        "summary": "Walkable solar panels integrate energy generation into everyday routes and expand how renewable energy can be used on estates.",
+        "detail": "Property management teams apply walkable photovoltaic panels in suitable locations so shared space can collect solar energy while remaining part of residents' everyday routes.",
+        "impact": "The application brings renewable infrastructure closer to estate life and builds practical experience for greener operations.",
+        "alt": "Walkable photovoltaic panels installed in a shared space at Kwun Lung Lau"
+      }
+    }
+  }
+]

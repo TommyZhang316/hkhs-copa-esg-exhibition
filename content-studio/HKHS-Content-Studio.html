@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>HKHS 屋邨行動內容工作台</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f2f5f1;
+      --surface: #ffffff;
+      --forest: #0d4138;
+      --muted: #5f6e69;
+      --line: #cfd9d3;
+      --accent: #ef233c;
+      --soft: #e7efe9;
+      font-family: "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--page); color: var(--forest); }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .shell { width: min(1240px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 72px; }
+    .topbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; margin-bottom: 22px; }
+    .topbar h1 { margin: 0 0 8px; font-size: clamp(30px, 5vw, 52px); letter-spacing: -.045em; }
+    .topbar p { max-width: 720px; margin: 0; color: var(--muted); line-height: 1.65; }
+    .status { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--muted); font-size: 13px; }
+
+    .toolbar { position: sticky; top: 12px; z-index: 10; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 16px; background: rgb(255 255 255 / .94); padding: 12px; box-shadow: 0 12px 34px rgb(13 65 56 / .09); backdrop-filter: blur(14px); }
+    .toolbar button, .toolbar label, .toolbar select, .toolbar input { min-height: 42px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--forest); padding: 0 13px; }
+    .toolbar button.primary { border-color: var(--forest); background: var(--forest); color: white; }
+    .toolbar input[type="search"] { min-width: 220px; flex: 1; }
+    .file-label { display: inline-flex; align-items: center; }
+    .file-label input { display: none; }
+
+    .help { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0 24px; }
+    .help article { border: 1px solid var(--line); border-radius: 14px; background: var(--soft); padding: 16px; }
+    .help strong { display: block; margin-bottom: 6px; }
+    .help p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+
+    .empty-state { border: 1px dashed var(--line); border-radius: 18px; background: var(--surface); padding: 56px 24px; text-align: center; }
+    .empty-state h2 { margin-top: 0; }
+    .empty-state p { color: var(--muted); }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card { min-width: 0; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); overflow: hidden; }
+    .card-head { display: grid; grid-template-columns: 86px minmax(0, 1fr); gap: 14px; padding: 16px; border-bottom: 1px solid var(--line); }
+    .thumb { display: grid; place-items: center; width: 86px; height: 86px; overflow: hidden; border-radius: 10px; background: var(--soft); color: var(--muted); font-size: 11px; text-align: center; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .card-id { display: inline-block; margin-bottom: 7px; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+    .card h2 { margin: 0 0 5px; font-size: 21px; line-height: 1.25; }
+    .slug, .image-path { overflow-wrap: anywhere; color: var(--muted); font-family: Consolas, monospace; font-size: 12px; }
+    .image-path { margin-top: 6px; }
+    .card-body { display: grid; gap: 13px; padding: 16px; }
+    .field { display: grid; gap: 6px; }
+    .field span { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .field input, .field textarea { width: 100%; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfa; color: #153f37; padding: 10px 11px; line-height: 1.5; }
+    .field textarea { min-height: 88px; resize: vertical; }
+    .field input:focus, .field textarea:focus { outline: 3px solid rgb(239 35 60 / .16); border-color: var(--accent); }
+
+    .image-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
+    .image-tools input { width: 100%; }
+    .image-tools button { min-height: 38px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--forest); padding: 0 11px; }
+    .image-note { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+    .toast { position: fixed; right: 20px; bottom: 20px; z-index: 20; max-width: 340px; border-radius: 12px; background: var(--forest); color: white; padding: 13px 16px; box-shadow: 0 16px 40px rgb(0 0 0 / .18); opacity: 0; transform: translateY(12px); pointer-events: none; transition: .2s ease; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 20px, 1240px); padding-top: 18px; }
+      .topbar, .help, .grid { grid-template-columns: 1fr; }
+      .toolbar { top: 6px; }
+      .toolbar > * { flex: 1 1 44%; }
+      .toolbar input[type="search"] { flex-basis: 100%; }
+      .card-head { grid-template-columns: 72px minmax(0, 1fr); }
+      .thumb { width: 72px; height: 72px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <h1>屋邨行動內容工作台</h1>
+        <p>以固定編號管理屋邨行動與影片的繁體中文、簡體中文、英文文字，以及屋邨行動替換圖片。此工作台只在本機使用，不會成為公開網站的管理入口。</p>
+      </div>
+      <div class="status" id="status">尚未載入內容檔</div>
+    </header>
+
+    <section class="toolbar" aria-label="內容工具">
+      <label class="file-label">開啟內容 JSON<input id="jsonFile" type="file" accept="application/json,.json" /></label>
+      <select id="locale" aria-label="編輯語言">
+        <option value="zh-hk">繁體中文</option>
+        <option value="zh-cn">簡體中文</option>
+        <option value="en">English</option>
+      </select>
+      <input id="search" type="search" placeholder="搜尋編號、標題或位置" />
+      <button id="saveDraft" type="button">儲存本機草稿</button>
+      <button id="export" class="primary" type="button">匯出更新內容</button>
+    </section>
+
+    <section class="help" aria-label="使用說明">
+      <article><strong>1. 對應內容</strong><p>屋邨行動使用 EA 編號，影片使用 VD 編號；工作台會同時顯示目前媒體路徑。</p></article>
+      <article><strong>2. 微調文字</strong><p>選擇語言後直接修改欄位。匯出時三種語言會一併保留。</p></article>
+      <article><strong>3. 替換圖片</strong><p>載入屋邨行動內容時，可選取清晰照片並下載 WebP，再以相同 EA 檔名覆蓋圖片資料夾。</p></article>
+    </section>
+
+    <section id="empty" class="empty-state">
+      <h2>請先開啟內容檔</h2>
+      <p>可選擇 site/content/estate-actions.json 或 site/content/videos.json</p>
+    </section>
+    <section id="cards" class="grid" hidden></section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const state = { data: [], locale: 'zh-hk', kind: 'estate', sourceName: 'estate-actions.json', convertedImages: new Map() };
+    const fileInput = document.querySelector('#jsonFile');
+    const localeSelect = document.querySelector('#locale');
+    const searchInput = document.querySelector('#search');
+    const cards = document.querySelector('#cards');
+    const empty = document.querySelector('#empty');
+    const status = document.querySelector('#status');
+    const toast = document.querySelector('#toast');
+
+    const showToast = (message) => {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove('show'), 2400);
+    };
+
+    const escapeHtml = (value = '') => value
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;');
+
+    const targetName = (record) => `${record.id}.webp`;
+    const imageDisplayPath = (record) => record.image || '未配置圖片';
+    const publicPreviewPath = (record) => record.image ? `../public${record.image}` : '';
+
+    function render() {
+      const query = searchInput.value.trim().toLowerCase();
+      const visible = state.data.filter((record) => {
+        const copy = record.locales[state.locale];
+        return !query || [record.id, record.slug, copy.title, copy.place, copy.description].filter(Boolean).join(' ').toLowerCase().includes(query);
+      });
+
+      empty.hidden = state.data.length > 0;
+      cards.hidden = state.data.length === 0;
+      cards.innerHTML = visible.map((record) => {
+        const copy = record.locales[state.locale];
+        if (state.kind === 'video') {
+          return `
+            <article class="card" data-id="${record.id}">
+              <header class="card-head">
+                <div class="thumb">${record.id}</div>
+                <div>
+                  <span class="card-id">${record.id}</span>
+                  <h2>${escapeHtml(copy.title)}</h2>
+                  <div class="image-path">${escapeHtml(record.src)}</div>
+                </div>
+              </header>
+              <div class="card-body">
+                ${field(record.id, 'title', '標題', copy.title, false)}
+                ${field(record.id, 'description', '影片說明', copy.description, true)}
+              </div>
+            </article>`;
+        }
+        const preview = publicPreviewPath(record);
+        return `
+          <article class="card" data-id="${record.id}">
+            <header class="card-head">
+              <div class="thumb">${preview ? `<img src="${preview}" alt="" onerror="this.remove();this.parentElement.textContent='${record.id}'">` : record.id}</div>
+              <div>
+                <span class="card-id">${record.id}</span>
+                <h2>${escapeHtml(copy.title)}</h2>
+                <div class="slug">${escapeHtml(record.slug)}</div>
+                <div class="image-path">${escapeHtml(imageDisplayPath(record))}</div>
+              </div>
+            </header>
+            <div class="card-body">
+              ${field(record.id, 'place', '位置／範圍', copy.place, false)}
+              ${field(record.id, 'title', '標題', copy.title, false)}
+              ${field(record.id, 'summary', '卡片摘要', copy.summary, true)}
+              ${field(record.id, 'detail', '行動內容', copy.detail, true)}
+              ${field(record.id, 'impact', '帶來的改變', copy.impact, true)}
+              ${field(record.id, 'alt', '圖片替代文字', copy.alt, false)}
+              <div class="image-tools">
+                <input type="file" accept="image/jpeg,image/png,image/webp" data-image-for="${record.id}" aria-label="選擇 ${record.id} 替換圖片" />
+                <button type="button" data-download-image="${record.id}" disabled>下載 ${targetName(record)}</button>
+                <p class="image-note">圖片會在瀏覽器內轉成 WebP，最長邊限制為 1800px。請避免使用可清晰辨識居民面孔的照片；如必須使用，請同步更新肖像授權清單。</p>
+              </div>
+            </div>
+          </article>`;
+      }).join('');
+
+      bindFields();
+      const kindLabel = state.kind === 'video' ? '影片內容' : '屋邨行動';
+      status.textContent = `${kindLabel}｜已載入 ${state.data.length} 項｜目前顯示 ${visible.length} 項｜${localeSelect.selectedOptions[0].textContent}`;
+    }
+
+    function field(id, key, label, value, multiline) {
+      const tag = multiline
+        ? `<textarea data-id="${id}" data-key="${key}">${escapeHtml(value)}</textarea>`
+        : `<input data-id="${id}" data-key="${key}" value="${escapeHtml(value)}" />`;
+      return `<label class="field"><span>${label}</span>${tag}</label>`;
+    }
+
+    function bindFields() {
+      cards.querySelectorAll('[data-key]').forEach((input) => {
+        input.addEventListener('input', () => {
+          const record = state.data.find((item) => item.id === input.dataset.id);
+          record.locales[state.locale][input.dataset.key] = input.value;
+          const heading = input.closest('.card').querySelector('h2');
+          if (input.dataset.key === 'title') heading.textContent = input.value;
+        });
+      });
+
+      cards.querySelectorAll('[data-image-for]').forEach((input) => {
+        input.addEventListener('change', async () => {
+          const file = input.files[0];
+          if (!file) return;
+          const blob = await convertToWebp(file);
+          state.convertedImages.set(input.dataset.imageFor, blob);
+          const button = input.parentElement.querySelector('[data-download-image]');
+          button.disabled = false;
+          const thumb = input.closest('.card').querySelector('.thumb');
+          thumb.innerHTML = `<img src="${URL.createObjectURL(blob)}" alt="替換圖片預覽">`;
+          showToast(`${input.dataset.imageFor} 圖片已轉換，可下載後覆蓋原檔`);
+        });
+      });
+
+      cards.querySelectorAll('[data-download-image]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const id = button.dataset.downloadImage;
+          const blob = state.convertedImages.get(id);
+          if (!blob) return;
+          downloadBlob(blob, `${id}.webp`);
+        });
+      });
+    }
+
+    async function convertToWebp(file) {
+      const bitmap = await createImageBitmap(file);
+      const limit = 1800;
+      const scale = Math.min(1, limit / Math.max(bitmap.width, bitmap.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(bitmap.width * scale);
+      canvas.height = Math.round(bitmap.height * scale);
+      canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+      bitmap.close();
+      return new Promise((resolve, reject) => canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error('圖片轉換失敗')), 'image/webp', .88));
+    }
+
+    function downloadBlob(blob, name) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = name;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function exportJson() {
+      if (!state.data.length) return showToast('請先載入內容檔');
+      const text = JSON.stringify(state.data, null, 2) + '\n';
+      downloadBlob(new Blob([text], { type: 'application/json' }), state.sourceName);
+      showToast('已匯出更新內容');
+    }
+
+    fileInput.addEventListener('change', async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      try {
+        const data = JSON.parse(await file.text());
+        if (!Array.isArray(data)) throw new Error('內容格式不正確');
+        state.data = data;
+        state.kind = data[0]?.action ? 'estate' : 'video';
+        state.sourceName = state.kind === 'estate' ? 'estate-actions.json' : 'videos.json';
+        render();
+        showToast('內容檔已載入');
+      } catch (error) {
+        showToast(error.message || '無法讀取內容檔');
+      }
+    });
+
+    localeSelect.addEventListener('change', () => { state.locale = localeSelect.value; render(); });
+    searchInput.addEventListener('input', render);
+    document.querySelector('#export').addEventListener('click', exportJson);
+    document.querySelector('#saveDraft').addEventListener('click', () => {
+      if (!state.data.length) return showToast('請先載入內容檔');
+      localStorage.setItem(`hkhs-${state.kind}-content-draft`, JSON.stringify(state.data));
+      showToast('草稿已儲存在這部電腦的瀏覽器');
+    });
+
+    ['estate', 'video'].some((kind) => {
+      const draft = localStorage.getItem(`hkhs-${kind}-content-draft`);
+      if (!draft) return false;
+      try {
+        state.data = JSON.parse(draft);
+        state.kind = kind;
+        state.sourceName = kind === 'estate' ? 'estate-actions.json' : 'videos.json';
+        render();
+        showToast('已載入本機草稿');
+        return true;
+      } catch { return false; }
+    });
+  </script>
+</body>
+</html>
