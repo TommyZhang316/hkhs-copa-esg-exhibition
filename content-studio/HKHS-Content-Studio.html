@@ -57,9 +57,9 @@
     .card-body { display: grid; gap: 13px; padding: 16px; }
     .field { display: grid; gap: 6px; }
     .field span { color: var(--muted); font-size: 12px; font-weight: 700; }
-    .field input, .field textarea { width: 100%; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfa; color: #153f37; padding: 10px 11px; line-height: 1.5; }
+    .field input, .field textarea, .field select { width: 100%; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfa; color: #153f37; padding: 10px 11px; line-height: 1.5; }
     .field textarea { min-height: 88px; resize: vertical; }
-    .field input:focus, .field textarea:focus { outline: 3px solid rgb(239 35 60 / .16); border-color: var(--accent); }
+    .field input:focus, .field textarea:focus, .field select:focus { outline: 3px solid rgb(239 35 60 / .16); border-color: var(--accent); }
 
     .image-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
     .image-tools input { width: 100%; }
@@ -155,14 +155,16 @@
       cards.innerHTML = visible.map((record) => {
         const copy = record.locales[state.locale];
         if (state.kind === 'video') {
+          const videoPoster = record.poster ? `../public${record.poster}` : '';
           return `
             <article class="card" data-id="${record.id}">
               <header class="card-head">
-                <div class="thumb">${record.id}</div>
+                <div class="thumb">${videoPoster ? `<img src="${videoPoster}" alt="" onerror="this.remove();this.parentElement.textContent='${record.id}'">` : record.id}</div>
                 <div>
                   <span class="card-id">${record.id}</span>
                   <h2>${escapeHtml(copy.title)}</h2>
                   <div class="image-path">${escapeHtml(record.src)}</div>
+                  <div class="image-path">封面：${escapeHtml(record.poster || '未配置')}</div>
                 </div>
               </header>
               <div class="card-body">
@@ -184,6 +186,7 @@
               </div>
             </header>
             <div class="card-body">
+              ${actionField(record)}
               ${field(record.id, 'place', '位置／範圍', copy.place, false)}
               ${field(record.id, 'title', '標題', copy.title, false)}
               ${field(record.id, 'summary', '卡片摘要', copy.summary, true)}
@@ -211,6 +214,15 @@
       return `<label class="field"><span>${label}</span>${tag}</label>`;
     }
 
+    function actionField(record) {
+      const options = [
+        ['environment', 'Environment／環境'],
+        ['social', 'Social／社會'],
+        ['governance', 'Governance／管治'],
+      ].map(([value, label]) => `<option value="${value}" ${record.action === value ? 'selected' : ''}>${label}</option>`).join('');
+      return `<label class="field"><span>ESG 分類</span><select data-action-for="${record.id}">${options}</select></label>`;
+    }
+
     function bindFields() {
       cards.querySelectorAll('[data-key]').forEach((input) => {
         input.addEventListener('input', () => {
@@ -218,6 +230,14 @@
           record.locales[state.locale][input.dataset.key] = input.value;
           const heading = input.closest('.card').querySelector('h2');
           if (input.dataset.key === 'title') heading.textContent = input.value;
+        });
+      });
+
+      cards.querySelectorAll('[data-action-for]').forEach((select) => {
+        select.addEventListener('change', () => {
+          const record = state.data.find((item) => item.id === select.dataset.actionFor);
+          record.action = select.value;
+          showToast(`${record.id} 已改為 ${select.selectedOptions[0].textContent}`);
         });
       });
 

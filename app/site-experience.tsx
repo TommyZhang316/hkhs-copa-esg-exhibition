@@ -24,7 +24,7 @@ import videoRecords from "../content/videos.json";
 
 type Locale = "zh-hk" | "zh-cn" | "en";
 type PillarKey = "homes" | "carbon" | "future";
-type ActionKey = "community" | "environment" | "service" | "innovation";
+type ActionKey = "environment" | "social" | "governance";
 type StoryMedia =
   | { type: "image"; src: string; alt: string }
   | { type: "video"; src: string; alt: string }
@@ -76,6 +76,7 @@ type EstateActionRecord = {
 type VideoRecord = {
   id: string;
   src: string;
+  poster: string;
   mime: "video/mp4" | "video/quicktime";
   locales: Record<Locale, { title: string; description: string }>;
 };
@@ -85,6 +86,7 @@ type VideoItem = {
   title: string;
   description: string;
   src: string;
+  poster: string;
   mime: "video/mp4" | "video/quicktime";
 };
 
@@ -161,6 +163,7 @@ const buildVideoItems = (locale: Locale): VideoItem[] =>
     title: record.locales[locale].title,
     description: record.locales[locale].description,
     src: publicPath(record.src),
+    poster: publicPath(record.poster),
     mime: record.mime,
   }));
 
@@ -235,13 +238,13 @@ const content = {
     ] satisfies Pillar[],
     storySection: {
       title: "物業管理，讓可持續發展在屋邨發生",
-      body: "按主題探索我們在社區共融、綠色營運、數碼服務及智慧管理上的實際工作。",
+      body: "從環境、社會及管治三個範疇，探索物業管理團隊在屋邨的實際工作。",
       all: "全部",
       read: "閱讀故事",
       detailTitle: "我們的行動",
       impactTitle: "帶來的改變",
       actionPrompt: "選擇屋邨行動主題",
-      actions: { community: "共融社區", environment: "綠色營運", service: "數碼服務", innovation: "智慧管理" },
+      actions: { environment: "環境", social: "社會", governance: "管治" },
     },
     stories: [] as Story[],
     /* Legacy inline records kept temporarily for comparison. Live estate actions
@@ -388,9 +391,9 @@ const content = {
     ] satisfies Pillar[],
     storySection: {
       title: "物业管理，让可持续发展在屋邨发生",
-      body: "按主题探索我们在社区共融、绿色营运、数码服务及智慧管理上的实际工作。",
+      body: "从环境、社会及管治三个范畴，探索物业管理团队在屋邨的实际工作。",
       all: "全部", read: "阅读故事", detailTitle: "我们的行动", impactTitle: "带来的改变", actionPrompt: "选择屋邨行动主题",
-      actions: { community: "共融社区", environment: "绿色营运", service: "数码服务", innovation: "智慧管理" },
+      actions: { environment: "环境", social: "社会", governance: "管治" },
     },
     stories: [] as Story[],
     progress: { title: "以量化成果，呈现我们的进展。", body: "", source: "资料来源：香港房屋协会 2024/25 可持续发展报告及年度报告。" },
@@ -442,9 +445,9 @@ const content = {
     ] satisfies Pillar[],
     storySection: {
       title: "Property management makes sustainability tangible",
-      body: "Explore our work across inclusive communities, greener operations, digital services and smarter management.",
+      body: "Explore how property management puts environmental, social and governance principles into practice across our estates.",
       all: "All", read: "Read story", detailTitle: "Our action", impactTitle: "The change", actionPrompt: "Choose an estate action theme",
-      actions: { community: "Inclusive community", environment: "Greener operations", service: "Digital services", innovation: "Smarter management" },
+      actions: { environment: "Environment", social: "Social", governance: "Governance" },
     },
     stories: [] as Story[],
     progress: { title: "Presenting our progress through measurable results.", body: "", source: "Sources: HKHS Sustainability Report 2024/25 and Annual Report 2024/25." },
@@ -982,15 +985,15 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <div className="video-player">
               {/* Captions will be connected when the approved transcripts are provided. */}
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <video key={videoItems[activeVideo].src} controls playsInline preload="metadata" poster={media.smartRecycling} aria-label={videoItems[activeVideo].title}>
+              <video key={videoItems[activeVideo].src} controls playsInline preload="metadata" poster={videoItems[activeVideo].poster} aria-label={videoItems[activeVideo].title}>
                 <source src={videoItems[activeVideo].src} type={videoItems[activeVideo].mime} />
               </video>
               <p>{c.videos.note}</p>
             </div>
             <div className="video-selector" ref={videoRailRef}>
-              {videoItems.map(({ id, title, description }, index) => (
+              {videoItems.map(({ id, title, description, poster }, index) => (
                 <button key={id} type="button" data-content-id={id} className={activeVideo === index ? "is-active" : ""} onClick={() => selectVideo(index)}>
-                  <span className="play-icon"><Play size={18} weight="fill" aria-hidden="true" /></span>
+                  <span className="video-thumb"><img src={poster} alt="" /><span className="play-icon"><Play size={16} weight="fill" aria-hidden="true" /></span></span>
                   <span><strong>{title}</strong><small>{description}</small></span>
                 </button>
               ))}
