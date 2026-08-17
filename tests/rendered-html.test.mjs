@@ -22,7 +22,7 @@ async function render(path = "/") {
   );
 }
 
-test("server-renders the Traditional Chinese COPA experience", async () => {
+test("server-renders the Property Management Division sustainability experience", async () => {
   const response = await render("/");
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
@@ -30,8 +30,6 @@ test("server-renders the Traditional Chinese COPA experience", async () => {
   const html = await response.text();
   assert.match(html, /創建宜居．永續共融/);
   assert.match(html, /香港房屋協會-物業管理部門 可持續發展/);
-  assert.match(html, /物業及資產綜合平臺（COPA）/);
-  assert.match(html, /透過物聯網（IoT）在單一平臺/);
   assert.match(html, /以量化成果，呈現我們的進展。/);
   assert.match(html, /Hong Kong Housing Society Property Management Division/);
   assert.match(html, /香港房屋協會 物業管理部門/);
@@ -39,12 +37,19 @@ test("server-renders the Traditional Chinese COPA experience", async () => {
   assert.match(html, /三大支柱/);
   assert.match(html, /ESG 概覽影片/);
   assert.match(html, /探索進度/);
-  assert.match(html, /\/media\/feedback2\/copa-connect\.webp/);
-  assert.match(html, /屋邨中的可持續行動/);
+  assert.match(html, /物業管理，讓可持續發展在屋邨發生/);
+  assert.match(html, /共融社區/);
+  assert.match(html, /數碼服務/);
+  assert.match(html, /智慧管理/);
+  assert.match(html, /\/media\/feedback4\/hs-living\.webp/);
+  assert.match(html, /\/media\/feedback4\/renewable-wind\.webp/);
+  assert.match(html, /以智能監測支援精準防蚊/);
   assert.match(html, /智能回收，讓分類走進日常/);
   assert.doesNotMatch(html, /為舊衣物預留回收出口|用清楚標示支援多類回收/);
   assert.match(html, /20 個出租屋邨/);
   assert.doesNotMatch(html, /20 個出租屋邨及 1 個管理物業/);
+  assert.doesNotMatch(html, /物業及資產綜合平臺|透過物聯網（IoT）在單一平臺|COPA 智能設施/);
+  assert.ok(html.indexOf("物業管理，讓可持續發展在屋邨發生") < html.indexOf("三大支柱，共同支撐宜居未來"));
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/);
   assert.doesNotMatch(html, /DxwklpgWz3c|kr5ljZSQx_c|wxdvJ-yH_JQ|1bH5kHK0oec/);
 });

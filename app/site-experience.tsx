@@ -9,7 +9,6 @@ import {
   ChartLineUp,
   CheckCircle,
   Cpu,
-  Database,
   FilmSlate,
   HouseLine,
   Leaf,
@@ -26,10 +25,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 type Locale = "zh-hk" | "zh-cn" | "en";
 type PillarKey = "homes" | "carbon" | "future";
+type ActionKey = "community" | "environment" | "service" | "innovation";
 type StoryMedia =
   | { type: "image"; src: string; alt: string }
   | { type: "video"; src: string; alt: string }
-  | { type: "graphic"; variant: "solar" | "copa" | "community"; alt: string };
+  | { type: "graphic"; variant: "solar" | "community"; alt: string };
 
 type Pillar = {
   key: PillarKey;
@@ -42,6 +42,7 @@ type Pillar = {
 type Story = {
   slug: string;
   pillar: PillarKey;
+  action: ActionKey;
   place: string;
   title: string;
   summary: string;
@@ -87,10 +88,6 @@ const media = {
   garden: publicPath("/media/videos/community-garden.mp4"),
   foodWasteKll: publicPath("/media/videos/food-waste-kll.mp4"),
   foodWasteLtt: publicPath("/media/videos/food-waste-ltt.mp4"),
-  copaConnect: publicPath("/media/feedback2/copa-connect.webp"),
-  copaStandardise: publicPath("/media/feedback2/copa-standardise.webp"),
-  copaInsight: publicPath("/media/feedback2/copa-insight.webp"),
-  copaAct: publicPath("/media/feedback2/copa-act.webp"),
   foodWaste: publicPath("/media/feedback2/estate-food-waste.webp"),
   clothesRecycling: publicPath("/media/feedback2/estate-clothes-recycling.webp"),
   smartRecycling: publicPath("/media/feedback2/estate-smart-recycling.webp"),
@@ -100,6 +97,10 @@ const media = {
   communityArt: publicPath("/media/feedback2/estate-community-art.webp"),
   evCharging: publicPath("/media/feedback2/estate-ev-charging.webp"),
   inclusivePlay: publicPath("/media/feedback2/estate-inclusive-play.webp"),
+  hsLiving: publicPath("/media/feedback4/hs-living.webp"),
+  renewableWind: publicPath("/media/feedback4/renewable-wind.webp"),
+  smartMosquito: publicPath("/media/feedback4/smart-mosquito.webp"),
+  smartFoodWaste: publicPath("/media/feedback4/smart-food-waste.webp"),
 };
 
 const content = {
@@ -107,16 +108,16 @@ const content = {
     htmlLang: "zh-HK",
     nav: {
       home: "首頁",
-      pillars: "三大支柱",
-      copa: "COPA",
       stories: "屋邨行動",
       progress: "進展",
       videos: "影片",
+      pillars: "三大支柱",
+      direction: "房協方向",
       menu: "開啟選單",
       close: "關閉",
     },
     brand: {
-      copa: "香港房屋協會 物業管理部門",
+      division: "香港房屋協會 物業管理部門",
       full: "Hong Kong Housing Society Property Management Division",
     },
     ui: {
@@ -138,7 +139,7 @@ const content = {
       eyebrow: "香港房屋協會-物業管理部門 可持續發展",
       title: "創建宜居．永續共融",
       body: "我們在物業管理和社區日常中落實可持續發展，與居民共建更宜居、更低碳的未來。",
-      cta: "探索我們的行動",
+      cta: "探索屋邨行動",
       secondary: "查看進展",
       videoLabel: "ESG 概覽影片",
       videoDuration: "約 2 分鐘",
@@ -185,53 +186,47 @@ const content = {
         ["社區協作", "與居民、學校、伙伴及業界共同擴大正面影響。"],
       ],
     },
-    copa: {
-      title: "以 COPA 連結物業管理每一環",
-      body: "物業及資產綜合平臺（COPA）",
-      steps: [
-        ["連接", "透過物聯網（IoT）在單一平臺連接不同系統、感應器與物業資訊。", media.copaConnect, "COPA 地圖介面連接不同物業及資產資訊"],
-        ["統一", "以標準化共同數據環境整理跨系統資料，建立一致的管理基礎。", media.copaStandardise, "COPA 資產管理儀表板統一呈現設施資料"],
-        ["洞察", "透過互動儀表板、大數據分析及 AI-ready 基礎掌握物業狀況。", media.copaInsight, "COPA ESG 儀表板呈現能源、碳排放、可再生能源及用水資訊"],
-        ["行動", "把資訊轉化為日常營運能力，支援安全、維修、能源及服務持續改善。", media.copaAct, "COPA 智能設施儀表板顯示警報、位置及影像資訊"],
-      ],
-      features: "平台功能包括系統及感應器整合、共同數據環境、互動儀表板、安全數據管理，以及日後擴展能力。",
-    },
     storySection: {
-      title: "屋邨中的可持續行動",
-      body: "從一部廚餘機、一塊舊布，到一個更安全的管理流程，改變在社區中逐步發生。",
+      title: "物業管理，讓可持續發展在屋邨發生",
+      body: "按主題探索我們在社區共融、綠色營運、數碼服務及智慧管理上的實際工作。",
       all: "全部",
       read: "閱讀故事",
       detailTitle: "我們的行動",
       impactTitle: "帶來的改變",
+      actionPrompt: "選擇屋邨行動主題",
+      actions: { community: "共融社區", environment: "綠色營運", service: "數碼服務", innovation: "智慧管理" },
     },
     stories: [
       {
         slug: "smart-recycling-hub",
         pillar: "carbon",
+        action: "environment",
         place: "20 個出租屋邨",
         title: "智能回收，讓分類走進日常",
         summary: "廚餘、舊衣和多類可回收物各有清楚去向，讓屋邨分類更便利。",
         detail: "物業管理團隊按屋邨環境整合智能廚餘機、衣物回收箱，以及金屬、塑膠、紙張和玻璃分類設施，並以清楚標示和日常管理支援居民參與。",
         impact: "近 50 部智能廚餘回收機已設於 20 個出租屋邨，並與其他分類設施共同支援資源循環。",
-        media: { type: "image", src: media.smartRecycling, alt: "屋邨內並列設置的智能分類回收設施" },
+        media: { type: "image", src: media.smartFoodWaste, alt: "出租屋邨設置的智能廚餘回收設施" },
         sourceKey: "annual",
         sourcePage: 141,
       },
       {
         slug: "renewable-energy",
         pillar: "carbon",
+        action: "environment",
         place: "出租屋邨",
         title: "在屋邨採集潔淨能源",
         summary: "太陽能和風力設備把公共空間轉化為可再生能源的實踐場景。",
         detail: "房協在合適屋邨設置太陽能光伏系統，並在觀龍樓應用風力發電，將可再生能源融入物業營運。",
         impact: "截至 2024/25 年度，10 個出租屋邨設有太陽能光伏系統。",
-        media: { type: "image", src: media.solarMosquito, alt: "設於屋邨園景範圍的太陽能滅蚊燈" },
+        media: { type: "image", src: media.renewableWind, alt: "觀龍樓的風力發電設備" },
         sourceKey: "annual",
         sourcePage: 141,
       },
       {
         slug: "intergenerational-community",
         pillar: "homes",
+        action: "community",
         place: "跨代社區",
         title: "讓不同世代共享生活空間",
         summary: "共融設施和社區活動回應長者、家庭及不同居民的生活需要。",
@@ -242,6 +237,7 @@ const content = {
       {
         slug: "community-art",
         pillar: "homes",
+        action: "community",
         place: "屋邨公共空間",
         title: "把社區故事帶進日常空間",
         summary: "以街坊創作和地方特色豐富公共空間，讓屋邨環境更具歸屬感。",
@@ -252,6 +248,7 @@ const content = {
       {
         slug: "ev-charging",
         pillar: "carbon",
+        action: "environment",
         place: "屋邨停車場",
         title: "為低碳出行準備充電設施",
         summary: "在合適停車位置配置充電設備，配合交通電動化的長遠需要。",
@@ -260,30 +257,32 @@ const content = {
         media: { type: "image", src: media.evCharging, alt: "屋邨停車位置旁的電動車充電設備" },
       },
       {
-        slug: "solar-estate-details",
-        pillar: "carbon",
-        place: "屋邨園景",
-        title: "讓小型設施善用潔淨能源",
-        summary: "太陽能供電設備在園景和公共範圍支援日常環境管理。",
-        detail: "在日照及位置合適的地方，小型太陽能設備可為指定設施供電，減少接駁電源的需要。",
-        impact: "低碳轉型不只來自大型系統，也可由貼近日常管理的設施逐步累積。",
-        media: { type: "image", src: media.solarMosquitoNight, alt: "夜間屋邨園景內運作中的太陽能滅蚊燈" },
+        slug: "geoai-mosquito-control",
+        pillar: "future",
+        action: "innovation",
+        place: "觀龍樓等屋邨",
+        title: "以智能監測支援精準防蚊",
+        summary: "智能滅蚊燈和氣象資料協助團隊掌握環境變化，提早部署防蚊工作。",
+        detail: "物業管理團隊與科研機構合作，在觀龍樓等屋邨安裝智能滅蚊燈及氣象站，透過數據辨識蚊種及預測短期蚊患趨勢。",
+        impact: "環境管理由定期處理走向更具針對性的部署，提升屋邨防蚊工作的效率。",
+        media: { type: "image", src: media.smartMosquito, alt: "屋邨園景內的智能滅蚊及環境監測設備" },
       },
       {
-        slug: "copa-smart-operations",
+        slug: "hs-living-service",
         pillar: "future",
-        place: "COPA",
-        title: "把數據轉化為物業管理行動",
-        summary: "我們整合資訊、科技和專業知識，讓管理決策更清晰、更及時。",
-        detail: "COPA 在單一平台連結物業和資產管理所需的系統、感應器、數據及流程，並以共同數據環境和互動儀表板支援日常工作。",
-        impact: "管理團隊可更清晰掌握資產狀況，支援安全、維修、能源和服務表現的持續改善。",
-        media: { type: "image", src: media.copaAct, alt: "COPA 智能設施儀表板支援物業管理行動" },
+        action: "service",
+        place: "屋邨數碼服務",
+        title: "一站式資訊，連繫屋邨生活",
+        summary: "居民可透過手機應用程式查閱屋邨資訊、接收通知及報名參與活動。",
+        detail: "HS Living 及房協屋邨資訊手機應用程式把常用屋邨資訊和服務帶到流動裝置，讓居民更便捷地了解日常安排及社區活動。",
+        impact: "資訊傳達更及時，亦減少紙本通告的需要，支持居民參與和綠色生活。",
+        media: { type: "image", src: media.hsLiving, alt: "HS Living 手機應用程式畫面" },
       },
     ] satisfies Story[],
     progress: {
       title: "以量化成果，呈現我們的進展。",
       body: "",
-      source: "資料來源：香港房屋協會 2024/25 可持續發展報告及年度報告。每項數據均附正式文件連結及頁碼。",
+      source: "資料來源：香港房屋協會 2024/25 可持續發展報告及年度報告。",
     },
     metrics: [
       { value: "31", unit: "%", label: "能源消耗減少", scope: "相對 2012/13 基準，按正式報告所列選定物業範圍", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
@@ -321,8 +320,8 @@ const content = {
   },
   "zh-cn": {
     htmlLang: "zh-CN",
-    nav: { home: "首页", pillars: "三大支柱", copa: "COPA", stories: "屋邨行动", progress: "进展", videos: "视频", menu: "打开菜单", close: "关闭" },
-    brand: { copa: "香港房屋协会 物业管理部门", full: "Hong Kong Housing Society Property Management Division" },
+    nav: { home: "首页", stories: "屋邨行动", progress: "进展", videos: "视频", pillars: "三大支柱", direction: "房协方向", menu: "打开菜单", close: "关闭" },
+    brand: { division: "香港房屋协会 物业管理部门", full: "Hong Kong Housing Society Property Management Division" },
     ui: {
       swipe: "左右滑动查看更多", previous: "上一项", next: "下一项", source: "查看正式来源", reportPage: "PDF 第", pageSuffix: "页",
       organization: "房协整体", property: "物业管理实践", sustainabilityReport: "香港房屋协会 2024/25 可持续发展报告", annualReport: "香港房屋协会 2024/25 年度报告",
@@ -332,7 +331,7 @@ const content = {
       eyebrow: "香港房屋协会-物业管理部门 可持续发展",
       title: "创建宜居．永续共融",
       body: "我们在物业管理和社区日常中落实可持续发展，与居民共建更宜居、更低碳的未来。",
-      cta: "探索我们的行动",
+      cta: "探索屋邨行动",
       secondary: "查看进展",
       videoLabel: "ESG 概览视频", videoDuration: "约 2 分钟", videoStatus: "完整视频将在此位置播放",
     },
@@ -359,20 +358,14 @@ const content = {
         ["社区协作", "与居民、学校、伙伴及业界共同扩大正面影响。"],
       ],
     },
-    copa: {
-      title: "以 COPA 连结物业管理每一环",
-      body: "物业及资产综合平台（COPA）",
-      steps: [
-        ["连接", "透过物联网（IoT）在单一平台连接不同系统、传感器与物业信息。", media.copaConnect, "COPA 地图界面连接不同物业及资产信息"],
-        ["统一", "以标准化共同数据环境整理跨系统资料，建立一致的管理基础。", media.copaStandardise, "COPA 资产管理仪表板统一呈现设施数据"],
-        ["洞察", "透过互动仪表板、大数据分析及 AI-ready 基础掌握物业状况。", media.copaInsight, "COPA ESG 仪表板呈现能源、碳排放、可再生能源及用水信息"],
-        ["行动", "把信息转化为日常营运能力，支持安全、维修、能源及服务持续改善。", media.copaAct, "COPA 智能设施仪表板显示警报、位置及影像信息"],
-      ],
-      features: "平台功能包括系统及传感器整合、共同数据环境、互动仪表板、安全数据管理，以及日后扩展能力。",
+    storySection: {
+      title: "物业管理，让可持续发展在屋邨发生",
+      body: "按主题探索我们在社区共融、绿色营运、数码服务及智慧管理上的实际工作。",
+      all: "全部", read: "阅读故事", detailTitle: "我们的行动", impactTitle: "带来的改变", actionPrompt: "选择屋邨行动主题",
+      actions: { community: "共融社区", environment: "绿色营运", service: "数码服务", innovation: "智慧管理" },
     },
-    storySection: { title: "屋邨中的可持续行动", body: "从一部厨余机、一块旧布，到一个更安全的管理流程，改变在社区中逐步发生。", all: "全部", read: "阅读故事", detailTitle: "我们的行动", impactTitle: "带来的改变" },
     stories: [] as Story[],
-    progress: { title: "以量化成果，呈现我们的进展。", body: "", source: "资料来源：香港房屋协会 2024/25 可持续发展报告及年度报告。每项数据均附正式文件链接及页码。" },
+    progress: { title: "以量化成果，呈现我们的进展。", body: "", source: "资料来源：香港房屋协会 2024/25 可持续发展报告及年度报告。" },
     metrics: [
       { value: "31", unit: "%", label: "能源消耗减少", scope: "相对 2012/13 基准，按正式报告所列选定物业范围", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
       { value: "21.9", unit: "%", label: "范围一及二碳排放按年下降", scope: "2024/25，涵盖出租屋邨、管理物业、建筑项目及主要办公室", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
@@ -405,8 +398,8 @@ const content = {
   },
   en: {
     htmlLang: "en",
-    nav: { home: "Home", pillars: "Our pillars", copa: "COPA", stories: "Estate action", progress: "Progress", videos: "Videos", menu: "Open menu", close: "Close" },
-    brand: { copa: "香港房屋協會 物業管理部門", full: "Hong Kong Housing Society Property Management Division" },
+    nav: { home: "Home", stories: "Estate action", progress: "Progress", videos: "Videos", pillars: "Our pillars", direction: "HKHS direction", menu: "Open menu", close: "Close" },
+    brand: { division: "香港房屋協會 物業管理部門", full: "Hong Kong Housing Society Property Management Division" },
     ui: {
       swipe: "Swipe to explore", previous: "Previous", next: "Next", source: "View official source", reportPage: "PDF page ", pageSuffix: "",
       organization: "HKHS-wide", property: "Property management practice", sustainabilityReport: "HKHS Sustainability Report 2024/25", annualReport: "HKHS Annual Report 2024/25",
@@ -416,7 +409,7 @@ const content = {
       eyebrow: "HKHS Property Management Division Sustainability",
       title: "Creating Homes for Sustainable Living",
       body: "We put sustainability into practice through property management and community life, building a liveable, low-carbon future with residents.",
-      cta: "Explore our action",
+      cta: "Explore estate action",
       secondary: "View our progress",
       videoLabel: "ESG overview film", videoDuration: "Around 2 minutes", videoStatus: "The full film will play here",
     },
@@ -443,20 +436,14 @@ const content = {
         ["Work together", "Extend positive impact with residents, schools, partners and the industry."],
       ],
     },
-    copa: {
-      title: "Connecting every part of property management",
-      body: "Central Office for Property and Asset (COPA)",
-      steps: [
-        ["Connect", "Use the Internet of Things (IoT) to connect systems, sensors and property information on one platform.", media.copaConnect, "A COPA map interface connecting property and asset information"],
-        ["Standardise", "Organise information in a standardised common data environment for a consistent management foundation.", media.copaStandardise, "A COPA asset management dashboard presenting facility data consistently"],
-        ["Understand", "Use interactive dashboards, big-data analytics and an AI-ready foundation to understand asset conditions.", media.copaInsight, "The COPA ESG dashboard presenting energy, emissions, renewable energy and water information"],
-        ["Act", "Turn information into operational capability for safety, maintenance, energy and service improvement.", media.copaAct, "A COPA smart facilities dashboard showing alerts, locations and visual information"],
-      ],
-      features: "Platform capabilities include system and sensor integration, a common data environment, interactive dashboards, secure data management and future expansion.",
+    storySection: {
+      title: "Property management makes sustainability tangible",
+      body: "Explore our work across inclusive communities, greener operations, digital services and smarter management.",
+      all: "All", read: "Read story", detailTitle: "Our action", impactTitle: "The change", actionPrompt: "Choose an estate action theme",
+      actions: { community: "Inclusive community", environment: "Greener operations", service: "Digital services", innovation: "Smarter management" },
     },
-    storySection: { title: "Sustainability in estate life", body: "From food waste facilities and old fabric to safer management, change grows through practical community action.", all: "All", read: "Read story", detailTitle: "Our action", impactTitle: "The change" },
     stories: [] as Story[],
-    progress: { title: "Presenting our progress through measurable results.", body: "", source: "Sources: HKHS Sustainability Report 2024/25 and Annual Report 2024/25. Each figure includes an official document link and page reference." },
+    progress: { title: "Presenting our progress through measurable results.", body: "", source: "Sources: HKHS Sustainability Report 2024/25 and Annual Report 2024/25." },
     metrics: [
       { value: "31", unit: "%", label: "reduction in energy consumption", scope: "Against the 2012/13 baseline, within the selected property scope stated in the report", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
       { value: "21.9", unit: "%", label: "year-on-year fall in Scope 1 and 2 emissions", scope: "2024/25, covering rental estates, managed properties, construction projects and major offices", scopeKind: "organization", sourceKey: "sustainability", sourcePage: 9 },
@@ -493,30 +480,33 @@ const englishStories: Story[] = [
   {
     slug: "smart-recycling-hub",
     pillar: "carbon",
+    action: "environment",
     place: "20 rental estates",
     title: "Smart recycling for everyday sorting",
     summary: "Food waste, used clothing and common recyclables each have a clearer route across estate life.",
     detail: "Property management teams bring together smart food waste bins, clothes collection and facilities for metal, plastic, paper and glass, supported by clear signs and daily management.",
     impact: "Nearly 50 smart food waste recycling bins serve 20 rental estates alongside other recycling facilities.",
-    media: { type: "image", src: media.smartRecycling, alt: "Smart recycling facilities grouped together on an estate" },
+    media: { type: "image", src: media.smartFoodWaste, alt: "A smart food waste recycling facility at a rental estate" },
     sourceKey: "annual",
     sourcePage: 141,
   },
   {
     slug: "renewable-energy",
     pillar: "carbon",
+    action: "environment",
     place: "Rental estates",
     title: "Harvesting cleaner energy on estates",
     summary: "Solar and wind installations turn shared spaces into practical renewable energy sites.",
     detail: "HKHS installs solar photovoltaic systems at suitable estates and uses wind generation at Kwun Lung Lau, integrating renewables into operations.",
     impact: "By 2024/25, solar photovoltaic systems were installed at 10 rental estates.",
-    media: { type: "image", src: media.solarMosquito, alt: "A solar-powered mosquito-control light in an estate landscape" },
+    media: { type: "image", src: media.renewableWind, alt: "Wind generation equipment at Kwun Lung Lau" },
     sourceKey: "annual",
     sourcePage: 141,
   },
   {
     slug: "intergenerational-community",
     pillar: "homes",
+    action: "community",
     place: "Intergenerational community",
     title: "Shared spaces for every generation",
     summary: "Inclusive facilities and activities respond to older people, families and diverse residents.",
@@ -527,6 +517,7 @@ const englishStories: Story[] = [
   {
     slug: "community-art",
     pillar: "homes",
+    action: "community",
     place: "Estate shared space",
     title: "Bringing community stories into shared space",
     summary: "Resident creativity and local character can enrich everyday estate environments.",
@@ -537,6 +528,7 @@ const englishStories: Story[] = [
   {
     slug: "ev-charging",
     pillar: "carbon",
+    action: "environment",
     place: "Estate car park",
     title: "Preparing charging facilities for lower-carbon travel",
     summary: "Charging equipment at suitable parking spaces supports the longer-term transition to electric mobility.",
@@ -545,24 +537,26 @@ const englishStories: Story[] = [
     media: { type: "image", src: media.evCharging, alt: "Electric vehicle charging equipment beside an estate parking space" },
   },
   {
-    slug: "solar-estate-details",
-    pillar: "carbon",
-    place: "Estate landscape",
-    title: "Using clean energy for small estate facilities",
-    summary: "Solar-powered equipment supports routine environmental management in landscaped and shared areas.",
-    detail: "Where sunlight and location are suitable, compact solar equipment can power selected facilities without a conventional electricity connection.",
-    impact: "Low-carbon transition grows through both large systems and practical details embedded in daily management.",
-    media: { type: "image", src: media.solarMosquitoNight, alt: "A solar-powered mosquito-control light operating in an estate landscape at night" },
+    slug: "geoai-mosquito-control",
+    pillar: "future",
+    action: "innovation",
+    place: "Kwun Lung Lau and other estates",
+    title: "Using smart monitoring for targeted mosquito control",
+    summary: "Smart mosquito traps and weather data help teams track environmental change and plan earlier action.",
+    detail: "Property management teams work with research partners to install smart mosquito traps and weather stations, using data to identify species and forecast short-term mosquito activity.",
+    impact: "Estate hygiene work becomes more targeted and responsive to local conditions.",
+    media: { type: "image", src: media.smartMosquito, alt: "Smart mosquito-control and environmental monitoring equipment in an estate landscape" },
   },
   {
-    slug: "copa-smart-operations",
+    slug: "hs-living-service",
     pillar: "future",
-    place: "COPA",
-    title: "Turning data into property management action",
-    summary: "We bring information, technology and expertise together for clearer, timely decisions.",
-    detail: "COPA connects the systems, sensors, data and workflows required for property and asset management on one platform, supported by a common data environment and interactive dashboards.",
-    impact: "Teams gain a clearer view of asset conditions and support continuous improvement in safety, maintenance, energy and service performance.",
-    media: { type: "image", src: media.copaAct, alt: "A COPA smart facilities dashboard supporting property management action" },
+    action: "service",
+    place: "Estate digital services",
+    title: "One place for everyday estate information",
+    summary: "Residents can view estate information, receive notices and register for activities on their phones.",
+    detail: "The HS Living and estate information apps bring frequently used information and services to mobile devices, helping residents keep up with everyday arrangements and community activities.",
+    impact: "Information reaches residents sooner, with less reliance on paper notices and more convenient participation.",
+    media: { type: "image", src: media.hsLiving, alt: "HS Living mobile application screens" },
   },
 ];
 
@@ -570,30 +564,33 @@ const simplifiedStories: Story[] = [
   {
     slug: "smart-recycling-hub",
     pillar: "carbon",
+    action: "environment",
     place: "20 个出租屋邨",
     title: "智能回收，让分类走进日常",
     summary: "厨余、旧衣和多类可回收物各有清楚去向，让屋邨分类更便利。",
     detail: "物业管理团队按屋邨环境整合智能厨余机、衣物回收箱，以及金属、塑料、纸张和玻璃分类设施，并以清楚标示和日常管理支持居民参与。",
     impact: "近 50 部智能厨余回收机已设于 20 个出租屋邨，并与其他分类设施共同支持资源循环。",
-    media: { type: "image", src: media.smartRecycling, alt: "屋邨内并列设置的智能分类回收设施" },
+    media: { type: "image", src: media.smartFoodWaste, alt: "出租屋邨设置的智能厨余回收设施" },
     sourceKey: "annual",
     sourcePage: 141,
   },
   {
     slug: "renewable-energy",
     pillar: "carbon",
+    action: "environment",
     place: "出租屋邨",
     title: "在屋邨采集洁净能源",
     summary: "太阳能和风力设备把公共空间转化为可再生能源的实践场景。",
     detail: "房协在合适屋邨设置太阳能光伏系统，并在观龙楼应用风力发电，将可再生能源融入物业营运。",
     impact: "截至 2024/25 年度，10 个出租屋邨设有太阳能光伏系统。",
-    media: { type: "image", src: media.solarMosquito, alt: "设于屋邨园景范围的太阳能灭蚊灯" },
+    media: { type: "image", src: media.renewableWind, alt: "观龙楼的风力发电设备" },
     sourceKey: "annual",
     sourcePage: 141,
   },
   {
     slug: "intergenerational-community",
     pillar: "homes",
+    action: "community",
     place: "跨代社区",
     title: "让不同世代共享生活空间",
     summary: "共融设施和社区活动回应长者、家庭及不同居民的生活需要。",
@@ -604,6 +601,7 @@ const simplifiedStories: Story[] = [
   {
     slug: "community-art",
     pillar: "homes",
+    action: "community",
     place: "屋邨公共空间",
     title: "把社区故事带进日常空间",
     summary: "以街坊创作和地方特色丰富公共空间，让屋邨环境更具归属感。",
@@ -614,6 +612,7 @@ const simplifiedStories: Story[] = [
   {
     slug: "ev-charging",
     pillar: "carbon",
+    action: "environment",
     place: "屋邨停车场",
     title: "为低碳出行准备充电设施",
     summary: "在合适停车位置配置充电设备，配合交通电动化的长远需要。",
@@ -622,24 +621,26 @@ const simplifiedStories: Story[] = [
     media: { type: "image", src: media.evCharging, alt: "屋邨停车位置旁的电动车充电设备" },
   },
   {
-    slug: "solar-estate-details",
-    pillar: "carbon",
-    place: "屋邨园景",
-    title: "让小型设施善用清洁能源",
-    summary: "太阳能供电设备在园景和公共范围支持日常环境管理。",
-    detail: "在日照及位置合适的地方，小型太阳能设备可为指定设施供电，减少接驳电源的需要。",
-    impact: "低碳转型不只来自大型系统，也可由贴近日常管理的设施逐步累积。",
-    media: { type: "image", src: media.solarMosquitoNight, alt: "夜间屋邨园景内运作中的太阳能灭蚊灯" },
+    slug: "geoai-mosquito-control",
+    pillar: "future",
+    action: "innovation",
+    place: "观龙楼等屋邨",
+    title: "以智能监测支持精准防蚊",
+    summary: "智能灭蚊灯和气象数据协助团队掌握环境变化，提早部署防蚊工作。",
+    detail: "物业管理团队与科研机构合作，在观龙楼等屋邨安装智能灭蚊灯及气象站，透过数据辨识蚊种及预测短期蚊患趋势。",
+    impact: "环境管理由定期处理走向更具针对性的部署，提升屋邨防蚊工作的效率。",
+    media: { type: "image", src: media.smartMosquito, alt: "屋邨园景内的智能灭蚊及环境监测设备" },
   },
   {
-    slug: "copa-smart-operations",
+    slug: "hs-living-service",
     pillar: "future",
-    place: "COPA",
-    title: "把数据转化为物业管理行动",
-    summary: "我们整合信息、科技和专业知识，让管理决策更清晰、更及时。",
-    detail: "COPA 在单一平台连接物业和资产管理所需的系统、传感器、数据及流程，并以共同数据环境和互动仪表板支持日常工作。",
-    impact: "管理团队可更清晰掌握资产状况，支持安全、维修、能源和服务表现的持续改善。",
-    media: { type: "image", src: media.copaAct, alt: "COPA 智能设施仪表板支持物业管理行动" },
+    action: "service",
+    place: "屋邨数码服务",
+    title: "一站式信息，连系屋邨生活",
+    summary: "居民可透过手机应用程序查阅屋邨信息、接收通知及报名参与活动。",
+    detail: "HS Living 及房协屋邨信息手机应用程序把常用屋邨信息和服务带到移动设备，让居民更便捷地了解日常安排及社区活动。",
+    impact: "信息传达更及时，也减少纸本通告的需要，支持居民参与和绿色生活。",
+    media: { type: "image", src: media.hsLiving, alt: "HS Living 手机应用程序画面" },
   },
 ];
 
@@ -669,7 +670,7 @@ function StoryVisual({ media: visual, compact = false }: { media: StoryMedia; co
     );
   }
 
-  const Icon = visual.variant === "solar" ? Sun : visual.variant === "community" ? UsersThree : Cpu;
+  const Icon = visual.variant === "solar" ? Sun : UsersThree;
   return (
     <div className={`story-graphic story-graphic-${visual.variant} ${compact ? "is-compact" : ""}`} role="img" aria-label={visual.alt}>
       <Icon size={compact ? 54 : 88} weight="thin" aria-hidden="true" />
@@ -729,7 +730,7 @@ function useRailIndex(count: number) {
   return { railRef, activeIndex, selectIndex };
 }
 
-const sectionIds = ["home", "pillars", "copa", "stories", "progress", "videos"] as const;
+const sectionIds = ["home", "stories", "progress", "videos", "pillars", "direction"] as const;
 
 function useSectionProgress() {
   const [activeSection, setActiveSection] = useState<(typeof sectionIds)[number]>("home");
@@ -758,10 +759,9 @@ export function SiteExperience({ locale }: { locale: Locale }) {
   const c = content[locale];
   const [menuOpen, setMenuOpen] = useState(false);
   const [activePillar, setActivePillar] = useState<PillarKey>("homes");
-  const [storyFilter, setStoryFilter] = useState<"all" | PillarKey>("all");
+  const [storyFilter, setStoryFilter] = useState<"all" | ActionKey>("all");
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const [activeVideo, setActiveVideo] = useState(0);
-  const [activeCopaStep, setActiveCopaStep] = useState(0);
   const activeSection = useSectionProgress();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogInnerRef = useRef<HTMLDivElement>(null);
@@ -779,17 +779,16 @@ export function SiteExperience({ locale }: { locale: Locale }) {
     return [...content["zh-hk"].stories];
   }, [locale]);
 
-  const filteredStories = storyFilter === "all" ? stories : stories.filter((story) => story.pillar === storyFilter);
+  const filteredStories = storyFilter === "all" ? stories : stories.filter((story) => story.action === storyFilter);
   const selectedPillar = c.pillars.find((pillar) => pillar.key === activePillar) ?? c.pillars[0];
   const activePillarIndex = c.pillars.findIndex((pillar) => pillar.key === activePillar);
-  const activeCopa = c.copa.steps[activeCopaStep];
   const sectionLinks = [
     ["home", c.nav.home],
-    ["pillars", c.nav.pillars],
-    ["copa", c.nav.copa],
     ["stories", c.nav.stories],
     ["progress", c.nav.progress],
     ["videos", c.nav.videos],
+    ["pillars", c.nav.pillars],
+    ["direction", c.nav.direction],
   ] as const;
   const dialogOpen = Boolean(selectedStory);
 
@@ -870,11 +869,11 @@ export function SiteExperience({ locale }: { locale: Locale }) {
         </a>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <a href="#pillars">{c.nav.pillars}</a>
-          <a href="#copa">{c.nav.copa}</a>
           <a href="#stories">{c.nav.stories}</a>
           <a href="#progress">{c.nav.progress}</a>
           <a href="#videos">{c.nav.videos}</a>
+          <a href="#pillars">{c.nav.pillars}</a>
+          <a href="#direction">{c.nav.direction}</a>
         </nav>
 
         <div className="header-actions">
@@ -905,11 +904,11 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <BrandMark />
             <nav aria-label="Mobile navigation">
               {[
-                ["#pillars", c.nav.pillars],
-                ["#copa", c.nav.copa],
                 ["#stories", c.nav.stories],
                 ["#progress", c.nav.progress],
                 ["#videos", c.nav.videos],
+                ["#pillars", c.nav.pillars],
+                ["#direction", c.nav.direction],
               ].map(([href, label]) => (
                 <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowRight size={22} aria-hidden="true" /></a>
               ))}
@@ -930,7 +929,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <h1>{c.hero.title}</h1>
             <p className="hero-body">{c.hero.body}</p>
             <div className="hero-actions">
-              <a className="primary-button" href="#pillars">{c.hero.cta}<ArrowRight size={18} aria-hidden="true" /></a>
+              <a className="primary-button" href="#stories">{c.hero.cta}<ArrowRight size={18} aria-hidden="true" /></a>
               <a className="text-link" href="#progress">{c.hero.secondary}</a>
             </div>
           </motion.div>
@@ -959,6 +958,101 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           <h2>{c.intro.title}</h2>
           <p>{c.intro.body}</p>
         </motion.section>
+
+        <section className="stories-section" id="stories">
+          <div className="section-heading">
+            <h2>{c.storySection.title}</h2>
+            <p>{c.storySection.body}</p>
+          </div>
+          <div className="story-filters" role="group" aria-label={c.storySection.actionPrompt}>
+            <button type="button" className={storyFilter === "all" ? "is-active" : ""} onClick={() => setStoryFilter("all")}>{c.storySection.all}</button>
+            {(Object.entries(c.storySection.actions) as [ActionKey, string][]).map(([key, label]) => (
+              <button key={key} type="button" className={storyFilter === key ? "is-active" : ""} onClick={() => setStoryFilter(key)}>{label}</button>
+            ))}
+          </div>
+          <motion.div className="stories-grid" layout>
+            <AnimatePresence mode="popLayout">
+              {filteredStories.map((story, index) => (
+                <motion.article
+                  layout
+                  key={story.slug}
+                  className={`story-card story-card-${index % 6} story-${story.slug}`}
+                  initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 12 }}
+                  transition={{ duration: 0.35 }}
+                >
+                  <div className="story-media"><StoryVisual media={story.media} compact /></div>
+                  <div className="story-copy">
+                    <div className="story-meta"><p className="story-place">{story.place}</p><span>{c.ui.property}</span></div>
+                    <h3>{story.title}</h3>
+                    <p>{story.summary}</p>
+                    <button type="button" onClick={() => setSelectedStory(story)}>{c.storySection.read}<ArrowRight size={17} aria-hidden="true" /></button>
+                  </div>
+                </motion.article>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </section>
+
+        <section className="progress-section" id="progress">
+          <motion.div className="progress-heading" {...reveal}>
+            <ChartLineUp size={42} weight="thin" aria-hidden="true" />
+            <h2>{c.progress.title}</h2>
+            {c.progress.body ? <p>{c.progress.body}</p> : null}
+          </motion.div>
+          <div className="metrics-grid">
+            {c.metrics.map((metric, index) => (
+              <motion.article key={metric.label} className={`metric metric-${index}`} {...reveal}>
+                <span className={`scope-label scope-${metric.scopeKind}`}>{metric.scopeKind === "property" ? c.ui.property : c.ui.organization}</span>
+                <div className="metric-value"><strong>{metric.value}</strong><span>{metric.unit}</span></div>
+                <h3>{metric.label}</h3>
+                <p>{metric.scope}</p>
+              </motion.article>
+            ))}
+          </div>
+          <details className="source-note">
+            <summary>{c.ui.source}<ArrowSquareOut size={16} aria-hidden="true" /></summary>
+            <p>{c.progress.source}</p>
+            <div>
+              <a href={sourceDocuments.sustainability} target="_blank" rel="noreferrer">{c.ui.sustainabilityReport}</a>
+              <a href={sourceDocuments.annual} target="_blank" rel="noreferrer">{c.ui.annualReport}</a>
+            </div>
+          </details>
+        </section>
+
+        <section className="videos-section" id="videos">
+          <div className="section-heading">
+            <h2>{c.videos.title}</h2>
+            <p>{c.videos.body}</p>
+          </div>
+          <div className="video-layout">
+            <div className="video-player">
+              {/* Captions will be connected when the approved transcripts are provided. */}
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+              <video key={c.videos.items[activeVideo][2]} controls playsInline preload="metadata" poster={media.smartRecycling} aria-label={c.videos.items[activeVideo][0]}>
+                <source src={c.videos.items[activeVideo][2]} type="video/mp4" />
+              </video>
+              <p>{c.videos.note}</p>
+            </div>
+            <div className="video-selector" ref={videoRailRef}>
+              {c.videos.items.map(([title, description], index) => (
+                <button key={title} type="button" className={activeVideo === index ? "is-active" : ""} onClick={() => selectVideo(index)}>
+                  <span className="play-icon"><Play size={18} weight="fill" aria-hidden="true" /></span>
+                  <span><strong>{title}</strong><small>{description}</small></span>
+                </button>
+              ))}
+            </div>
+            <RailCue
+              activeIndex={activeVideo}
+              count={c.videos.items.length}
+              label={c.ui.swipe}
+              previousLabel={c.ui.previous}
+              nextLabel={c.ui.next}
+              onSelect={selectVideo}
+            />
+          </div>
+        </section>
 
         <section className="pillars-section" id="pillars">
           <div className="section-heading">
@@ -1011,7 +1105,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           </a>
         </section>
 
-        <motion.section className="journey-section" {...reveal}>
+        <motion.section className="journey-section" id="direction" {...reveal}>
           <div className="journey-lead">
             <h2>{c.journey.title}</h2>
             <p>{c.journey.body}</p>
@@ -1035,103 +1129,6 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           />
         </motion.section>
 
-        <section className="copa-section" id="copa">
-          <div className="copa-heading">
-            <div className="copa-heading-mark" aria-hidden="true"><Database size={34} weight="thin" /></div>
-            <h2>{c.copa.title}</h2>
-            <p>{c.copa.body}</p>
-          </div>
-          <div className="copa-experience">
-            <AnimatePresence mode="wait">
-              <motion.figure
-                key={activeCopaStep}
-                className="copa-visual"
-                initial={reduceMotion ? false : { opacity: 0, scale: 0.985 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.32 }}
-              >
-                <img src={activeCopa[2]} alt={activeCopa[3]} width="2048" height="1152" loading="lazy" />
-              </motion.figure>
-            </AnimatePresence>
-            <div className="copa-step-list" role="tablist" aria-label={c.copa.title}>
-              {c.copa.steps.map(([title, description], index) => (
-                <button
-                  key={title}
-                  type="button"
-                  role="tab"
-                  aria-selected={activeCopaStep === index}
-                  onClick={() => setActiveCopaStep(index)}
-                >
-                  <strong>{title}</strong>
-                  <span>{description}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-          <p className="copa-feature-note">{c.copa.features}</p>
-        </section>
-
-        <section className="stories-section" id="stories">
-          <div className="section-heading">
-            <h2>{c.storySection.title}</h2>
-            <p>{c.storySection.body}</p>
-          </div>
-          <div className="story-filters" role="group" aria-label={c.pillarPrompt}>
-            <button type="button" className={storyFilter === "all" ? "is-active" : ""} onClick={() => setStoryFilter("all")}>{c.storySection.all}</button>
-            {c.pillars.map((pillar) => (
-              <button key={pillar.key} type="button" className={storyFilter === pillar.key ? "is-active" : ""} onClick={() => setStoryFilter(pillar.key)}>{pillar.title}</button>
-            ))}
-          </div>
-          <motion.div className="stories-grid" layout>
-            <AnimatePresence mode="popLayout">
-              {filteredStories.map((story, index) => (
-                <motion.article
-                  layout
-                  key={story.slug}
-                  className={`story-card story-card-${index % 6}`}
-                  initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 12 }}
-                  transition={{ duration: 0.35 }}
-                >
-                  <div className="story-media"><StoryVisual media={story.media} compact /></div>
-                  <div className="story-copy">
-                    <div className="story-meta"><p className="story-place">{story.place}</p><span>{c.ui.property}</span></div>
-                    <h3>{story.title}</h3>
-                    <p>{story.summary}</p>
-                    <button type="button" onClick={() => setSelectedStory(story)}>{c.storySection.read}<ArrowRight size={17} aria-hidden="true" /></button>
-                  </div>
-                </motion.article>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        </section>
-
-        <section className="progress-section" id="progress">
-          <motion.div className="progress-heading" {...reveal}>
-            <ChartLineUp size={42} weight="thin" aria-hidden="true" />
-            <h2>{c.progress.title}</h2>
-            {c.progress.body ? <p>{c.progress.body}</p> : null}
-          </motion.div>
-          <div className="metrics-grid">
-            {c.metrics.map((metric, index) => (
-              <motion.article key={metric.label} className={`metric metric-${index}`} {...reveal}>
-                <span className={`scope-label scope-${metric.scopeKind}`}>{metric.scopeKind === "property" ? c.ui.property : c.ui.organization}</span>
-                <div className="metric-value"><strong>{metric.value}</strong><span>{metric.unit}</span></div>
-                <h3>{metric.label}</h3>
-                <p>{metric.scope}</p>
-                <a className="metric-source" href={`${sourceDocuments[metric.sourceKey]}#page=${metric.sourcePage}`} target="_blank" rel="noreferrer">
-                  <span>{c.ui.source}</span>
-                  <small>{metric.sourceKey === "annual" ? c.ui.annualReport : c.ui.sustainabilityReport}<br />{c.ui.reportPage}{metric.sourcePage}{c.ui.pageSuffix}</small>
-                  <ArrowSquareOut size={16} aria-hidden="true" />
-                </a>
-              </motion.article>
-            ))}
-          </div>
-          <p className="source-note">{c.progress.source}</p>
-        </section>
-
         <motion.section className="governance-section" {...reveal}>
           <div className="governance-copy">
             <ShieldCheck size={48} weight="thin" aria-hidden="true" />
@@ -1150,39 +1147,6 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             ))}
           </div>
         </motion.section>
-
-        <section className="videos-section" id="videos">
-          <div className="section-heading">
-            <h2>{c.videos.title}</h2>
-            <p>{c.videos.body}</p>
-          </div>
-          <div className="video-layout">
-            <div className="video-player">
-              {/* Captions will be connected when the approved transcripts are provided. */}
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <video key={c.videos.items[activeVideo][2]} controls playsInline preload="metadata" poster={media.smartRecycling} aria-label={c.videos.items[activeVideo][0]}>
-                <source src={c.videos.items[activeVideo][2]} type="video/mp4" />
-              </video>
-              <p>{c.videos.note}</p>
-            </div>
-            <div className="video-selector" ref={videoRailRef}>
-              {c.videos.items.map(([title, description], index) => (
-                <button key={title} type="button" className={activeVideo === index ? "is-active" : ""} onClick={() => selectVideo(index)}>
-                  <span className="play-icon"><Play size={18} weight="fill" aria-hidden="true" /></span>
-                  <span><strong>{title}</strong><small>{description}</small></span>
-                </button>
-              ))}
-            </div>
-            <RailCue
-              activeIndex={activeVideo}
-              count={c.videos.items.length}
-              label={c.ui.swipe}
-              previousLabel={c.ui.previous}
-              nextLabel={c.ui.next}
-              onSelect={selectVideo}
-            />
-          </div>
-        </section>
       </main>
 
       <aside className="page-progress" aria-label={c.ui.journeyProgress}>
@@ -1206,7 +1170,7 @@ export function SiteExperience({ locale }: { locale: Locale }) {
         <div className="footer-statement">
           <p>{c.footer.statement}</p>
           <span>{c.brand.full}</span>
-          <strong>{c.brand.copa}</strong>
+          <strong>{c.brand.division}</strong>
         </div>
         <div className="footer-meta">
           <p>© {new Date().getFullYear()} {c.footer.copyright}</p>
@@ -1215,16 +1179,16 @@ export function SiteExperience({ locale }: { locale: Locale }) {
       </footer>
 
       <nav className="bottom-nav" aria-label="Mobile primary navigation">
-        <a href="#pillars"><Leaf size={21} aria-hidden="true" /><span>{c.nav.pillars}</span></a>
-        <a href="#copa"><Database size={21} aria-hidden="true" /><span>{c.nav.copa}</span></a>
         <a href="#stories"><Buildings size={21} aria-hidden="true" /><span>{c.nav.stories}</span></a>
         <a href="#progress"><ChartLineUp size={21} aria-hidden="true" /><span>{c.nav.progress}</span></a>
         <a href="#videos"><Play size={21} aria-hidden="true" /><span>{c.nav.videos}</span></a>
+        <a href="#pillars"><Leaf size={21} aria-hidden="true" /><span>{c.nav.pillars}</span></a>
+        <a href="#direction"><HouseLine size={21} aria-hidden="true" /><span>{c.nav.direction}</span></a>
       </nav>
 
       <dialog
         ref={dialogRef}
-        className="story-dialog"
+        className={`story-dialog ${selectedStory ? `story-${selectedStory.slug}` : ""}`}
         onCancel={() => setSelectedStory(null)}
         onClose={() => setSelectedStory(null)}
       >
