@@ -25,6 +25,7 @@ import videoRecords from "../content/videos.json";
 type Locale = "zh-hk" | "zh-cn" | "en";
 type PillarKey = "homes" | "carbon" | "future";
 type ActionKey = "environment" | "social" | "governance";
+type VideoTheme = "green" | "community" | "smart";
 type StoryMedia =
   | { type: "image"; src: string; alt: string }
   | { type: "video"; src: string; alt: string }
@@ -75,6 +76,7 @@ type EstateActionRecord = {
 
 type VideoRecord = {
   id: string;
+  theme: VideoTheme;
   src: string;
   poster: string;
   mime: "video/mp4" | "video/quicktime";
@@ -83,6 +85,7 @@ type VideoRecord = {
 
 type VideoItem = {
   id: string;
+  theme: VideoTheme;
   title: string;
   description: string;
   src: string;
@@ -160,6 +163,7 @@ const buildEstateStories = (locale: Locale): Story[] =>
 const buildVideoItems = (locale: Locale): VideoItem[] =>
   (videoRecords as VideoRecord[]).map((record) => ({
     id: record.id,
+    theme: record.theme,
     title: record.locales[locale].title,
     description: record.locales[locale].description,
     src: publicPath(record.src),
@@ -352,6 +356,13 @@ const content = {
       body: "透過屋邨片段，了解綠色生活、共融社區和智慧管理如何在日常發生。",
       play: "播放影片",
       note: "可使用原生播放控制觀看影片。",
+      browse: "按主題瀏覽影片",
+      filterLabel: "選擇影片主題",
+      nowPlaying: "現正播放",
+      showAll: "顯示全部影片",
+      showLess: "收起影片",
+      countSuffix: "段影片",
+      themes: { all: "全部", green: "綠色生活", community: "共融社區", smart: "智慧管理" },
       items: [] as [string, string, string][],
     },
     footer: {
@@ -409,6 +420,13 @@ const content = {
       body: "透过屋邨片段，了解绿色生活、共融社区和智慧管理如何在日常发生。",
       play: "播放视频",
       note: "可使用原生播放控制观看视频。",
+      browse: "按主题浏览视频",
+      filterLabel: "选择视频主题",
+      nowPlaying: "正在播放",
+      showAll: "显示全部视频",
+      showLess: "收起视频",
+      countSuffix: "段视频",
+      themes: { all: "全部", green: "绿色生活", community: "共融社区", smart: "智慧管理" },
       items: [] as [string, string, string][],
     },
     footer: { statement: "可持续发展不是单一项目，而是我们建造、管理和服务社区的方式。", copyright: "香港房屋协会 物业管理部门" },
@@ -463,6 +481,13 @@ const content = {
       body: "Estate stories show how greener living, inclusive communities and smarter management become part of everyday life.",
       play: "Play video",
       note: "Use the native playback controls to watch each video.",
+      browse: "Browse videos by theme",
+      filterLabel: "Choose a video theme",
+      nowPlaying: "Now playing",
+      showAll: "Show all videos",
+      showLess: "Show fewer videos",
+      countSuffix: "videos",
+      themes: { all: "All", green: "Green living", community: "Inclusive community", smart: "Smart management" },
       items: [] as [string, string, string][],
     },
     footer: { statement: "Sustainability is not one project. It is how we build, manage and serve communities.", copyright: "Hong Kong Housing Society Property Management Division" },
@@ -732,17 +757,22 @@ export function SiteExperience({ locale }: { locale: Locale }) {
   const [storyFilter, setStoryFilter] = useState<"all" | ActionKey>("all");
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const [activeVideo, setActiveVideo] = useState(0);
+  const [videoFilter, setVideoFilter] = useState<"all" | VideoTheme>("all");
+  const [videoExpanded, setVideoExpanded] = useState(false);
   const activeSection = useSectionProgress();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogInnerRef = useRef<HTMLDivElement>(null);
   const pillarRailRef = useRef<HTMLDivElement>(null);
-  const videoRailRef = useRef<HTMLDivElement>(null);
+  const videoPlayerRef = useRef<HTMLDivElement>(null);
   const stories = useMemo(() => {
     return buildEstateStories(locale);
   }, [locale]);
   const videoItems = useMemo(() => buildVideoItems(locale), [locale]);
 
   const filteredStories = storyFilter === "all" ? stories : stories.filter((story) => story.action === storyFilter);
+  const filteredVideoItems = videoFilter === "all" ? videoItems : videoItems.filter((video) => video.theme === videoFilter);
+  const visibleVideoItems = videoExpanded ? filteredVideoItems : filteredVideoItems.slice(0, 6);
+  const activeVideoItem = videoItems[activeVideo] ?? videoItems[0];
   const selectedPillar = c.pillars.find((pillar) => pillar.key === activePillar) ?? c.pillars[0];
   const activePillarIndex = c.pillars.findIndex((pillar) => pillar.key === activePillar);
   const sectionLinks = [
@@ -793,9 +823,23 @@ export function SiteExperience({ locale }: { locale: Locale }) {
     (pillarRailRef.current?.children[index] as HTMLElement | undefined)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
   };
 
-  const selectVideo = (index: number) => {
+  const selectVideo = (id: string) => {
+    const index = videoItems.findIndex((video) => video.id === id);
+    if (index < 0) return;
     setActiveVideo(index);
-    (videoRailRef.current?.children[index] as HTMLElement | undefined)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+    if (window.matchMedia("(max-width: 760px)").matches) {
+      window.requestAnimationFrame(() => videoPlayerRef.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }));
+    }
+  };
+
+  const selectVideoFilter = (theme: "all" | VideoTheme) => {
+    setVideoFilter(theme);
+    setVideoExpanded(false);
+    const nextItems = theme === "all" ? videoItems : videoItems.filter((video) => video.theme === theme);
+    if (nextItems.length && !nextItems.some((video) => video.id === activeVideoItem.id)) {
+      const nextIndex = videoItems.findIndex((video) => video.id === nextItems[0].id);
+      setActiveVideo(nextIndex);
+    }
   };
 
   const selectStoryByOffset = (offset: number) => {
@@ -962,30 +1006,48 @@ export function SiteExperience({ locale }: { locale: Locale }) {
             <p>{c.videos.body}</p>
           </div>
           <div className="video-layout">
-            <div className="video-player">
+            <div className="video-player" ref={videoPlayerRef}>
               {/* Captions will be connected when the approved transcripts are provided. */}
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <video key={videoItems[activeVideo].src} controls playsInline preload="metadata" poster={videoItems[activeVideo].poster} aria-label={videoItems[activeVideo].title}>
-                <source src={videoItems[activeVideo].src} type={videoItems[activeVideo].mime} />
+              <video key={activeVideoItem.src} controls playsInline preload="metadata" poster={activeVideoItem.poster} aria-label={activeVideoItem.title}>
+                <source src={activeVideoItem.src} type={activeVideoItem.mime} />
               </video>
-              <p>{c.videos.note}</p>
+              <div className="video-now-playing">
+                <span>{c.videos.nowPlaying}</span>
+                <h3>{activeVideoItem.title}</h3>
+                <p>{activeVideoItem.description}</p>
+              </div>
+              <p className="video-control-note">{c.videos.note}</p>
             </div>
-            <div className="video-selector" ref={videoRailRef}>
-              {videoItems.map(({ id, title, description, poster }, index) => (
-                <button key={id} type="button" data-content-id={id} className={activeVideo === index ? "is-active" : ""} onClick={() => selectVideo(index)}>
-                  <span className="video-thumb"><img src={poster} alt="" /><span className="play-icon"><Play size={16} weight="fill" aria-hidden="true" /></span></span>
-                  <span><strong>{title}</strong><small>{description}</small></span>
+            <div className="video-library">
+              <div className="video-library-heading">
+                <strong>{c.videos.browse}</strong>
+                <span aria-live="polite">{filteredVideoItems.length} {c.videos.countSuffix}</span>
+              </div>
+              <div className="video-filters" role="group" aria-label={c.videos.filterLabel}>
+                {(Object.keys(c.videos.themes) as Array<"all" | VideoTheme>).map((theme) => (
+                  <button key={theme} type="button" className={videoFilter === theme ? "is-active" : ""} aria-pressed={videoFilter === theme} onClick={() => selectVideoFilter(theme)}>
+                    {c.videos.themes[theme]}
+                  </button>
+                ))}
+              </div>
+              <div className="video-selector">
+                {visibleVideoItems.map(({ id, title, poster, theme }) => {
+                  const index = videoItems.findIndex((video) => video.id === id);
+                  return (
+                    <button key={id} type="button" data-content-id={id} className={activeVideo === index ? "is-active" : ""} onClick={() => selectVideo(id)} aria-label={`${c.videos.play}: ${title}`}>
+                      <span className="video-thumb"><img src={poster} alt="" /><span className="play-icon"><Play size={15} weight="fill" aria-hidden="true" /></span></span>
+                      <span className="video-card-copy"><small>{c.videos.themes[theme]}</small><strong>{title}</strong></span>
+                    </button>
+                  );
+                })}
+              </div>
+              {filteredVideoItems.length > 6 ? (
+                <button type="button" className="video-more-button" onClick={() => setVideoExpanded((expanded) => !expanded)} aria-expanded={videoExpanded}>
+                  {videoExpanded ? c.videos.showLess : `${c.videos.showAll} (${filteredVideoItems.length})`}
                 </button>
-              ))}
+              ) : null}
             </div>
-            <RailCue
-              activeIndex={activeVideo}
-              count={videoItems.length}
-              label={c.ui.swipe}
-              previousLabel={c.ui.previous}
-              nextLabel={c.ui.next}
-              onSelect={selectVideo}
-            />
           </div>
         </section>
 

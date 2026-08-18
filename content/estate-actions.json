@@ -214,7 +214,7 @@
     "slug": "estate-digital-noticeboards",
     "pillar": "future",
     "action": "governance",
-    "image": null,
+    "image": "/media/estate-actions/EA-08.webp",
     "sourceKey": null,
     "sourcePage": null,
     "locales": {
@@ -224,7 +224,7 @@
         "summary": "影片、通告和海報以數碼方式發布，讓居民掌握屋邨及政府部門的最新資訊。",
         "detail": "物業管理團隊在合適的大廈地下大堂設置電子通告板，集中播放屋邨辦事處的影片、通告和海報，減少紙本印刷的碳排放。",
         "impact": "日常資訊能夠更及時、全面地傳達，減少更新紙本告示所需時間的同時推進無紙化環保。",
-        "alt": ""
+        "alt": "大廈升降機大堂旁的屋邨電子通告板"
       },
       "zh-cn": {
         "place": "数码服务",
@@ -232,7 +232,7 @@
         "summary": "视频、通告和海报以数码方式发布，让居民掌握屋邨及政府部门的最新信息。",
         "detail": "物业管理团队在合适的大厦地下大堂设置电子通告板，集中播放屋邨办事处的视频、通告和海报，减少纸本印刷的碳排放。",
         "impact": "日常信息能够更及时、全面地传达，在减少更新纸本告示所需时间的同时推进无纸化环保。",
-        "alt": ""
+        "alt": "大厦电梯大堂旁的屋邨电子通告板"
       },
       "en": {
         "place": "Digital services",
@@ -240,7 +240,7 @@
         "summary": "Videos, notices and posters help residents keep up with the latest estate and government information.",
         "detail": "Property management teams install digital noticeboards in suitable ground-floor lobbies to present videos, notices and posters from estate offices, reducing carbon emissions from paper printing.",
         "impact": "Everyday information can be communicated more promptly and comprehensively, while reducing time spent replacing printed notices and advancing paperless operations.",
-        "alt": ""
+        "alt": "An estate digital noticeboard beside a lift lobby"
       }
     }
   },
@@ -284,7 +284,7 @@
     "slug": "proptech-co-working-space",
     "pillar": "future",
     "action": "governance",
-    "image": null,
+    "image": "/media/estate-actions/EA-10.webp",
     "sourceKey": null,
     "sourcePage": null,
     "locales": {
@@ -294,7 +294,7 @@
         "summary": "房地產科技共享工作室為初創企業提供交流及概念測試(Proof of Concept)的機會。",
         "detail": "房協與數碼港設立房地產科技共享工作室，讓創科團隊在舒適的工作環境下探索屋邨場景的技術應用。",
         "impact": "把前線需要、業界知識和創新方案連繫起來，支持物業管理能力持續提升。",
-        "alt": ""
+        "alt": "房地產科技共享工作室的交流及工作空間"
       },
       "zh-cn": {
         "place": "智慧管理",
@@ -302,7 +302,7 @@
         "summary": "房地产科技共享工作室为初创企业提供交流及概念测试（Proof of Concept）的机会。",
         "detail": "房协与数码港设立房地产科技共享工作室，让创科团队在舒适的工作环境下探索屋邨场景的技术应用。",
         "impact": "把前线需要、业界知识和创新方案连系起来，支持物业管理能力持续提升。",
-        "alt": ""
+        "alt": "房地产科技共享工作室的交流及工作空间"
       },
       "en": {
         "place": "Smart management",
@@ -310,7 +310,7 @@
         "summary": "The Property Technology Co-working Space gives start-ups opportunities to exchange ideas and conduct proof-of-concept testing.",
         "detail": "HKHS and Cyberport established the shared workspace so innovation and technology teams can explore technology applications for estate settings in a comfortable working environment.",
         "impact": "It connects frontline needs, industry knowledge and emerging solutions to support continuous improvement in property management.",
-        "alt": ""
+        "alt": "The collaboration and work area at the Property Technology Co-working Space"
       }
     }
   },

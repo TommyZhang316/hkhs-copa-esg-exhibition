@@ -168,6 +168,7 @@
                 </div>
               </header>
               <div class="card-body">
+                ${videoThemeField(record)}
                 ${field(record.id, 'title', '標題', copy.title, false)}
                 ${field(record.id, 'description', '影片說明', copy.description, true)}
               </div>
@@ -223,6 +224,15 @@
       return `<label class="field"><span>ESG 分類</span><select data-action-for="${record.id}">${options}</select></label>`;
     }
 
+    function videoThemeField(record) {
+      const options = [
+        ['green', 'Green living／綠色生活'],
+        ['community', 'Inclusive community／共融社區'],
+        ['smart', 'Smart management／智慧管理'],
+      ].map(([value, label]) => `<option value="${value}" ${record.theme === value ? 'selected' : ''}>${label}</option>`).join('');
+      return `<label class="field"><span>影片主題</span><select data-video-theme-for="${record.id}">${options}</select></label>`;
+    }
+
     function bindFields() {
       cards.querySelectorAll('[data-key]').forEach((input) => {
         input.addEventListener('input', () => {
@@ -237,6 +247,14 @@
         select.addEventListener('change', () => {
           const record = state.data.find((item) => item.id === select.dataset.actionFor);
           record.action = select.value;
+          showToast(`${record.id} 已改為 ${select.selectedOptions[0].textContent}`);
+        });
+      });
+
+      cards.querySelectorAll('[data-video-theme-for]').forEach((select) => {
+        select.addEventListener('change', () => {
+          const record = state.data.find((item) => item.id === select.dataset.videoThemeFor);
+          record.theme = select.value;
           showToast(`${record.id} 已改為 ${select.selectedOptions[0].textContent}`);
         });
       });

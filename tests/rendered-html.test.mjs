@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 async function render(path = "/") {
@@ -51,8 +52,10 @@ test("server-renders the Property Management Division sustainability experience"
   assert.match(html, /GeoAI智能監測滅蚊燈/);
   assert.match(html, /智能回收，讓廚餘分類走進日常/);
   assert.match(html, /電子通告板，讓資訊更快到達/);
+  assert.match(html, /\/media\/estate-actions\/EA-08\.webp/);
   assert.match(html, /跨代共融遊樂空間，連繫不同年齡/);
   assert.match(html, /共享工作室，連繫房地產科技創新/);
+  assert.match(html, /\/media\/estate-actions\/EA-10\.webp/);
   assert.match(html, /可踏式太陽能發電板，讓公共空間同時發電/);
   assert.doesNotMatch(html, /讓不同世代共享生活空間|\/media\/estate-actions\/EA-03\.webp/);
   assert.doesNotMatch(html, /為舊衣物預留回收出口|用清楚標示支援多類回收/);
@@ -61,9 +64,10 @@ test("server-renders the Property Management Division sustainability experience"
   assert.doesNotMatch(html, /從建造到管理，把長遠價值帶進日常|以負責任管治，推動每一步|房協方向/);
   assert.match(html, /\/media\/videos\/latest\/VD-01\.mp4/);
   assert.match(html, /\/media\/videos\/posters\/VD-01\.jpg/);
-  assert.match(html, /\/media\/videos\/posters\/VD-14\.jpg/);
-  assert.match(html, /智能廚餘機使用示範/);
-  assert.match(html, /由物業管理員工示範廚餘分類和回收流程/);
+  assert.match(html, /按主題瀏覽影片/);
+  assert.match(html, /綠色生活/);
+  assert.match(html, /智慧管理/);
+  assert.match(html, /顯示全部影片 \(18\)/);
   assert.doesNotMatch(html, /food-waste-kll|food-waste-ltt|觀龍樓智能廚餘回收/);
   assert.ok(html.indexOf("物業管理，讓可持續發展在屋邨發生") < html.indexOf("三大支柱，共同支撐宜居未來"));
   assert.ok(html.indexOf('id="stories"') < html.indexOf('id="videos"'));
@@ -71,6 +75,18 @@ test("server-renders the Property Management Division sustainability experience"
   assert.doesNotMatch(html, /數據以所示報告期、披露範圍及正式來源為準/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/);
   assert.doesNotMatch(html, /DxwklpgWz3c|kr5ljZSQx_c|wxdvJ-yH_JQ|1bH5kHK0oec/);
+});
+
+test("video library includes the newly supplied clips and theme metadata", () => {
+  const records = JSON.parse(readFileSync(new URL("../content/videos.json", import.meta.url), "utf8"));
+  assert.equal(records.length, 18);
+  assert.deepEqual(records.slice(-4).map(({ id }) => id), ["VD-15", "VD-16", "VD-17", "VD-18"]);
+  assert.equal(records.find(({ id }) => id === "VD-15").theme, "smart");
+  assert.equal(records.find(({ id }) => id === "VD-18").theme, "green");
+  assert.equal(records.find(({ id }) => id === "VD-14").poster, "/media/videos/posters/VD-14.jpg");
+  assert.equal(records.find(({ id }) => id === "VD-07").locales["zh-hk"].title, "智能廚餘機使用示範");
+  assert.match(records.find(({ id }) => id === "VD-07").locales["zh-hk"].description, /由物業管理員工示範/);
+  assert.equal(records.find(({ id }) => id === "VD-18").poster, "/media/videos/posters/VD-18.jpg");
 });
 
 test("server-renders English and Simplified Chinese routes", async () => {

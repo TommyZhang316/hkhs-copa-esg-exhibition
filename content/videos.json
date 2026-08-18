@@ -1,6 +1,7 @@
 [
   {
     "id": "VD-01",
+    "theme": "green",
     "src": "/media/videos/latest/VD-01.mp4",
     "poster": "/media/videos/posters/VD-01.jpg",
     "mime": "video/mp4",
@@ -12,6 +13,7 @@
   },
   {
     "id": "VD-02",
+    "theme": "green",
     "src": "/media/videos/latest/VD-02.mp4",
     "poster": "/media/videos/posters/VD-02.jpg",
     "mime": "video/mp4",
@@ -23,6 +25,7 @@
   },
   {
     "id": "VD-03",
+    "theme": "green",
     "src": "/media/videos/latest/VD-03.mp4",
     "poster": "/media/videos/posters/VD-03.jpg",
     "mime": "video/mp4",
@@ -34,6 +37,7 @@
   },
   {
     "id": "VD-04",
+    "theme": "community",
     "src": "/media/videos/latest/VD-04.mp4",
     "poster": "/media/videos/posters/VD-04.jpg",
     "mime": "video/mp4",
@@ -45,6 +49,7 @@
   },
   {
     "id": "VD-05",
+    "theme": "green",
     "src": "/media/videos/latest/VD-05.mov",
     "poster": "/media/videos/posters/VD-05.jpg",
     "mime": "video/quicktime",
@@ -56,6 +61,7 @@
   },
   {
     "id": "VD-06",
+    "theme": "smart",
     "src": "/media/videos/latest/VD-06.mov",
     "poster": "/media/videos/posters/VD-06.jpg",
     "mime": "video/quicktime",
@@ -67,6 +73,7 @@
   },
   {
     "id": "VD-07",
+    "theme": "green",
     "src": "/media/videos/latest/VD-07.mov",
     "poster": "/media/videos/posters/VD-07.jpg",
     "mime": "video/quicktime",
@@ -78,6 +85,7 @@
   },
   {
     "id": "VD-08",
+    "theme": "green",
     "src": "/media/videos/latest/VD-08.mp4",
     "poster": "/media/videos/posters/VD-08.jpg",
     "mime": "video/mp4",
@@ -89,6 +97,7 @@
   },
   {
     "id": "VD-09",
+    "theme": "green",
     "src": "/media/videos/latest/VD-09.mp4",
     "poster": "/media/videos/posters/VD-09.jpg",
     "mime": "video/mp4",
@@ -100,6 +109,7 @@
   },
   {
     "id": "VD-10",
+    "theme": "green",
     "src": "/media/videos/latest/VD-10.mp4",
     "poster": "/media/videos/posters/VD-10.jpg",
     "mime": "video/mp4",
@@ -111,6 +121,7 @@
   },
   {
     "id": "VD-11",
+    "theme": "green",
     "src": "/media/videos/latest/VD-11.mp4",
     "poster": "/media/videos/posters/VD-11.jpg",
     "mime": "video/mp4",
@@ -122,6 +133,7 @@
   },
   {
     "id": "VD-12",
+    "theme": "green",
     "src": "/media/videos/latest/VD-12.mp4",
     "poster": "/media/videos/posters/VD-12.jpg",
     "mime": "video/mp4",
@@ -133,6 +145,7 @@
   },
   {
     "id": "VD-13",
+    "theme": "community",
     "src": "/media/videos/latest/VD-13.mp4",
     "poster": "/media/videos/posters/VD-13.jpg",
     "mime": "video/mp4",
@@ -144,6 +157,7 @@
   },
   {
     "id": "VD-14",
+    "theme": "community",
     "src": "/media/videos/latest/VD-14.mp4",
     "poster": "/media/videos/posters/VD-14.jpg",
     "mime": "video/mp4",
@@ -151,6 +165,54 @@
       "zh-hk": { "title": "留足跡．長記憶（二）", "description": "由年輕一代分享數碼工具，促進跨代交流。" },
       "zh-cn": { "title": "留足迹．长记忆（二）", "description": "由年轻一代分享数码工具，促进跨代交流。" },
       "en": { "title": "Footprints and memories 2", "description": "Younger participants share digital tools and support intergenerational exchange." }
+    }
+  },
+  {
+    "id": "VD-15",
+    "theme": "smart",
+    "src": "/media/videos/latest/VD-15.mp4",
+    "poster": "/media/videos/posters/VD-15.jpg",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "HS Living 手機應用程式（一）", "description": "示範如何以手機查閱屋邨資訊及使用日常服務。" },
+      "zh-cn": { "title": "HS Living 手机应用程序（一）", "description": "示范如何通过手机查阅屋邨信息及使用日常服务。" },
+      "en": { "title": "HS Living mobile app 1", "description": "A demonstration of accessing estate information and everyday services by phone." }
+    }
+  },
+  {
+    "id": "VD-16",
+    "theme": "smart",
+    "src": "/media/videos/latest/VD-16.mp4",
+    "poster": "/media/videos/posters/VD-16.jpg",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "HS Living 手機應用程式（二）", "description": "從流動介面了解屋邨通知、活動及服務資訊。" },
+      "zh-cn": { "title": "HS Living 手机应用程序（二）", "description": "从移动界面了解屋邨通知、活动及服务信息。" },
+      "en": { "title": "HS Living mobile app 2", "description": "See how estate notices, activities and service information come together on mobile." }
+    }
+  },
+  {
+    "id": "VD-17",
+    "theme": "green",
+    "src": "/media/videos/latest/VD-17.mp4",
+    "poster": "/media/videos/posters/VD-17.jpg",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "電動車充電設施（一）", "description": "了解屋邨停車場的電動車充電配置，支援低碳出行。" },
+      "zh-cn": { "title": "电动车充电设施（一）", "description": "了解屋邨停车场的电动车充电配置，支持低碳出行。" },
+      "en": { "title": "Electric vehicle charging 1", "description": "See how estate car park charging facilities support lower-carbon travel." }
+    }
+  },
+  {
+    "id": "VD-18",
+    "theme": "green",
+    "src": "/media/videos/latest/VD-18.mp4",
+    "poster": "/media/videos/posters/VD-18.jpg",
+    "mime": "video/mp4",
+    "locales": {
+      "zh-hk": { "title": "電動車充電設施（二）", "description": "從充電設備的日常運作，看物業管理如何配合交通電動化。" },
+      "zh-cn": { "title": "电动车充电设施（二）", "description": "从充电设备的日常运作，看物业管理如何配合交通电动化。" },
+      "en": { "title": "Electric vehicle charging 2", "description": "Charging equipment in daily operation shows how property management supports transport electrification." }
     }
   }
 ]
