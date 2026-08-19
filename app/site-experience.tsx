@@ -119,6 +119,9 @@ const sourceDocuments = {
 
 const siteBasePath = process.env.NEXT_PUBLIC_SITE_BASE_PATH ?? "";
 const publicPath = (path: string) => `${siteBasePath}${path}`;
+// English and Simplified Chinese remain published for future use, while the
+// public interface currently presents Traditional Chinese only.
+const showLanguageSwitcher = false;
 
 const media = {
   reuseHero: publicPath("/media/photos/kll-reuse-hero.jpg"),
@@ -882,13 +885,15 @@ export function SiteExperience({ locale }: { locale: Locale }) {
         </nav>
 
         <div className="header-actions">
-          <div className="language-switcher" aria-label="Language">
-            {languageLinks.map(([key, label]) => (
-              <a key={key} href={publicPath(key === "zh-hk" ? "/zh-hk" : `/${key}`)} aria-current={locale === key ? "page" : undefined}>
-                {label}
-              </a>
-            ))}
-          </div>
+          {showLanguageSwitcher ? (
+            <div className="language-switcher" aria-label="Language">
+              {languageLinks.map(([key, label]) => (
+                <a key={key} href={publicPath(key === "zh-hk" ? "/zh-hk" : `/${key}`)} aria-current={locale === key ? "page" : undefined}>
+                  {label}
+                </a>
+              ))}
+            </div>
+          ) : null}
           <button className="menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label={c.nav.menu}>
             <List size={24} weight="regular" aria-hidden="true" />
           </button>
@@ -917,13 +922,15 @@ export function SiteExperience({ locale }: { locale: Locale }) {
                 <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowRight size={22} aria-hidden="true" /></a>
               ))}
             </nav>
-            <div className="language-switcher mobile-language-switcher" aria-label="Language">
-              {languageLinks.map(([key, label]) => (
-                <a key={key} href={publicPath(key === "zh-hk" ? "/zh-hk" : `/${key}`)} aria-current={locale === key ? "page" : undefined}>
-                  {label}
-                </a>
-              ))}
-            </div>
+            {showLanguageSwitcher ? (
+              <div className="language-switcher mobile-language-switcher" aria-label="Language">
+                {languageLinks.map(([key, label]) => (
+                  <a key={key} href={publicPath(key === "zh-hk" ? "/zh-hk" : `/${key}`)} aria-current={locale === key ? "page" : undefined}>
+                    {label}
+                  </a>
+                ))}
+              </div>
+            ) : null}
           </motion.div>
         )}
       </AnimatePresence>
