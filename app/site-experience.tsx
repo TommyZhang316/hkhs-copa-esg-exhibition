@@ -77,21 +77,21 @@ type EstateActionRecord = {
 type VideoRecord = {
   id: string;
   theme: VideoTheme;
-  src: string;
-  poster: string;
-  mime: "video/mp4" | "video/quicktime";
   locales: Record<Locale, { title: string; description: string }>;
-};
+} & (
+  | { mediaType: "video"; src: string; poster: string; mime: "video/mp4" | "video/quicktime" }
+  | { mediaType: "still"; still: string }
+);
 
 type VideoItem = {
   id: string;
   theme: VideoTheme;
   title: string;
   description: string;
-  src: string;
-  poster: string;
-  mime: "video/mp4" | "video/quicktime";
-};
+} & (
+  | { mediaType: "video"; src: string; poster: string; mime: "video/mp4" | "video/quicktime" }
+  | { mediaType: "still"; still: string }
+);
 
 type Metric = {
   value: string;
@@ -124,9 +124,6 @@ const publicPath = (path: string) => `${siteBasePath}${path}`;
 const showLanguageSwitcher = false;
 
 const media = {
-  reuseHero: publicPath("/media/photos/kll-reuse-hero.jpg"),
-  reuseDetail: publicPath("/media/photos/kll-reuse-detail-1.jpg"),
-  reusePortrait: publicPath("/media/photos/kll-reuse-detail-2.jpg"),
   foodWaste: publicPath("/media/feedback2/estate-food-waste.webp"),
   clothesRecycling: publicPath("/media/feedback2/estate-clothes-recycling.webp"),
   smartRecycling: publicPath("/media/feedback2/estate-smart-recycling.webp"),
@@ -164,15 +161,17 @@ const buildEstateStories = (locale: Locale): Story[] =>
   });
 
 const buildVideoItems = (locale: Locale): VideoItem[] =>
-  (videoRecords as VideoRecord[]).map((record) => ({
-    id: record.id,
-    theme: record.theme,
-    title: record.locales[locale].title,
-    description: record.locales[locale].description,
-    src: publicPath(record.src),
-    poster: publicPath(record.poster),
-    mime: record.mime,
-  }));
+  (videoRecords as VideoRecord[]).map((record) => {
+    const common = {
+      id: record.id,
+      theme: record.theme,
+      title: record.locales[locale].title,
+      description: record.locales[locale].description,
+    };
+    return record.mediaType === "video"
+      ? { ...common, mediaType: "video" as const, src: publicPath(record.src), poster: publicPath(record.poster), mime: record.mime }
+      : { ...common, mediaType: "still" as const, still: publicPath(record.still) };
+  });
 
 const content = {
   "zh-hk": {
@@ -358,13 +357,16 @@ const content = {
       title: "看見社區中的改變",
       body: "透過屋邨片段，了解綠色生活、共融社區和智慧管理如何在日常發生。",
       play: "播放影片",
+      viewStill: "查看活動畫面",
       note: "可使用原生播放控制觀看影片。",
-      browse: "按主題瀏覽影片",
+      stillNote: "此項以活動靜態畫面呈現。",
+      browse: "按主題瀏覽屋邨片段",
       filterLabel: "選擇影片主題",
       nowPlaying: "現正播放",
-      showAll: "顯示全部影片",
-      showLess: "收起影片",
-      countSuffix: "段影片",
+      nowViewing: "活動畫面",
+      showAll: "顯示全部內容",
+      showLess: "收起內容",
+      countSuffix: "項內容",
       themes: { all: "全部", green: "綠色生活", community: "共融社區", smart: "智慧管理" },
       items: [] as [string, string, string][],
     },
@@ -421,13 +423,16 @@ const content = {
       title: "看见社区中的改变",
       body: "透过屋邨片段，了解绿色生活、共融社区和智慧管理如何在日常发生。",
       play: "播放视频",
+      viewStill: "查看活动画面",
       note: "可使用原生播放控制观看视频。",
-      browse: "按主题浏览视频",
+      stillNote: "此项以活动静态画面呈现。",
+      browse: "按主题浏览屋邨片段",
       filterLabel: "选择视频主题",
       nowPlaying: "正在播放",
-      showAll: "显示全部视频",
-      showLess: "收起视频",
-      countSuffix: "段视频",
+      nowViewing: "活动画面",
+      showAll: "显示全部内容",
+      showLess: "收起内容",
+      countSuffix: "项内容",
       themes: { all: "全部", green: "绿色生活", community: "共融社区", smart: "智慧管理" },
       items: [] as [string, string, string][],
     },
@@ -482,13 +487,16 @@ const content = {
       title: "See change taking place",
       body: "Estate stories show how greener living, inclusive communities and smarter management become part of everyday life.",
       play: "Play video",
+      viewStill: "View activity still",
       note: "Use the native playback controls to watch each video.",
-      browse: "Browse videos by theme",
+      stillNote: "This item is presented as an activity still.",
+      browse: "Browse estate moments by theme",
       filterLabel: "Choose a video theme",
       nowPlaying: "Now playing",
-      showAll: "Show all videos",
-      showLess: "Show fewer videos",
-      countSuffix: "videos",
+      nowViewing: "Activity still",
+      showAll: "Show all items",
+      showLess: "Show fewer items",
+      countSuffix: "items",
       themes: { all: "All", green: "Green living", community: "Inclusive community", smart: "Smart management" },
       items: [] as [string, string, string][],
     },
@@ -1013,17 +1021,21 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           </div>
           <div className="video-layout">
             <div className="video-player" ref={videoPlayerRef}>
-              {/* Captions will be connected when the approved transcripts are provided. */}
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <video key={activeVideoItem.src} controls playsInline preload="metadata" poster={activeVideoItem.poster} aria-label={activeVideoItem.title}>
-                <source src={activeVideoItem.src} type={activeVideoItem.mime} />
-              </video>
+              {activeVideoItem.mediaType === "video" ? (
+                /* Captions will be connected when the approved transcripts are provided. */
+                /* eslint-disable-next-line jsx-a11y/media-has-caption */
+                <video key={activeVideoItem.src} controls playsInline preload="metadata" poster={activeVideoItem.poster} aria-label={activeVideoItem.title}>
+                  <source src={activeVideoItem.src} type={activeVideoItem.mime} />
+                </video>
+              ) : (
+                <img className="video-still" key={activeVideoItem.still} src={activeVideoItem.still} alt={activeVideoItem.title} width="1280" height="720" />
+              )}
               <div className="video-now-playing">
-                <span>{c.videos.nowPlaying}</span>
+                <span>{activeVideoItem.mediaType === "video" ? c.videos.nowPlaying : c.videos.nowViewing}</span>
                 <h3>{activeVideoItem.title}</h3>
                 <p>{activeVideoItem.description}</p>
               </div>
-              <p className="video-control-note">{c.videos.note}</p>
+              <p className="video-control-note">{activeVideoItem.mediaType === "video" ? c.videos.note : c.videos.stillNote}</p>
             </div>
             <div className="video-library">
               <div className="video-library-heading">
@@ -1038,11 +1050,14 @@ export function SiteExperience({ locale }: { locale: Locale }) {
                 ))}
               </div>
               <div className="video-selector">
-                {visibleVideoItems.map(({ id, title, poster, theme }) => {
+                {visibleVideoItems.map((item) => {
+                  const { id, title, theme } = item;
                   const index = videoItems.findIndex((video) => video.id === id);
+                  const thumbnail = item.mediaType === "video" ? item.poster : item.still;
+                  const actionLabel = item.mediaType === "video" ? c.videos.play : c.videos.viewStill;
                   return (
-                    <button key={id} type="button" data-content-id={id} className={activeVideo === index ? "is-active" : ""} onClick={() => selectVideo(id)} aria-label={`${c.videos.play}: ${title}`}>
-                      <span className="video-thumb"><img src={poster} alt="" /><span className="play-icon"><Play size={15} weight="fill" aria-hidden="true" /></span></span>
+                    <button key={id} type="button" data-content-id={id} className={activeVideo === index ? "is-active" : ""} onClick={() => selectVideo(id)} aria-label={`${actionLabel}: ${title}`}>
+                      <span className="video-thumb"><img src={thumbnail} alt="" />{item.mediaType === "video" ? <span className="play-icon"><Play size={15} weight="fill" aria-hidden="true" /></span> : <span className="still-badge">{c.videos.nowViewing}</span>}</span>
                       <span className="video-card-copy"><small>{c.videos.themes[theme]}</small><strong>{title}</strong></span>
                     </button>
                   );

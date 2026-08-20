@@ -1221,13 +1221,20 @@ a {
   scroll-margin-top: 86px;
 }
 
-.video-player video {
+.video-player video,
+.video-player .video-still {
+  display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-card);
   background: #0d1511;
   object-fit: contain;
   box-shadow: var(--shadow);
+}
+
+.video-player .video-still {
+  background: var(--surface-strong);
+  object-fit: cover;
 }
 
 .video-now-playing {
@@ -1365,6 +1372,20 @@ a {
   border-radius: 999px;
   background: var(--accent);
   color: var(--on-accent);
+}
+
+.still-badge {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--forest) 88%, transparent);
+  color: #fff;
+  padding: 6px 9px;
+  font-size: 9px;
+  font-weight: 780;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(8px);
 }
 
 .video-card-copy {

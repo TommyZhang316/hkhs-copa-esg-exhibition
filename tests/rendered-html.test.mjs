@@ -65,12 +65,13 @@ test("server-renders the HKHS sustainability experience focused on property mana
   assert.doesNotMatch(html, /20 個出租屋邨及 1 個管理物業/);
   assert.doesNotMatch(html, /物業及資產綜合平臺|透過物聯網（IoT）在單一平臺|COPA 智能設施/);
   assert.doesNotMatch(html, /從建造到管理，把長遠價值帶進日常|以負責任管治，推動每一步|房協方向/);
-  assert.match(html, /\/media\/videos\/latest\/VD-01\.mp4/);
-  assert.match(html, /\/media\/videos\/posters\/VD-01\.jpg/);
-  assert.match(html, /按主題瀏覽影片/);
+  assert.match(html, /\/media\/videos\/safe-stills\/VD-01\.jpg/);
+  assert.doesNotMatch(html, /\/media\/videos\/latest\/VD-01\.mp4|\/media\/videos\/posters\/VD-01\.jpg/);
+  assert.match(html, /按主題瀏覽屋邨片段/);
+  assert.match(html, /活動畫面/);
   assert.match(html, /綠色生活/);
   assert.match(html, /智慧管理/);
-  assert.match(html, /顯示全部影片 \(18\)/);
+  assert.match(html, /顯示全部內容 \(18\)/);
   assert.doesNotMatch(html, /food-waste-kll|food-waste-ltt|觀龍樓智能廚餘回收/);
   assert.ok(html.indexOf("物業管理，讓可持續發展在屋邨發生") < html.indexOf("三大支柱，共同支撐宜居未來"));
   assert.ok(html.indexOf('id="stories"') < html.indexOf('id="videos"'));
@@ -86,10 +87,16 @@ test("video library includes the newly supplied clips and theme metadata", () =>
   assert.deepEqual(records.slice(-4).map(({ id }) => id), ["VD-15", "VD-16", "VD-17", "VD-18"]);
   assert.equal(records.find(({ id }) => id === "VD-15").theme, "smart");
   assert.equal(records.find(({ id }) => id === "VD-18").theme, "green");
-  assert.equal(records.find(({ id }) => id === "VD-14").poster, "/media/videos/posters/VD-14.jpg");
+  assert.equal(records.filter(({ mediaType }) => mediaType === "video").length, 5);
+  assert.equal(records.filter(({ mediaType }) => mediaType === "still").length, 13);
+  assert.equal(records.find(({ id }) => id === "VD-14").still, "/media/videos/safe-stills/VD-14.jpg");
   assert.equal(records.find(({ id }) => id === "VD-07").locales["zh-hk"].title, "智能廚餘機使用示範");
   assert.match(records.find(({ id }) => id === "VD-07").locales["zh-hk"].description, /由物業管理員工示範/);
   assert.equal(records.find(({ id }) => id === "VD-18").poster, "/media/videos/posters/VD-18.jpg");
+  for (const record of records.filter(({ mediaType }) => mediaType === "still")) {
+    assert.equal("src" in record, false);
+    assert.match(record.still, /^\/media\/videos\/safe-stills\/VD-\d{2}\.jpg$/);
+  }
 });
 
 test("server-renders English and Simplified Chinese routes", async () => {

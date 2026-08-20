@@ -2,9 +2,8 @@
   {
     "id": "VD-01",
     "theme": "green",
-    "src": "/media/videos/latest/VD-01.mp4",
-    "poster": "/media/videos/posters/VD-01.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-01.jpg",
     "locales": {
       "zh-hk": { "title": "週末園圃種植樂", "description": "居民共享種植經驗，讓綠色空間成為社區交流的一部分。" },
       "zh-cn": { "title": "周末园圃种植乐", "description": "居民共享种植经验，让绿色空间成为社区交流的一部分。" },
@@ -14,9 +13,8 @@
   {
     "id": "VD-02",
     "theme": "green",
-    "src": "/media/videos/latest/VD-02.mp4",
-    "poster": "/media/videos/posters/VD-02.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-02.jpg",
     "locales": {
       "zh-hk": { "title": "花花世界", "description": "以花卉和園藝活動豐富屋邨綠色生活。" },
       "zh-cn": { "title": "花花世界", "description": "以花卉和园艺活动丰富屋邨绿色生活。" },
@@ -26,9 +24,8 @@
   {
     "id": "VD-03",
     "theme": "green",
-    "src": "/media/videos/latest/VD-03.mp4",
-    "poster": "/media/videos/posters/VD-03.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-03.jpg",
     "locales": {
       "zh-hk": { "title": "園途友里：製作艾草薄荷膏", "description": "社區與學校以植物體驗連繫環境教育和日常生活。" },
       "zh-cn": { "title": "园途友里：制作艾草薄荷膏", "description": "社区与学校以植物体验连系环境教育和日常生活。" },
@@ -38,6 +35,7 @@
   {
     "id": "VD-04",
     "theme": "community",
+    "mediaType": "video",
     "src": "/media/videos/latest/VD-04.mp4",
     "poster": "/media/videos/posters/VD-04.jpg",
     "mime": "video/mp4",
@@ -50,6 +48,7 @@
   {
     "id": "VD-05",
     "theme": "green",
+    "mediaType": "video",
     "src": "/media/videos/latest/VD-05.mov",
     "poster": "/media/videos/posters/VD-05.jpg",
     "mime": "video/quicktime",
@@ -62,6 +61,7 @@
   {
     "id": "VD-06",
     "theme": "smart",
+    "mediaType": "video",
     "src": "/media/videos/latest/VD-06.mov",
     "poster": "/media/videos/posters/VD-06.jpg",
     "mime": "video/quicktime",
@@ -74,9 +74,8 @@
   {
     "id": "VD-07",
     "theme": "green",
-    "src": "/media/videos/latest/VD-07.mov",
-    "poster": "/media/videos/posters/VD-07.jpg",
-    "mime": "video/quicktime",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-07.jpg",
     "locales": {
       "zh-hk": { "title": "智能廚餘機使用示範", "description": "由物業管理員工示範廚餘分類和回收流程。" },
       "zh-cn": { "title": "智能厨余机使用示范", "description": "由物业管理员工示范厨余分类和回收流程。" },
@@ -86,9 +85,8 @@
   {
     "id": "VD-08",
     "theme": "green",
-    "src": "/media/videos/latest/VD-08.mp4",
-    "poster": "/media/videos/posters/VD-08.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-08.jpg",
     "locales": {
       "zh-hk": { "title": "升級再造坊（一）", "description": "從日常物料出發，探索升級再造的不同可能。" },
       "zh-cn": { "title": "升级再造坊（一）", "description": "从日常物料出发，探索升级再造的不同可能。" },
@@ -98,9 +96,8 @@
   {
     "id": "VD-09",
     "theme": "green",
-    "src": "/media/videos/latest/VD-09.mp4",
-    "poster": "/media/videos/posters/VD-09.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-09.jpg",
     "locales": {
       "zh-hk": { "title": "升級再造坊（二）", "description": "以創意延長物料的使用價值。" },
       "zh-cn": { "title": "升级再造坊（二）", "description": "以创意延长物料的使用价值。" },
@@ -110,9 +107,8 @@
   {
     "id": "VD-10",
     "theme": "green",
-    "src": "/media/videos/latest/VD-10.mp4",
-    "poster": "/media/videos/posters/VD-10.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-10.jpg",
     "locales": {
       "zh-hk": { "title": "升級再造坊（三）", "description": "讓資源循環成為可參與的社區體驗。" },
       "zh-cn": { "title": "升级再造坊（三）", "description": "让资源循环成为可参与的社区体验。" },
@@ -122,9 +118,8 @@
   {
     "id": "VD-11",
     "theme": "green",
-    "src": "/media/videos/latest/VD-11.mp4",
-    "poster": "/media/videos/posters/VD-11.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-11.jpg",
     "locales": {
       "zh-hk": { "title": "升級再造坊（四）", "description": "在製作過程中重新認識物料和減廢。" },
       "zh-cn": { "title": "升级再造坊（四）", "description": "在制作过程中重新认识物料和减废。" },
@@ -134,9 +129,8 @@
   {
     "id": "VD-12",
     "theme": "green",
-    "src": "/media/videos/latest/VD-12.mp4",
-    "poster": "/media/videos/posters/VD-12.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-12.jpg",
     "locales": {
       "zh-hk": { "title": "升級再造坊（五）", "description": "以社區創作延續物料價值和環保意識。" },
       "zh-cn": { "title": "升级再造坊（五）", "description": "以社区创作延续物料价值和环保意识。" },
@@ -146,9 +140,8 @@
   {
     "id": "VD-13",
     "theme": "community",
-    "src": "/media/videos/latest/VD-13.mp4",
-    "poster": "/media/videos/posters/VD-13.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-13.jpg",
     "locales": {
       "zh-hk": { "title": "留足跡．長記憶（一）", "description": "以數碼地圖記錄社區足跡，連繫不同世代的生活記憶。" },
       "zh-cn": { "title": "留足迹．长记忆（一）", "description": "以数码地图记录社区足迹，连系不同世代的生活记忆。" },
@@ -158,9 +151,8 @@
   {
     "id": "VD-14",
     "theme": "community",
-    "src": "/media/videos/latest/VD-14.mp4",
-    "poster": "/media/videos/posters/VD-14.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-14.jpg",
     "locales": {
       "zh-hk": { "title": "留足跡．長記憶（二）", "description": "由年輕一代分享數碼工具，促進跨代交流。" },
       "zh-cn": { "title": "留足迹．长记忆（二）", "description": "由年轻一代分享数码工具，促进跨代交流。" },
@@ -170,9 +162,8 @@
   {
     "id": "VD-15",
     "theme": "smart",
-    "src": "/media/videos/latest/VD-15.mp4",
-    "poster": "/media/videos/posters/VD-15.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-15.jpg",
     "locales": {
       "zh-hk": { "title": "HS Living 手機應用程式（一）", "description": "示範如何以手機查閱屋邨資訊及使用日常服務。" },
       "zh-cn": { "title": "HS Living 手机应用程序（一）", "description": "示范如何通过手机查阅屋邨信息及使用日常服务。" },
@@ -182,9 +173,8 @@
   {
     "id": "VD-16",
     "theme": "smart",
-    "src": "/media/videos/latest/VD-16.mp4",
-    "poster": "/media/videos/posters/VD-16.jpg",
-    "mime": "video/mp4",
+    "mediaType": "still",
+    "still": "/media/videos/safe-stills/VD-16.jpg",
     "locales": {
       "zh-hk": { "title": "HS Living 手機應用程式（二）", "description": "從流動介面了解屋邨通知、活動及服務資訊。" },
       "zh-cn": { "title": "HS Living 手机应用程序（二）", "description": "从移动界面了解屋邨通知、活动及服务信息。" },
@@ -194,6 +184,7 @@
   {
     "id": "VD-17",
     "theme": "green",
+    "mediaType": "video",
     "src": "/media/videos/latest/VD-17.mp4",
     "poster": "/media/videos/posters/VD-17.jpg",
     "mime": "video/mp4",
@@ -206,6 +197,7 @@
   {
     "id": "VD-18",
     "theme": "green",
+    "mediaType": "video",
     "src": "/media/videos/latest/VD-18.mp4",
     "poster": "/media/videos/posters/VD-18.jpg",
     "mime": "video/mp4",
