@@ -162,8 +162,10 @@
   {
     "id": "VD-15",
     "theme": "smart",
-    "mediaType": "still",
-    "still": "/media/videos/safe-stills/VD-15.jpg",
+    "mediaType": "video",
+    "src": "/media/videos/latest/VD-15.mp4",
+    "poster": "/media/videos/posters/VD-15.jpg",
+    "mime": "video/mp4",
     "locales": {
       "zh-hk": { "title": "HS Living 手機應用程式（一）", "description": "示範如何以手機查閱屋邨資訊及使用日常服務。" },
       "zh-cn": { "title": "HS Living 手机应用程序（一）", "description": "示范如何通过手机查阅屋邨信息及使用日常服务。" },
@@ -173,8 +175,10 @@
   {
     "id": "VD-16",
     "theme": "smart",
-    "mediaType": "still",
-    "still": "/media/videos/safe-stills/VD-16.jpg",
+    "mediaType": "video",
+    "src": "/media/videos/latest/VD-16.mp4",
+    "poster": "/media/videos/posters/VD-16.jpg",
+    "mime": "video/mp4",
     "locales": {
       "zh-hk": { "title": "HS Living 手機應用程式（二）", "description": "從流動介面了解屋邨通知、活動及服務資訊。" },
       "zh-cn": { "title": "HS Living 手机应用程序（二）", "description": "从移动界面了解屋邨通知、活动及服务信息。" },

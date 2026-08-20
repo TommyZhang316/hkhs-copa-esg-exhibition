@@ -87,11 +87,13 @@ test("video library includes the newly supplied clips and theme metadata", () =>
   assert.deepEqual(records.slice(-4).map(({ id }) => id), ["VD-15", "VD-16", "VD-17", "VD-18"]);
   assert.equal(records.find(({ id }) => id === "VD-15").theme, "smart");
   assert.equal(records.find(({ id }) => id === "VD-18").theme, "green");
-  assert.equal(records.filter(({ mediaType }) => mediaType === "video").length, 5);
-  assert.equal(records.filter(({ mediaType }) => mediaType === "still").length, 13);
+  assert.equal(records.filter(({ mediaType }) => mediaType === "video").length, 7);
+  assert.equal(records.filter(({ mediaType }) => mediaType === "still").length, 11);
   assert.equal(records.find(({ id }) => id === "VD-14").still, "/media/videos/safe-stills/VD-14.jpg");
   assert.equal(records.find(({ id }) => id === "VD-07").locales["zh-hk"].title, "智能廚餘機使用示範");
   assert.match(records.find(({ id }) => id === "VD-07").locales["zh-hk"].description, /由物業管理員工示範/);
+  assert.equal(records.find(({ id }) => id === "VD-15").src, "/media/videos/latest/VD-15.mp4");
+  assert.equal(records.find(({ id }) => id === "VD-16").src, "/media/videos/latest/VD-16.mp4");
   assert.equal(records.find(({ id }) => id === "VD-18").poster, "/media/videos/posters/VD-18.jpg");
   for (const record of records.filter(({ mediaType }) => mediaType === "still")) {
     assert.equal("src" in record, false);
