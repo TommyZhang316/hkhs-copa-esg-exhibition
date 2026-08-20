@@ -187,8 +187,8 @@ const content = {
       close: "關閉",
     },
     brand: {
-      division: "香港房屋協會 物業管理部門",
-      full: "Hong Kong Housing Society Property Management Division",
+      division: "香港房屋協會",
+      full: "Hong Kong Housing Society",
     },
     ui: {
       swipe: "左右滑動查看更多",
@@ -206,16 +206,16 @@ const content = {
       journeyProgress: "頁面進度",
     },
     hero: {
-      eyebrow: "香港房屋協會-物業管理部門 可持續發展",
+      eyebrow: "香港房屋協會 可持續發展",
       title: "創建宜居．永續共融",
-      body: "我們在物業管理和社區日常中落實可持續發展，與居民共建更宜居、更低碳的未來。",
+      body: "香港房屋協會把可持續發展融入物業管理和社區日常，與居民共建更宜居、更低碳的未來。",
       cta: "探索屋邨行動",
       secondary: "觀看屋邨 ESG 實踐視頻",
       imageAlt: "屋邨內的共融遊樂及休憩空間",
     },
     intro: {
       title: "在物業管理日常，把 ESG 承諾變成行動",
-      body: "我們從居民需要、資源使用、設施表現和未來能力出發，把房協的長遠方向落實在屋邨管理和社區日常。",
+      body: "我們從居民需要、資源使用、設施表現和未來能力出發，透過物業管理把房協的長遠方向落實在屋邨和社區日常。",
     },
     pillarHeading: "三大支柱，共同支撐宜居未來",
     pillarPrompt: "選擇支柱",
@@ -369,30 +369,29 @@ const content = {
       items: [] as [string, string, string][],
     },
     footer: {
-      statement: "可持續發展不是單一項目，而是我們建造、管理和服務社區的方式。",
-      copyright: "香港房屋協會 物業管理部門",
+      statement: "可持續發展不是單一項目，而是我們管理屋邨和服務社區的方式。",
     },
   },
   "zh-cn": {
     htmlLang: "zh-CN",
     nav: { home: "首页", stories: "屋邨行动", progress: "进展", videos: "视频", pillars: "三大支柱", menu: "打开菜单", close: "关闭" },
-    brand: { division: "香港房屋协会 物业管理部门", full: "Hong Kong Housing Society Property Management Division" },
+    brand: { division: "香港房屋协会", full: "Hong Kong Housing Society" },
     ui: {
       swipe: "左右滑动查看更多", previous: "上一项", next: "下一项", source: "查看正式来源", reportPage: "PDF 第", pageSuffix: "页",
       organization: "房协整体", property: "物业管理实践", sustainabilityReport: "香港房屋协会 2024/25 可持续发展报告", annualReport: "香港房屋协会 2024/25 年度报告",
       previousStory: "上一个故事", nextStory: "下一个故事", journeyProgress: "页面进度",
     },
     hero: {
-      eyebrow: "香港房屋协会-物业管理部门 可持续发展",
+      eyebrow: "香港房屋协会 可持续发展",
       title: "创建宜居．永续共融",
-      body: "我们在物业管理和社区日常中落实可持续发展，与居民共建更宜居、更低碳的未来。",
+      body: "香港房屋协会把可持续发展融入物业管理和社区日常，与居民共建更宜居、更低碳的未来。",
       cta: "探索屋邨行动",
       secondary: "观看屋邨 ESG 实践视频",
       imageAlt: "屋邨内的共融游乐及休憩空间",
     },
     intro: {
       title: "在物业管理日常，把 ESG 承诺变成行动",
-      body: "我们从居民需要、资源使用、设施表现和未来能力出发，把房协的长远方向落实在屋邨管理和社区日常。",
+      body: "我们从居民需要、资源使用、设施表现和未来能力出发，通过物业管理把房协的长远方向落实在屋邨和社区日常。",
     },
     pillarHeading: "三大支柱，共同支撑宜居未来",
     pillarPrompt: "选择支柱",
@@ -432,28 +431,28 @@ const content = {
       themes: { all: "全部", green: "绿色生活", community: "共融社区", smart: "智慧管理" },
       items: [] as [string, string, string][],
     },
-    footer: { statement: "可持续发展不是单一项目，而是我们建造、管理和服务社区的方式。", copyright: "香港房屋协会 物业管理部门" },
+    footer: { statement: "可持续发展不是单一项目，而是我们管理屋邨和服务社区的方式。" },
   },
   en: {
     htmlLang: "en",
     nav: { home: "Home", stories: "Estate action", progress: "Progress", videos: "Videos", pillars: "Our pillars", menu: "Open menu", close: "Close" },
-    brand: { division: "香港房屋協會 物業管理部門", full: "Hong Kong Housing Society Property Management Division" },
+    brand: { division: "香港房屋協會", full: "Hong Kong Housing Society" },
     ui: {
       swipe: "Swipe to explore", previous: "Previous", next: "Next", source: "View official source", reportPage: "PDF page ", pageSuffix: "",
       organization: "HKHS-wide", property: "Property management practice", sustainabilityReport: "HKHS Sustainability Report 2024/25", annualReport: "HKHS Annual Report 2024/25",
       previousStory: "Previous story", nextStory: "Next story", journeyProgress: "Page progress",
     },
     hero: {
-      eyebrow: "HKHS Property Management Division Sustainability",
+      eyebrow: "Hong Kong Housing Society Sustainability",
       title: "Creating Homes for Sustainable Living",
-      body: "We put sustainability into practice through property management and community life, building a liveable, low-carbon future with residents.",
+      body: "The Hong Kong Housing Society puts sustainability into practice through property management and community life, building a liveable, low-carbon future with residents.",
       cta: "Explore estate action",
       secondary: "Watch estate ESG practices in action",
       imageAlt: "An inclusive play and resting space on an estate",
     },
     intro: {
       title: "Turning ESG commitments into everyday management",
-      body: "We bring HKHS's long-term direction into estate management through resident needs, resource use, asset performance and future-ready capabilities.",
+      body: "Through property management, we bring HKHS's long-term direction into estate and community life, guided by resident needs, resource use, asset performance and future-ready capabilities.",
     },
     pillarHeading: "Three pillars for a liveable future",
     pillarPrompt: "Choose a pillar",
@@ -493,7 +492,7 @@ const content = {
       themes: { all: "All", green: "Green living", community: "Inclusive community", smart: "Smart management" },
       items: [] as [string, string, string][],
     },
-    footer: { statement: "Sustainability is not one project. It is how we build, manage and serve communities.", copyright: "Hong Kong Housing Society Property Management Division" },
+    footer: { statement: "Sustainability is not one project. It is how we manage estates and serve communities." },
   },
 } as const;
 
@@ -1161,7 +1160,8 @@ export function SiteExperience({ locale }: { locale: Locale }) {
           <strong>{c.brand.division}</strong>
         </div>
         <div className="footer-meta">
-          <p>© {new Date().getFullYear()} {c.footer.copyright}</p>
+          <p>Copyright © {new Date().getFullYear()} Hong Kong Housing Society. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} 香港房屋協會版權所有</p>
         </div>
       </footer>
 

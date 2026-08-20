@@ -23,19 +23,21 @@ async function render(path = "/") {
   );
 }
 
-test("server-renders the Property Management Division sustainability experience", async () => {
+test("server-renders the HKHS sustainability experience focused on property management", async () => {
   const response = await render("/");
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
   assert.match(html, /創建宜居．永續共融/);
-  assert.match(html, /香港房屋協會-物業管理部門 可持續發展/);
+  assert.match(html, /香港房屋協會 可持續發展/);
   assert.doesNotMatch(html, /class="language-switcher|mobile-language-switcher|aria-label="Language"/);
   assert.match(html, /class="text-link" href="#videos">觀看屋邨 ESG 實踐視頻/);
   assert.match(html, /以量化成果，呈現我們的進展。/);
-  assert.match(html, /Hong Kong Housing Society Property Management Division/);
-  assert.match(html, /香港房屋協會 物業管理部門/);
+  assert.match(html, /Hong Kong Housing Society/);
+  assert.match(html, /香港房屋協會版權所有/);
+  assert.match(html, /Copyright ©[\s\S]{0,40}Hong Kong Housing Society\. All Rights Reserved\./);
+  assert.doesNotMatch(html, /Hong Kong Housing Society Property Management Division|© \d{4} 香港房屋協會 物業管理部門/);
   assert.doesNotMatch(html, /跨代共融遊樂空間，讓不同年齡居民共享屋邨設施|以清楚範圍，呈現我們的進展|每個數字都與年份/);
   assert.match(html, /三大支柱/);
   assert.doesNotMatch(html, /ESG 概覽影片|完整影片將於此位置播放/);

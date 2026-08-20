@@ -153,7 +153,7 @@ a {
 }
 
 .brand-mark-compact img {
-  width: 150px;
+  width: 176px;
 }
 
 .desktop-nav {
@@ -1412,7 +1412,7 @@ a {
 
 .site-footer {
   display: grid;
-  grid-template-columns: 230px 1fr minmax(250px, 0.5fr);
+  grid-template-columns: 260px 1fr minmax(280px, 0.55fr);
   gap: 48px;
   border-top: 1px solid var(--line);
   background: color-mix(in srgb, var(--surface-strong) 72%, var(--page));
@@ -1669,7 +1669,7 @@ a {
   }
 
   .brand-mark-compact img {
-    width: 138px;
+    width: 158px;
   }
 
   .hero {
@@ -1715,7 +1715,7 @@ a {
   }
 
   .brand-mark-compact img {
-    width: 126px;
+    width: 146px;
   }
 
   .desktop-nav,
@@ -2106,7 +2106,7 @@ a {
   }
 
   .footer-brand {
-    width: 180px;
+    width: 210px;
   }
 
   .footer-meta {
